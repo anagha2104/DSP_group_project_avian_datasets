@@ -18,13 +18,15 @@
 
 ## Project Structure
 
-/ 
-│ 
-├── data/ # Raw and processed datasets 
-├── notebooks/ # Jupyter notebooks for EDA and experiments 
-├── src/ # Source code (pipeline, preprocessing, models) 
-├── results/ # Figures, outputs, and reports 
-├── requirements.txt # Python dependencies 
+/
+│
+├── data/               # Raw and processed datasets
+│   ├── raw/            # Raw data files
+│   └── preprocessed/   # Cleaned / processed data
+├── notebooks/          # Jupyter notebooks for EDA and experiments
+├── src/                # Source code (pipeline, preprocessing, models)
+├── results/            # Figures, outputs, and reports
+├── requirements.txt    # Python dependencies
 └── README.md
 
 ---
