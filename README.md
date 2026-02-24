@@ -17,7 +17,7 @@
 ---
 
 ## Project Structure
-
+```text
 /
 │
 ├── data/               # Raw and processed datasets
@@ -28,7 +28,7 @@
 ├── results/            # Figures, outputs, and reports
 ├── requirements.txt    # Python dependencies
 └── README.md
-
+```
 ---
 
 ## Contributors
