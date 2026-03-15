@@ -1,30 +1,26 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import plotly.express as px
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
 
-st.text("Hello world")
-st.title("Hello world")
+st.title("Avian Dashboard")
+st.sidebar.header("Controls")
+x_axis = st.sidebar.selectbox("X-Axis", ['BodyMass', 'WingLength'])
+missing_strategy = st.sidebar.radio("Missing Data Strategy", ['Drop', 'Impute'])
+run_pca = st.sidebar.button("Run PCA")
+
+def load_data():
+    # df = pd.read_csv('team_data.csv') 
+    df = pd.DataFrame({})
+    return df
+
+fig = px.scatter(df_processed, x=x_axis, y="BodyMass")
+st.plotly_chart(fig)
+
+if run_pca:
+    st.write("Running your team's code...")
 
 
-dataframe = pd.DataFrame(
-    np.random.randn(10, 20),
-    columns=('col %d' % i for i in range(20)))
-st.table(dataframe)
 
-
-chart_data = pd.DataFrame(
-     np.random.randn(20, 3),
-     columns=['a', 'b', 'c'])
-st.line_chart(chart_data)
-
-# Add a selectbox to the sidebar:
-add_selectbox = st.sidebar.selectbox(
-    'Bird Name',
-    ('Email', 'Home phone', 'Mobile phone')
-)
-
-# Add a slider to the sidebar:
-add_slider = st.sidebar.slider(
-    'Select a range of values',
-    0.0, 100.0, (25.0, 75.0)
-)
