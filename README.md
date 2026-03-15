@@ -1,18 +1,18 @@
-# Bird Traits Prediction
+# Avian Functional Trait Database Explorer
 
-## Overview
+## Objective
 
-**Bird Traits Prediction** is a collaborative data science project that develops a reproducible pipeline for ingesting, harmonising, analyzing, and predicting avian functional trait datasets. The project aims to explore ecomorphological relationships, evaluate data quality across bird taxa, and uncover predictive links between morphological and ecological traits..
+Design and implement a reproducible data ingestion, analysis, and visualisation pipeline to explore large avian trait databases, with the goal of understanding ecomorphological relationships, data quality issues, and variability across avian taxa.
 
 ---
 
 ## Objectives
 
-- Develop a clean and reproducible data pipeline  
+- Identify and collect bird traits from various datasets  
 - Harmonise bird trait datasets from multiple sources  
-- Perform exploratory data analysis (EDA)  
-- Build predictive models for avian traits  
-- Ensure modular and scalable project structure
+- Perform exploratory data analysis  
+- Compute summary statistics and exploratory relationships between functional traits and ecological roles.  
+- Build an interactive dashboard that enables filtering, comparison, and  visual exploration of trait distributions and phylogenetic correlations
 
 ---
 
