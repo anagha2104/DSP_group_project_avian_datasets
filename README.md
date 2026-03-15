@@ -6,7 +6,7 @@ Design and implement a reproducible data ingestion, analysis, and visualisation 
 
 ---
 
-## Objectives
+## Tasks
 
 - Identify and collect bird traits from various datasets  
 - Harmonise bird trait datasets from multiple sources  
