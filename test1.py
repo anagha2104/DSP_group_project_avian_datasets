@@ -17,8 +17,14 @@ chart_data = pd.DataFrame(
      columns=['a', 'b', 'c'])
 st.line_chart(chart_data)
 
-map_data = pd.DataFrame(
-    np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],
-    columns=['lat', 'lon'])
+# Add a selectbox to the sidebar:
+add_selectbox = st.sidebar.selectbox(
+    'Bird Name',
+    ('Email', 'Home phone', 'Mobile phone')
+)
 
-st.map(map_data)
+# Add a slider to the sidebar:
+add_slider = st.sidebar.slider(
+    'Select a range of values',
+    0.0, 100.0, (25.0, 75.0)
+)
