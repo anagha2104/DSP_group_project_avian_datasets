@@ -15,7 +15,11 @@ Design and implement a reproducible data ingestion, analysis, and visualisation 
 - Build an interactive dashboard that enables filtering, comparison, and  visual exploration of trait distributions and phylogenetic correlations
 
 ---
-
+## Plan
+- Identify which system of Bird ID to use to aminatin consistency between systems. Merge continuous variables using averages in case of conflicts. If measures of variation is available, take that into account as well. Merge catergorical variables by using the most complete database and fill the missing gaps from other databases. In case of conflict, prefer most recent databse.
+- Once we have a mega data sheet with all avaiable data for each species and a metadata sheet mapping different bird IDs and common names to a single chosen Bird ID, we will use this data to analyse and look for patterns in the data.
+- We will combine the Bird data and photos soucred from the internet to display an interactive dashboard which displays pictures and descriptors for each species and where it is loctaed. We will also have a section of the dashboard where viewers can choose to see relationships between different variables for the birds.
+---
 ## Project Structure
 ```text
 /
