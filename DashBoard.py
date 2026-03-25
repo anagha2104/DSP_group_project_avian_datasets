@@ -156,3 +156,81 @@ else:
     columns_to_show = ['Species1'] + list(active_filters.keys())
     st.dataframe(results_df[columns_to_show])
 
+import streamlit as st
+import pandas as pd
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+
+# --- Assuming your dataframe is already loaded as 'df' ---
+
+st.write("---")
+st.header("🧬 PCA Cluster Analysis & Predictive Equations")
+st.write("Evaluate if linear combinations of physical traits can predict ecological categories.")
+
+# 1. Inputs
+all_numeric_traits = ['Mass', 'Wing.Length', 'Beak.Length_Culmen', 'Tarsus.Length']
+categorical_factors = ['Migration', 'Habitat', 'Diet', 'Trophic.Level']
+
+col1, col2 = st.columns(2)
+with col1:
+    selected_traits = st.multiselect("Select Traits for PCA:", options=all_numeric_traits, default=['Mass', 'Wing.Length', 'Beak.Length_Culmen', 'Tarsus.Length'])
+with col2:
+    grouping_factor = st.selectbox("Select Category to Color By:", options=categorical_factors)
+
+if len(selected_traits) >= 2:
+    # 2. Clean and Scale Data
+    columns_to_keep = selected_traits + [grouping_factor]
+    pca_df = df.dropna(subset=columns_to_keep).copy()
+    pca_df[grouping_factor] = pca_df[grouping_factor].astype(str)
+
+    X = pca_df[selected_traits]
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
+
+    # 3. Run PCA
+    pca = PCA(n_components=2)
+    components = pca.fit_transform(X_scaled)
+    pca_df['PC1'] = components[:, 0]
+    pca_df['PC2'] = components[:, 1]
+
+    # 4. Extract Loadings to build the Equations
+    # pca.components_ contains the weights for how much each trait contributes to each PC
+    loadings = pca.components_
+    
+    def build_equation(pc_index):
+        terms = []
+        for i, trait in enumerate(selected_traits):
+            weight = loadings[pc_index, i]
+            # Format to 3 decimal places. Add a '+' if positive.
+            sign = "+" if weight >= 0 else ""
+            terms.append(f"{sign}{weight:.3f}({trait})")
+        return " ".join(terms)
+
+    eq_pc1 = build_equation(0)
+    eq_pc2 = build_equation(1)
+
+    # 5. Display the Mathematical Equations
+    st.subheader("Linear Combinations (The Equations)")
+    st.write("These equations represent how your selected traits are mathematically combined to create the X and Y axes of the plot below. *(Note: Equations use scaled data).*")
+    
+    st.latex(rf"PC_1 = {eq_pc1}")
+    st.latex(rf"PC_2 = {eq_pc2}")
+
+    # 6. Display Explained Variance
+    var_pc1 = pca.explained_variance_ratio_[0] * 100
+    var_pc2 = pca.explained_variance_ratio_[1] * 100
+    st.caption(f"**Variance Explained:** PC1 ({var_pc1:.1f}%) | PC2 ({var_pc2:.1f}%) | Total ({(var_pc1 + var_pc2):.1f}%)")
+
+    # 7. Draw the Interactive Chart to Check Groupings
+    st.scatter_chart(
+        data=pca_df,
+        x='PC1',
+        y='PC2',
+        color=grouping_factor
+    )
+    
+    # 8. Analytical Conclusion Prompt
+    st.info(f"**How to read this:** Look at the colors ({grouping_factor}). If the colors naturally form distinct, separate clumps on the graph, then YES, the linear equations above can accurately predict a bird's {grouping_factor}. If the colors are completely mixed together like confetti, the physical traits do not strongly predict it.")
+
+else:
+    st.warning("⚠️ Please select at least two traits.")
