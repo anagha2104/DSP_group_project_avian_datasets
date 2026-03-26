@@ -98,74 +98,44 @@ with tab2:
     # A dictionary to store only the active filters the user turns on
     active_filters = {}
 
-    # 2. Build the dynamic UI
-    for trait in searchable_traits:
-        # A visual container to keep each trait's controls grouped together
-        with st.container():
-            # The Checkbox: If checked, show the inputs. If unchecked, ignore this trait.
-            if st.checkbox(f"🔍 Filter by {trait}"):
-                col1, col2 = st.columns(2)
+    # WRAPPING INPUTS IN A FORM PREVENTS CONSTANT RE-RUNS
+    with st.form("reverse_matcher_form"):
+        for trait in searchable_traits:
+            with st.container():
+                if st.checkbox(f"🔍 Filter by {trait}"):
+                    c1, c2 = st.columns(2)
+                    with c1:
+                        target_val = st.number_input(f"Target {trait}", min_value=0.0, value=50.0, step=1.0, key=f"target_{trait}")
+                    with c2:
+                        tolerance = st.slider(f"+/- Range (%)", min_value=1, max_value=50, value=10, key=f"tol_{trait}")
+                    
+                    active_filters[trait] = {'target': target_val, 'tolerance': tolerance}
+                st.write("") 
                 
-                with col1:
-                    # Target Value Input
-                    target_val = st.number_input(
-                        f"Target {trait}", 
-                        min_value=0.0, 
-                        value=50.0, 
-                        step=1.0, 
-                        key=f"target_{trait}" # Unique key required by Streamlit
-                    )
-                
-                with col2:
-                    # Tolerance Slider (%)
-                    tolerance = st.slider(
-                        f"+/- Range (%)", 
-                        min_value=1, 
-                        max_value=50, 
-                        value=10, 
-                        key=f"tol_{trait}"
-                    )
-                
-                # Save the user's choices into our dictionary
-                active_filters[trait] = {'target': target_val, 'tolerance': tolerance}
-            
-            st.write("") # Adds a tiny bit of vertical spacing between traits
-
-    # The math only triggers when this button is clicked
-    submit_search = st.form_submit_button("Run Search")
+        # The math only triggers when this button is clicked
+        submit_search = st.form_submit_button("Run Search")
 
     if submit_search:
-        # 3. Apply the filters to the Dataframe
         results_df = df.copy()
 
-    # Loop through only the traits the user actually checked
-    for trait, settings in active_filters.items():
-        target = settings['target']
-        tol_percent = settings['tolerance'] / 100.0
-        
-        # Calculate the exact min and max boundaries based on the % slider
-        min_bound = target - (target * tol_percent)
-        max_bound = target + (target * tol_percent)
-        
-        # Overwrite the dataframe with only the rows that fall inside these boundaries
-        results_df = results_df[(results_df[trait] >= min_bound) & (results_df[trait] <= max_bound)]
+        for trait, settings in active_filters.items():
+            target = settings['target']
+            tol_percent = settings['tolerance'] / 100.0
+            min_bound = target - (target * tol_percent)
+            max_bound = target + (target * tol_percent)
+            results_df = results_df[(results_df[trait] >= min_bound) & (results_df[trait] <= max_bound)]
 
-    # 4. Display the Results
-    st.subheader("🎯 Match Results")
-
-    if len(active_filters) == 0:
-        st.info("👈 Enable at least one filter above to start searching.")
-    elif results_df.empty:
-        st.warning("No birds found matching those exact parameters. Try increasing your +/- range!")
-    else:
-        st.success(f"Found {len(results_df)} matching species!")
+        st.subheader("🎯 Match Results")
+        if len(active_filters) == 0:
+            st.info("👈 Enable at least one filter above and click Run Search.")
+        elif results_df.empty:
+            st.warning("No birds found matching those exact parameters. Try increasing your +/- range!")
+        else:
+            st.success(f"Found {len(results_df)} matching species!")
+            columns_to_show = ['Species1'] + list(active_filters.keys())
+            st.dataframe(results_df[columns_to_show])
     
-    # We only display the 'Species' column PLUS the traits the user actually filtered by
-    columns_to_show = ['Species1'] + list(active_filters.keys())
-    st.dataframe(results_df[columns_to_show])
-
-
-
+    
 with tab3:
     st.header("🧬 PCA Cluster Analysis & Predictive Equations")
     st.write("Evaluate if linear combinations of physical traits can predict ecological categories.")
