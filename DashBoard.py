@@ -85,6 +85,27 @@ with tab1:
 
     st.write(f"**Pearson Correlation (r):** {r_value:.3f}")
 
+    # --- NEW PLOTLY CHART FOR TAB 1 ---
+    fig1 = px.scatter(
+        clean_df, 
+        x=x_trait, 
+        y=y_trait,
+        hover_data=['Species1'], # Lets the user see the bird's name when hovering!
+        title=f"Relationship: {y_trait} vs {x_trait}",
+        template="plotly_white"  # Gives it a clean, modern look
+    )
+    
+    # Add the line of best fit visually to the chart
+    fig1.add_scatter(
+        x=x_vals, 
+        y=(slope * x_vals + intercept), 
+        mode='lines', 
+        name='Trendline',
+        line=dict(color='red', dash='dash')
+    )
+    
+    st.plotly_chart(fig1, use_container_width=True)
+
 # --- Assuming your dataframe is already loaded as 'df' ---
 with tab2:
 
@@ -141,7 +162,7 @@ with tab3:
     st.write("Evaluate if linear combinations of physical traits can predict ecological categories.")
 
     all_numeric_traits = ['Mass', 'Wing.Length', 'Beak.Length_Culmen', 'Tarsus.Length']
-    categorical_factors = ['Migration', 'Habitat', 'Diet', 'Trophic.Level']
+    categorical_factors = ['Migration', 'Habitat', 'Diet', 'Trophic.Level', 'Trophic.Niche','Primary.Lifestyle']
 
     col1, col2 = st.columns(2)
     with col1:
@@ -191,7 +212,20 @@ with tab3:
         var_pc2 = pca.explained_variance_ratio_[1] * 100
         st.caption(f"**Variance Explained:** PC1 ({var_pc1:.1f}%) | PC2 ({var_pc2:.1f}%) | Total ({(var_pc1 + var_pc2):.1f}%)")
 
-        st.scatter_chart(data=pca_df, x='PC1', y='PC2', color=grouping_factor)
+        fig_pca = px.scatter(
+            pca_df,
+            x='PC1',
+            y='PC2',
+            color=grouping_factor,
+            hover_data=['Species1'] + selected_traits, 
+            title=f"PCA Clustering by {grouping_factor}",
+            template="plotly_white"
+        )
+        
+        # Make the dots slightly larger and slightly transparent to see overlapping clusters
+        fig_pca.update_traces(marker=dict(size=8, opacity=0.7, line=dict(width=1, color='DarkSlateGrey')))
+        
+        st.plotly_chart(fig_pca, use_container_width=True)
         
         st.info(f"**How to read this:** Look at the colors ({grouping_factor}). If the colors naturally form distinct, separate clumps on the graph, then YES, the linear equations above can accurately predict a bird's {grouping_factor}.")
     else:
