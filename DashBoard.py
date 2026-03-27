@@ -22,7 +22,7 @@ df = load_data()
 st.title("🦅 Avian Trait Database Explorer")
 
 # --- CREATE TABS TO PREVENT RENDER LAG ---
-tab1, tab2, tab3 = st.tabs(["🔍 Trait Lookup", "🎯 Reverse Matcher", "🧬 PCA Analysis"])
+tab1, tab2, tab3, tab4 = st.tabs(["🔍 Trait Lookup", "🎯 Reverse Matcher", "🧬 PCA Analysis", "🌍 Global Map"])
 
 # ==========================================
 # TAB 1: BIRD TRAIT LOOKUP & RELATIONSHIPS
@@ -230,3 +230,46 @@ with tab3:
         st.info(f"**How to read this:** Look at the colors ({grouping_factor}). If the colors naturally form distinct, separate clumps on the graph, then YES, the linear equations above can accurately predict a bird's {grouping_factor}.")
     else:
         st.warning("⚠️ Please select at least two traits and a valid grouping factor.")
+
+# ==========================================
+# TAB 4: BIOGEOGRAPHICAL MAP
+# ==========================================
+with tab4:
+    st.header("🌍 Global Avian Distribution")
+    st.write("Visualizing species centroids and range sizes across biogeographical realms.")
+
+    # 1. Clean the data for mapping
+    # Maps will crash if they try to plot blank coordinates
+    # Note: Double check the exact spelling of these columns in your CSV!
+    map_df = df.dropna(subset=['Centroid.Latitude', 'Centroid.Longitude']).copy()
+
+    # 2. Optional: Let the user color the map by a specific trait
+    color_options = ['Migration', 'Habitat', 'Diet']
+    available_colors = [c for c in color_options if c in df.columns]
+    
+    if available_colors:
+        map_color = st.selectbox("Color map points by:", options=available_colors)
+        map_df[map_color] = map_df[map_color].astype(str)
+    else:
+        map_color = None
+
+    # 3. Create the Plotly Map
+    fig_map = px.scatter_geo(
+        map_df,
+        lat="Centroid.Latitude",     # The column for up/down positioning
+        lon="Centroid.Longitude",    # The column for left/right positioning
+        hover_name="Species1",       # Shows the bird name when the user hovers
+        size="Range.Size",           # Makes the dot larger if the bird has a huge range!
+        color=map_color,             # Colors the dots based on the user's dropdown choice
+        projection="natural earth",  # Gives the map a nice, slightly curved aesthetic
+        template="plotly_white",
+        title="Species Centroid Locations"
+    )
+
+    # 4. Styling tweaks
+    # We set sizing limits so massive range sizes don't cover the entire map
+    fig_map.update_traces(marker=dict(sizemin=2, sizemode='area'))
+    fig_map.update_geos(showcountries=True, countrycolor="LightGrey")
+
+    # 5. Display in Streamlit
+    st.plotly_chart(fig_map, use_container_width=True)
