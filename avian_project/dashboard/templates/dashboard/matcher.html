@@ -1,0 +1,61 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2> Reverse Trait Matcher</h2>
+    <p>Input specific measurements to find candidate species. Check the box to activate a filter.</p>
+
+    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+        <form method="GET" action="">
+            <input type="hidden" name="search" value="true">
+
+            {% for key, label in traits.items %}
+                <div style="margin-bottom: 15px;">
+                    <input type="checkbox" name="check_{{ key }}" id="check_{{ key }}" value="true">
+                    <label style="font-weight:bold;" for="check_{{ key }}"> Filter by {{ label }}</label>
+                    
+                    <div style="margin-left: 25px; margin-top: 5px;">
+                        <label>Target Value:</label>
+                        <input type="number" step="0.1" name="target_{{ key }}" value="50.0" style="width: 80px;">
+                        
+                        <label style="margin-left: 15px;">+/- Range (%):</label>
+                        <input type="number" name="tol_{{ key }}" value="10" style="width: 60px;">
+                    </div>
+                </div>
+            {% endfor %}
+
+            <button type="submit" style="padding: 10px 20px; cursor: pointer; background: #0275d8; color: white; border: none; border-radius: 4px;">
+                Run Search
+            </button>
+        </form>
+    </div>
+
+    {% if results is not None %}
+        <h3 style="margin-top: 30px;">Match Results ({{ results|length }} found)</h3>
+        
+        {% if results %}
+            <table>
+                <tr>
+                    <th>Species</th>
+                    <th>Mass (g)</th>
+                    <th>Wing Length (mm)</th>
+                    <th>Beak Length (mm)</th>
+                    <th>Tarsus Length (mm)</th>
+                </tr>
+                {% for bird in results %}
+                <tr>
+                    <td><strong>{{ bird.species_name }}</strong></td>
+                    <td>{{ bird.mass }}</td>
+                    <td>{{ bird.wing_length }}</td>
+                    <td>{{ bird.beak_length }}</td>
+                    <td>{{ bird.tarsus_length }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p style="color: red;">No birds found matching those exact parameters. Try increasing your +/- range!</p>
+        {% endif %}
+    {% endif %}
+
+</div>
+{% endblock %}

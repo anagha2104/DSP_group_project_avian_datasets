@@ -1,0 +1,73 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2> PCA Cluster Analysis</h2>
+    <p>Evaluate if linear combinations of physical traits can predict ecological categories.</p>
+
+    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+        <form method="GET" action="">
+            <div style="display: flex; gap: 40px;">
+                
+                <div>
+                    <label style="font-weight: bold; display: block; margin-bottom: 10px;">Select Traits for PCA:</label>
+                    {% for key, label in numeric_traits.items %}
+                        <div style="margin-bottom: 5px;">
+                            <input type="checkbox" name="traits" value="{{ key }}" id="trait_{{ key }}" 
+                                {% if key in selected_traits %}checked{% endif %}>
+                            <label for="trait_{{ key }}">{{ label }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <label style="font-weight: bold; display: block; margin-bottom: 10px;" for="factor">Color By Category:</label>
+                    <select name="factor" id="factor" style="padding: 5px;">
+                        {% for key, label in categorical_factors.items %}
+                            <option value="{{ key }}" {% if key == selected_factor %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label style="font-weight: bold; display: block; margin-bottom: 10px;" for="pca_method">PCA Method:</label>
+                    <select name="pca_method" id="pca_method" style="padding: 5px;">
+                        <option value="correlation" {% if pca_method == 'correlation' %}selected{% endif %}>Correlation (Standardized)</option>
+                        <option value="covariance" {% if pca_method == 'covariance' %}selected{% endif %}>Covariance (Mean-Centered)</option>
+                    </select>
+                </div>
+
+            </div>
+
+            </div>
+            </div>
+
+            <button type="submit" style="margin-top: 15px; padding: 10px 20px; cursor: pointer; background: #0275d8; color: white; border: none; border-radius: 4px;">
+                Run PCA
+            </button>
+        </form>
+    </div>
+
+    {% if chart %}
+        <div style="background: #e8f4f8; padding: 15px; border-radius: 8px; border-left: 5px solid #0275d8;">
+            <h4 style="margin-top: 0; color: #0275d8;">Linear Combinations (The Equations)</h4>
+            <p style="font-family: monospace; font-size: 1.1em; margin-bottom: 5px;">
+                <strong>PC1:</strong> {{ eq_pc1 }}
+            </p>
+            <p style="font-family: monospace; font-size: 1.1em;">
+                <strong>PC2:</strong> {{ eq_pc2 }}
+            </p>
+            <p style="font-size: 0.9em; color: #555;">
+                <em>Variance Explained: PC1 ({{ var_pc1 }}%) | PC2 ({{ var_pc2 }}%) | Total ({{ total_var }}%)</em>
+            </p>
+        </div>
+
+        <div style="margin-top: 20px;">
+            {{ chart|safe }}
+        </div>
+    {% else %}
+        <p style="color: red;"> Please select at least two traits to run the Principal Component Analysis.</p>
+    {% endif %}
+
+</div>
+{% endblock %}

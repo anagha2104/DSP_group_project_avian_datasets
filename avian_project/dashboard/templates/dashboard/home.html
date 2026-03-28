@@ -1,61 +1,90 @@
-<body>
+{% extends "dashboard/base.html" %}
 
-    <div class="card">
-        <h1>🦅 Avian Trait Database Explorer</h1>
-        <p>Success! The Django database currently holds <strong>{{ total_birds }}</strong> birds.</p>
+{% block content %}
+<div class="card">
+    <h1>🦅 Avian Trait Database Explorer</h1>
+    <p>Success! The Django database currently holds <strong>{{ total_birds }}</strong> birds.</p>
+    <hr>
+    
+    <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 20px;">
+        <h3 style="margin-top: 0;">🔍 Specific Bird Lookup</h3>
         
-        <hr>
-
-        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px;">
-            <form method="GET" action="">
-                
-                <label for="x_trait"><strong>X-Axis Trait:</strong></label>
-                <select name="x_trait" id="x_trait">
-                    {% for key, label in available_traits.items %}
-                        <option value="{{ key }}" {% if key == selected_x %}selected{% endif %}>
-                            {{ label }}
-                        </option>
-                    {% endfor %}
-                </select>
-
-                <label for="y_trait" style="margin-left: 20px;"><strong>Y-Axis Trait:</strong></label>
-                <select name="y_trait" id="y_trait">
-                    {% for key, label in available_traits.items %}
-                        <option value="{{ key }}" {% if key == selected_y %}selected{% endif %}>
-                            {{ label }}
-                        </option>
-                    {% endfor %}
-                </select>
-
-                <button type="submit" style="margin-left: 20px; padding: 5px 15px; cursor: pointer;">
-                    Update Chart
-                </button>
-            </form>
-        </div>
-        {% if math_stats %}
-        <div style="background: #e8f4f8; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #0275d8;">
-            <h4 style="margin-top: 0; color: #0275d8;">📈 Statistical Relationship</h4>
+        <form method="GET" action="">
+            <input type="hidden" name="x_trait" value="{{ selected_x }}">
+            <input type="hidden" name="y_trait" value="{{ selected_y }}">
             
-            <p style="font-size: 1.1em;">
-                <strong>Equation:</strong> 
-                <em>y</em> = {{ math_stats.slope }}<em>x</em> 
-                {% if math_stats.intercept >= 0 %}+{% endif %} {{ math_stats.intercept }}
-            </p>
+            <input type="text" name="species_search" list="bird_list" placeholder="Type a species (e.g., Accipiter)" value="{{ search_query }}" style="padding: 8px; width: 300px;">
             
-            <div style="display: flex; gap: 40px;">
-                <p><strong>Pearson Correlation (r):</strong> {{ math_stats.r_value }}</p>
-                <p><strong>Explained Variance (R&sup2;):</strong> {{ math_stats.r_squared }}</p>
+            <datalist id="bird_list">
+                {% for bird_name in all_species %}
+                    <option value="{{ bird_name }}">
+                {% endfor %}
+            </datalist>
+
+            <button type="submit" style="padding: 8px 15px; background: #333; color: white; border: none; cursor: pointer;">Search</button>
+        </form>
+
+        {% if searched_bird %}
+            <div style="margin-top: 15px; display: flex; gap: 30px; border-top: 1px solid #eee; padding-top: 15px;">
+                <div><strong>Species:</strong> <br><span style="font-size: 1.2em; color: #0275d8;">{{ searched_bird.species_name }}</span></div>
+                <div><strong>Body Mass:</strong> <br>{{ searched_bird.mass|default:"N/A" }} g</div>
+                <div><strong>Wing Length:</strong> <br>{{ searched_bird.wing_length|default:"N/A" }} mm</div>
+                <div><strong>Beak Length:</strong> <br>{{ searched_bird.beak_length|default:"N/A" }} mm</div>
+                <div><strong>Tarsus Length:</strong> <br>{{ searched_bird.tarsus_length|default:"N/A" }} mm</div>
             </div>
-            
-            <p style="font-size: 0.9em; color: #666; margin-bottom: 0;">
-                <em>*An R&sup2; value closer to 1.0 indicates a stronger relationship between the variables.</em>
-            </p>
-        </div>
+        {% elif search_query %}
+            <p style="color: red; margin-top: 15px;">No bird found matching "{{ search_query }}".</p>
         {% endif %}
-        <div style="margin-top: 30px;">
-            {{ chart|safe }}
-        </div>
-        
     </div>
 
-</body>
+    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px;">
+        <form method="GET" action="">
+            <input type="hidden" name="species_search" value="{{ search_query }}">
+
+            <label for="x_trait"><strong>X-Axis Trait:</strong></label>
+            <select name="x_trait" id="x_trait">
+                {% for key, label in available_traits.items %}
+                    <option value="{{ key }}" {% if key == selected_x %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <label for="y_trait" style="margin-left: 20px;"><strong>Y-Axis Trait:</strong></label>
+            <select name="y_trait" id="y_trait">
+                {% for key, label in available_traits.items %}
+                    <option value="{{ key }}" {% if key == selected_y %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" style="margin-left: 20px; padding: 5px 15px; cursor: pointer;">
+                Update Chart
+            </button>
+        </form>
+    </div>
+    
+    {% if math_stats %}
+    <div style="background: #e8f4f8; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #0275d8;">
+        <h4 style="margin-top: 0; color: #0275d8;">📈 Statistical Relationship</h4>
+        
+        <p style="font-size: 1.1em;">
+            <strong>Equation:</strong> 
+            <em>y</em> = {{ math_stats.slope }}<em>x</em> 
+            {% if math_stats.intercept >= 0 %}+{% endif %} {{ math_stats.intercept }}
+        </p>
+        
+        <div style="display: flex; gap: 40px;">
+            <p><strong>Pearson Correlation (r):</strong> {{ math_stats.r_value }}</p>
+            <p><strong>Explained Variance (R&sup2;):</strong> {{ math_stats.r_squared }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <div style="margin-top: 30px;">
+        {{ chart|safe }}
+    </div>
+
+</div>
+{% endblock %}
