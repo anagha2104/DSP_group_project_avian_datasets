@@ -168,7 +168,6 @@ with tab3:
     with col1:
         selected_traits = st.multiselect("Select Traits for PCA:", options=all_numeric_traits, default=['Mass', 'Wing.Length', 'Beak.Length_Culmen', 'Tarsus.Length'])
     with col2:
-        # Check if these exact columns exist in AVONET1_BirdLife.csv, update if they have slightly different names
         available_factors = [f for f in categorical_factors if f in df.columns] 
         if available_factors:
             grouping_factor = st.selectbox("Select Category to Color By:", options=available_factors)
@@ -181,17 +180,44 @@ with tab3:
         pca_df = df.dropna(subset=columns_to_keep).copy()
         pca_df[grouping_factor] = pca_df[grouping_factor].astype(str)
 
-        X = pca_df[selected_traits]
+        X = pca_df[selected_traits].values
+        
+        # 1. Standardize Data
         scaler = StandardScaler()
         X_scaled = scaler.fit_transform(X)
 
-        pca = PCA(n_components=2)
-        components = pca.fit_transform(X_scaled)
-        pca_df['PC1'] = components[:, 0]
-        pca_df['PC2'] = components[:, 1]
-
-        loadings = pca.components_
+        # ==========================================
+        # EXPLICIT CORRELATION MATRIX METHOD
+        # ==========================================
         
+        # 2. Calculate the Correlation Matrix
+        # We transpose X_scaled because np.corrcoef expects variables as rows
+        corr_matrix = np.corrcoef(X_scaled.T)
+
+        # 3. Perform Eigendecomposition
+        # This extracts the eigenvalues (variance explained) and eigenvectors (the axes)
+        eigenvalues, eigenvectors = np.linalg.eig(corr_matrix)
+
+        # 4. Sort Components
+        # We must sort them so PC1 is the axis with the highest eigenvalue
+        sorted_indices = np.argsort(eigenvalues)[::-1]
+        sorted_eigenvalues = eigenvalues[sorted_indices]
+        sorted_eigenvectors = eigenvectors[:, sorted_indices]
+
+        # 5. Project the Data
+        # We take our scaled data and multiply (dot product) it by the top 2 eigenvectors
+        projection_matrix = sorted_eigenvectors[:, 0:2]
+        X_pca = X_scaled.dot(projection_matrix)
+
+        pca_df['PC1'] = X_pca[:, 0]
+        pca_df['PC2'] = X_pca[:, 1]
+
+        # 6. Extract Loadings for the Equations
+        # Transpose so it matches the shape expected by our equation builder
+        loadings = projection_matrix.T
+        
+        # ==========================================
+
         def build_equation(pc_index):
             terms = []
             for i, trait in enumerate(selected_traits):
@@ -208,8 +234,11 @@ with tab3:
         st.latex(rf"PC_1 = {eq_pc1}")
         st.latex(rf"PC_2 = {eq_pc2}")
 
-        var_pc1 = pca.explained_variance_ratio_[0] * 100
-        var_pc2 = pca.explained_variance_ratio_[1] * 100
+        # Calculate Explained Variance explicitly from eigenvalues
+        total_variance = np.sum(sorted_eigenvalues)
+        var_pc1 = (sorted_eigenvalues[0] / total_variance) * 100
+        var_pc2 = (sorted_eigenvalues[1] / total_variance) * 100
+        
         st.caption(f"**Variance Explained:** PC1 ({var_pc1:.1f}%) | PC2 ({var_pc2:.1f}%) | Total ({(var_pc1 + var_pc2):.1f}%)")
 
         fig_pca = px.scatter(
@@ -222,7 +251,6 @@ with tab3:
             template="plotly_white"
         )
         
-        # Make the dots slightly larger and slightly transparent to see overlapping clusters
         fig_pca.update_traces(marker=dict(size=8, opacity=0.7, line=dict(width=1, color='DarkSlateGrey')))
         
         st.plotly_chart(fig_pca, use_container_width=True)
