@@ -5,6 +5,36 @@ from sklearn.preprocessing import StandardScaler
 import plotly.express as px
 from django.shortcuts import render
 from .models import BirdTrait
+import math
+
+def haversine(lat1, lon1, lat2, lon2):
+    """Calculates distance in km between two lat/lon points on Earth."""
+    R_earth = 6371.0 # Earth radius in kilometers
+    lat1_rad, lon1_rad = math.radians(lat1), math.radians(lon1)
+    lat2_rad, lon2_rad = math.radians(lat2), math.radians(lon2)
+    
+    dlat = lat2_rad - lat1_rad
+    dlon = lon2_rad - lon1_rad
+    
+    a = math.sin(dlat / 2)**2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon / 2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    return R_earth * c
+
+def circle_intersection_area(d, r1, r2):
+    """Calculates the overlapping area of two circles."""
+    if d >= r1 + r2:
+        return 0.0 # No overlap
+    if d <= abs(r1 - r2):
+        return math.pi * min(r1, r2)**2 # One circle is completely inside the other
+    
+    # Partial overlap math
+    r1_sq, r2_sq = r1**2, r2**2
+    d1 = (r1_sq - r2_sq + d**2) / (2 * d)
+    d2 = d - d1
+    
+    area1 = r1_sq * math.acos(d1 / r1) - d1 * math.sqrt(r1_sq - d1**2)
+    area2 = r2_sq * math.acos(d2 / r2) - d2 * math.sqrt(r2_sq - d2**2)
+    return area1 + area2
 
 def dashboard_home(request):
     total_birds = BirdTrait.objects.count()
@@ -112,10 +142,7 @@ def dashboard_home(request):
     
     return render(request, 'dashboard/home.html', context)
 def reverse_matcher(request):
-    
     results = None
-    
-    # 1. Use a dictionary to map the database field (key) to a clean label (value)
     traits = {
         'mass': 'Body Mass',
         'wing_length': 'Wing Length',
@@ -126,22 +153,42 @@ def reverse_matcher(request):
     if request.GET.get('search'):
         query = BirdTrait.objects.all()
         
-        # 2. Loop through the dictionary keys instead of a list
+        # 1. Apply the standard physical trait filters first
         for key in traits.keys():
             if request.GET.get(f'check_{key}'):
                 target = float(request.GET.get(f'target_{key}', 0))
-                tolerance_pct = float(request.GET.get(f'tol_{key}', 10)) / 100.0
-                
-                min_bound = target - (target * tolerance_pct)
-                max_bound = target + (target * tolerance_pct)
-                
-                filter_kwargs = {
-                    f'{key}__gte': min_bound,
-                    f'{key}__lte': max_bound
-                }
-                query = query.filter(**filter_kwargs)
+                tol = float(request.GET.get(f'tol_{key}', 10)) / 100.0
+                query = query.filter(**{f'{key}__gte': target * (1 - tol), f'{key}__lte': target * (1 + tol)})
         
-        results = query[:200]
+        # 2. Convert the Django QuerySet to a list to perform Python math
+        filtered_birds = list(query)
+        
+        # 3. Apply the Spatial Filter if checked
+        if request.GET.get('check_spatial'):
+            user_lat = float(request.GET.get('user_lat', 0))
+            user_lon = float(request.GET.get('user_lon', 0))
+            user_radius = float(request.GET.get('user_radius', 1000)) # in km
+            min_overlap_pct = float(request.GET.get('overlap_pct', 50)) / 100.0
+            
+            spatial_results = []
+            for bird in filtered_birds:
+                # Skip if bird has no location data
+                if bird.centroid_latitude is None or bird.range_size is None:
+                    continue
+                
+                # Bird radius = sqrt(Area / pi)
+                bird_radius = math.sqrt(bird.range_size / math.pi)
+                
+                d = haversine(user_lat, user_lon, bird.centroid_latitude, bird.centroid_longitude)
+                overlap_area = circle_intersection_area(d, user_radius, bird_radius)
+                
+                # Check if overlap meets the user's required threshold
+                if overlap_area >= (min_overlap_pct * bird.range_size):
+                    spatial_results.append(bird)
+            
+            results = spatial_results[:200]
+        else:
+            results = filtered_birds[:200]
 
     return render(request, 'dashboard/matcher.html', {'results': results, 'traits': traits})
 def pca_analysis(request):
