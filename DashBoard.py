@@ -237,6 +237,7 @@ with tab2:
     if submit_search:
         results_df = df.copy()
 
+        # Physical trait filtering
         for trait, settings in active_filters.items():
             target = settings['target']
             tol_percent = settings['tolerance'] / 100.0
@@ -244,7 +245,7 @@ with tab2:
             max_bound = target + (target * tol_percent)
             results_df = results_df[(results_df[trait] >= min_bound) & (results_df[trait] <= max_bound)]
 
-        # Add the Map Filter Logic
+        # Add the Map Filter Logic (Now correctly indented!)
         if use_map_filter:
             # Drop rows missing map data so the math doesn't crash
             results_df = results_df.dropna(subset=['Centroid.Latitude', 'Centroid.Longitude', 'Range.Size'])
@@ -256,7 +257,7 @@ with tab2:
                     row['Centroid.Latitude'], row['Centroid.Longitude'], row['Range.Size']
                 ), axis=1
             )
-        
+            
             # Filter the dataframe keeping only birds that meet the overlap threshold
             results_df['Overlap_%'] = overlaps
             results_df = results_df[results_df['Overlap_%'] >= min_overlap]
@@ -269,9 +270,28 @@ with tab2:
         else:
             st.success(f"Found {len(results_df)} matching species!")
             columns_to_show = ['Species1'] + list(active_filters.keys())
+            
+        
+        # Build the columns we want to show in the final table
+            columns_to_show = ['Species1'] + list(active_filters.keys())
+            
+            if use_map_filter:
+                # Round the overlap percentage to 2 decimal places so it looks clean
+                results_df['Overlap_%'] = results_df['Overlap_%'].round(2)
+                columns_to_show.append('Overlap_%')
+                
             st.dataframe(results_df[columns_to_show])
-        
-        
+            
+            # --- DOWNLOAD BUTTON ---
+            # Convert the specific filtered dataframe columns to a CSV string
+            csv = results_df[columns_to_show].to_csv(index=False).encode('utf-8')
+            
+            st.download_button(
+                label="📥 Download Results as CSV",
+                data=csv,
+                file_name='bird_match_results.csv',
+                mime='text/csv',
+            )       
     
     
     
