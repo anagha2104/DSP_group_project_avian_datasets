@@ -4,6 +4,8 @@ import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 import plotly.express as px
+import math
+import plotly.graph_objects as go
 
 
 # Make the dashboard utilize the full width of the monitor
@@ -51,6 +53,26 @@ def calculate_overlap_percentage(lat1, lon1, r_user, lat2, lon2, area_bird):
         intersection_area = part1 + part2 - part3
         
         return (intersection_area / area_bird) * 100
+
+def generate_map_circle(lat, lon, radius_km, num_points=64):
+    """Generates latitude and longitude points for a circle on the Earth's surface."""
+    R = 6371.0 # Earth radius in km
+    lat_rad = math.radians(lat)
+    lon_rad = math.radians(lon)
+    d = radius_km / R
+
+    circle_lats, circle_lons = [], []
+    for i in range(num_points + 1):
+        bearing = math.radians((i / num_points) * 360)
+        new_lat = math.asin(math.sin(lat_rad) * math.cos(d) + 
+                            math.cos(lat_rad) * math.sin(d) * math.cos(bearing))
+        new_lon = lon_rad + math.atan2(math.sin(bearing) * math.sin(d) * math.cos(lat_rad), 
+                                       math.cos(d) - math.sin(lat_rad) * math.sin(new_lat))
+        
+        circle_lats.append(math.degrees(new_lat))
+        circle_lons.append(math.degrees(new_lon))
+        
+    return circle_lats, circle_lons
 
 # --- CREATE TABS TO PREVENT RENDER LAG ---
 tab1, tab2, tab3, tab4 = st.tabs(["🔍 Trait Lookup", "🎯 Reverse Matcher", "🧬 PCA Analysis", "🌍 Global Map"])
@@ -139,6 +161,49 @@ with tab1:
 
 # --- Assuming your dataframe is already loaded as 'df' ---
 with tab2:
+    st.header("🧬 Reverse Trait Matcher")
+    
+    # --- LIVE GEOSPATIAL PREVIEW (OUTSIDE THE FORM) ---
+    st.subheader("🌍 1. Geographic Filter (Optional)")
+    use_map_filter = st.checkbox("🔍 Enable Geographic Search")
+    
+    if use_map_filter:
+        col_map1, col_map2 = st.columns([1, 2]) # Split screen: Controls on left, Map on right
+        
+        with col_map1:
+            target_lat = st.slider("Target Latitude", min_value=-90.0, max_value=90.0, value=20.0, step=0.5)
+            target_lon = st.slider("Target Longitude", min_value=-180.0, max_value=180.0, value=75.0, step=0.5)
+            search_radius = st.slider("Search Radius (km)", min_value=100, max_value=5000, value=1000, step=100)
+            min_overlap = st.slider("Min. Bird Range Overlap (%)", min_value=1, max_value=100, value=50)
+            
+        with col_map2:
+            # 1. Generate the math points for our search circle
+            circle_lats, circle_lons = generate_map_circle(target_lat, target_lon, search_radius)
+            
+            # 2. Draw a blank map focused on the user's coordinates
+            fig_preview = go.Figure(go.Scattergeo())
+            
+            # 3. Add the search radius as a red circle
+            fig_preview.add_trace(go.Scattergeo(
+                lat=circle_lats,
+                lon=circle_lons,
+                mode='lines',
+                line=dict(color='red', width=2),
+                fill='toself',
+                fillcolor='rgba(255, 0, 0, 0.2)', # Semi-transparent red inside
+                name='Search Area'
+            ))
+            
+            # 4. Center the map dynamically
+            fig_preview.update_geos(
+                center=dict(lat=target_lat, lon=target_lon),
+                projection_scale=3, # Zooms in nicely
+                showcountries=True,
+                showcoastlines=True,
+                countrycolor="LightGrey"
+            )
+            fig_preview.update_layout(margin=dict(l=0, r=0, t=0, b=0), height=300)
+            st.plotly_chart(fig_preview, use_container_width=True)
 
     st.header("🧬 Reverse Trait Matcher")
     st.write("Input specific measurements to find candidate species. Leave a trait unchecked to ignore it.")
@@ -167,21 +232,7 @@ with tab2:
         # The math only triggers when this button is clicked
         submit_search = st.form_submit_button("Run Search")
 
-    st.write("---")
-    st.subheader("🌍 Geospatial Filter")
-    use_map_filter = st.checkbox("🔍 Filter by Geographic Region")
-
-    if use_map_filter:
-        map_c1, map_c2, map_c3 = st.columns(3)
-        with map_c1:
-            target_lat = st.number_input("Target Latitude", min_value=-90.0, max_value=90.0, value=20.0, step=0.5)
-        with map_c2:
-            target_lon = st.number_input("Target Longitude", min_value=-180.0, max_value=180.0, value=75.0, step=0.5)
-        with map_c3:
-            search_radius = st.number_input("Search Radius (km)", min_value=10, max_value=10000, value=1000, step=100)
-        
-        min_overlap = st.slider("Minimum Required Overlap of Bird's Range (%)", min_value=1, max_value=100, value=50)
-
+    
 
     if submit_search:
         results_df = df.copy()
@@ -206,9 +257,9 @@ with tab2:
                 ), axis=1
             )
         
-        # Filter the dataframe keeping only birds that meet the overlap threshold
-        results_df['Overlap_%'] = overlaps
-        results_df = results_df[results_df['Overlap_%'] >= min_overlap]
+            # Filter the dataframe keeping only birds that meet the overlap threshold
+            results_df['Overlap_%'] = overlaps
+            results_df = results_df[results_df['Overlap_%'] >= min_overlap]
 
         st.subheader("🎯 Match Results")
         if len(active_filters) == 0:
@@ -219,6 +270,8 @@ with tab2:
             st.success(f"Found {len(results_df)} matching species!")
             columns_to_show = ['Species1'] + list(active_filters.keys())
             st.dataframe(results_df[columns_to_show])
+        
+        
     
     
     
