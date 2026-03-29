@@ -21,6 +21,37 @@ df = load_data()
 
 st.title("🦅 Avian Trait Database Explorer")
 
+def calculate_overlap_percentage(lat1, lon1, r_user, lat2, lon2, area_bird):
+    # 1. Haversine formula to find distance (d) between centers in km
+    R_earth = 6371.0 
+    lat1_rad, lon1_rad = np.radians(lat1), np.radians(lon1)
+    lat2_rad, lon2_rad = np.radians(lat2), np.radians(lon2)
+    
+    dlon = lon2_rad - lon1_rad
+    dlat = lat2_rad - lat1_rad
+    
+    a = np.sin(dlat / 2)**2 + np.cos(lat1_rad) * np.cos(lat2_rad) * np.sin(dlon / 2)**2
+    c = 2 * np.arctan2(np.sqrt(a), np.sqrt(1 - a))
+    d = R_earth * c
+    
+    # 2. Bird radius from area
+    r_bird = np.sqrt(area_bird / np.pi)
+    
+    # 3. Intersection Logic
+    if d >= (r_user + r_bird):
+        return 0.0 # Too far apart
+    elif d <= abs(r_user - r_bird):
+        # One circle is entirely inside the other
+        return (np.pi * min(r_user, r_bird)**2 / area_bird) * 100
+    else:
+        # Complex partial overlap formula
+        part1 = r_user**2 * np.arccos((d**2 + r_user**2 - r_bird**2) / (2 * d * r_user))
+        part2 = r_bird**2 * np.arccos((d**2 + r_bird**2 - r_user**2) / (2 * d * r_bird))
+        part3 = 0.5 * np.sqrt((-d + r_user + r_bird) * (d - r_user + r_bird) * (d + r_user - r_bird) * (d + r_user + r_bird))
+        intersection_area = part1 + part2 - part3
+        
+        return (intersection_area / area_bird) * 100
+
 # --- CREATE TABS TO PREVENT RENDER LAG ---
 tab1, tab2, tab3, tab4 = st.tabs(["🔍 Trait Lookup", "🎯 Reverse Matcher", "🧬 PCA Analysis", "🌍 Global Map"])
 
@@ -136,6 +167,22 @@ with tab2:
         # The math only triggers when this button is clicked
         submit_search = st.form_submit_button("Run Search")
 
+    st.write("---")
+    st.subheader("🌍 Geospatial Filter")
+    use_map_filter = st.checkbox("🔍 Filter by Geographic Region")
+
+    if use_map_filter:
+        map_c1, map_c2, map_c3 = st.columns(3)
+        with map_c1:
+            target_lat = st.number_input("Target Latitude", min_value=-90.0, max_value=90.0, value=20.0, step=0.5)
+        with map_c2:
+            target_lon = st.number_input("Target Longitude", min_value=-180.0, max_value=180.0, value=75.0, step=0.5)
+        with map_c3:
+            search_radius = st.number_input("Search Radius (km)", min_value=10, max_value=10000, value=1000, step=100)
+        
+        min_overlap = st.slider("Minimum Required Overlap of Bird's Range (%)", min_value=1, max_value=100, value=50)
+
+
     if submit_search:
         results_df = df.copy()
 
@@ -146,6 +193,23 @@ with tab2:
             max_bound = target + (target * tol_percent)
             results_df = results_df[(results_df[trait] >= min_bound) & (results_df[trait] <= max_bound)]
 
+        # Add the Map Filter Logic
+        if use_map_filter:
+            # Drop rows missing map data so the math doesn't crash
+            results_df = results_df.dropna(subset=['Centroid.Latitude', 'Centroid.Longitude', 'Range.Size'])
+            
+            # Apply our complex math function to every remaining bird
+            overlaps = results_df.apply(
+                lambda row: calculate_overlap_percentage(
+                    target_lat, target_lon, search_radius,
+                    row['Centroid.Latitude'], row['Centroid.Longitude'], row['Range.Size']
+                ), axis=1
+            )
+        
+        # Filter the dataframe keeping only birds that meet the overlap threshold
+        results_df['Overlap_%'] = overlaps
+        results_df = results_df[results_df['Overlap_%'] >= min_overlap]
+
         st.subheader("🎯 Match Results")
         if len(active_filters) == 0:
             st.info("👈 Enable at least one filter above and click Run Search.")
@@ -155,6 +219,7 @@ with tab2:
             st.success(f"Found {len(results_df)} matching species!")
             columns_to_show = ['Species1'] + list(active_filters.keys())
             st.dataframe(results_df[columns_to_show])
+    
     
     
 with tab3:
