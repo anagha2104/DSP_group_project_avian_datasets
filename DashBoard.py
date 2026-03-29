@@ -21,6 +21,49 @@ def load_data():
 
 df = load_data()
 
+# --- GLOBAL STATE INITIALIZATION ---
+# 1. Store the original raw data so we never lose it
+if 'raw_df' not in st.session_state:
+    st.session_state['raw_df'] = df
+
+# 2. This will hold whatever data the user is currently analyzing
+if 'working_df' not in st.session_state:
+    st.session_state['working_df'] = df
+
+# 3. This will store the Tab 2 search results
+if 'tab2_results' not in st.session_state:
+    st.session_state['tab2_results'] = None
+
+# --- SIDEBAR DATA MANAGER ---
+st.sidebar.header("📁 Data Source Manager")
+st.sidebar.write("Select the dataset to use for Analysis (Tabs 1, 3, & 4):")
+
+data_source = st.sidebar.radio(
+    "Active Dataset:",
+    ["Original AVONET Data", "Tab 2 Filtered Results", "Upload Custom CSV"]
+)
+
+if data_source == "Original AVONET Data":
+    st.session_state['working_df'] = st.session_state['raw_df']
+
+elif data_source == "Tab 2 Filtered Results":
+    if st.session_state['tab2_results'] is not None:
+        st.session_state['working_df'] = st.session_state['tab2_results']
+    else:
+        st.sidebar.warning("⚠️ No filtered results yet. Run a search in Tab 2 first!")
+        st.session_state['working_df'] = st.session_state['raw_df']
+
+elif data_source == "Upload Custom CSV":
+    uploaded_file = st.sidebar.file_uploader("Upload your own dataset (.csv)", type=['csv'])
+    if uploaded_file is not None:
+        try:
+            # Read the user's file and set it as the working dataframe
+            custom_df = pd.read_csv(uploaded_file)
+            st.session_state['working_df'] = custom_df
+            st.sidebar.success("File uploaded and activated successfully!")
+        except Exception as e:
+            st.sidebar.error("Error reading the CSV file. Please ensure it is formatted correctly.")
+
 st.title("🦅 Avian Trait Database Explorer")
 
 def calculate_overlap_percentage(lat1, lon1, r_user, lat2, lon2, area_bird):
@@ -205,7 +248,6 @@ with tab2:
             fig_preview.update_layout(margin=dict(l=0, r=0, t=0, b=0), height=300)
             st.plotly_chart(fig_preview, use_container_width=True)
 
-    st.header("🧬 Reverse Trait Matcher")
     st.write("Input specific measurements to find candidate species. Leave a trait unchecked to ignore it.")
 
     # 1. Define the traits we want to allow searching by
@@ -263,16 +305,23 @@ with tab2:
             results_df = results_df[results_df['Overlap_%'] >= min_overlap]
 
         st.subheader("🎯 Match Results")
-        if len(active_filters) == 0:
-            st.info("👈 Enable at least one filter above and click Run Search.")
-        elif results_df.empty:
-            st.warning("No birds found matching those exact parameters. Try increasing your +/- range!")
-        else:
-            st.success(f"Found {len(results_df)} matching species!")
-            columns_to_show = ['Species1'] + list(active_filters.keys())
-            
         
-        # Build the columns we want to show in the final table
+        # --- THE FIX IS ON THIS NEXT LINE ---
+        if len(active_filters) == 0 and not use_map_filter:
+            st.info("👈 Enable at least one filter above (Geographic or Trait) and click Run Search.")
+            
+        elif results_df.empty:
+            st.warning("No birds found matching those exact parameters. Try increasing your +/- range or decreasing the required map overlap!")
+            
+        else:
+            # --- NEW: Save to Session State ---
+            st.session_state['tab2_results'] = results_df
+            st.info("💡 **These results have been saved to your workspace!** Select 'Tab 2 Filtered Results' in the left sidebar to run PCA or Trait Analysis on this specific list of birds.")
+            # ----------------------------------
+            
+            st.success(f"Found {len(results_df)} matching species!")
+                       
+            # Build the columns we want to show in the final table
             columns_to_show = ['Species1'] + list(active_filters.keys())
             
             if use_map_filter:
@@ -291,7 +340,75 @@ with tab2:
                 data=csv,
                 file_name='bird_match_results.csv',
                 mime='text/csv',
-            )       
+            )
+
+            # --- 4. MAP OF RESULTS ---
+            st.write("---")
+            st.subheader("🗺️ Geographic Distribution of Matches")
+
+            # --- THE NEW DYNAMIC WARNING ---
+            if use_map_filter and min_overlap < 35:
+                st.info("💡 **Note on Map Visuals:** Because you selected a low overlap requirement, some matched birds may have center dots that appear outside your red search circle. This happens when a bird has a massive continental range that reaches into your search area, even if its exact center is far away!")
+
+            
+            # Create a fresh Plotly figure for the results
+            fig_results = go.Figure()
+
+            # Layer 1: Draw the user's search region (Only if they enabled the map filter)
+            if use_map_filter:
+                fig_results.add_trace(go.Scattergeo(
+                    lat=circle_lats,
+                    lon=circle_lons,
+                    mode='lines',
+                    line=dict(color='red', width=2),
+                    fill='toself',
+                    fillcolor='rgba(255, 0, 0, 0.1)', # Faint red background
+                    name='Your Search Region'
+                ))
+
+            # Layer 2: Draw the matched birds
+            # First, drop any birds that might be missing coordinate data so the map doesn't crash
+            map_results_df = results_df.dropna(subset=['Centroid.Latitude', 'Centroid.Longitude', 'Range.Size'])
+
+            if not map_results_df.empty:
+                # Math trick: Scale the dot sizes so huge geographic ranges don't cover the 
+                # whole screen, but tiny island birds don't become invisible.
+                max_range = map_results_df['Range.Size'].max()
+                marker_sizes = (map_results_df['Range.Size'] / max_range * 40) + 6 if max_range > 0 else 8
+
+                fig_results.add_trace(go.Scattergeo(
+                    lat=map_results_df['Centroid.Latitude'],
+                    lon=map_results_df['Centroid.Longitude'],
+                    # --- NEW: Added Overlap % and Range Size to the hover text ---
+                    customdata=np.stack((map_results_df['Overlap_%'], map_results_df['Range.Size']), axis=-1),
+                    hovertemplate="<b>%{text}</b><br>Overlap with Region: %{customdata[0]:.1f}%<br>Total Range: %{customdata[1]:,.0f} sq km<extra></extra>",
+                    text=map_results_df['Species1'],
+                    mode='markers',
+                    marker=dict(
+                        size=marker_sizes,
+                        color='#3b82f6',
+                        opacity=0.7,
+                        line=dict(width=1, color='black')
+                    ),
+                    name='Matched Birds'
+                ))
+
+            # Format the globe
+            fig_results.update_geos(
+                showcountries=True,
+                showcoastlines=True,
+                countrycolor="LightGrey",
+                projection_type="natural earth"
+            )
+
+            # UX Upgrade: If the user searched a specific area, automatically zoom the camera in on that region!
+            if use_map_filter:
+                fig_results.update_geos(
+                    center=dict(lat=target_lat, lon=target_lon),
+                    projection_scale=2.5 
+                )
+
+            st.plotly_chart(fig_results, use_container_width=True)       
     
     
     
