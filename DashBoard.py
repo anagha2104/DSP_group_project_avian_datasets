@@ -22,15 +22,10 @@ def load_data():
 df = load_data()
 
 # --- GLOBAL STATE INITIALIZATION ---
-# 1. Store the original raw data so we never lose it
 if 'raw_df' not in st.session_state:
     st.session_state['raw_df'] = df
-
-# 2. This will hold whatever data the user is currently analyzing
 if 'working_df' not in st.session_state:
     st.session_state['working_df'] = df
-
-# 3. This will store the Tab 2 search results
 if 'tab2_results' not in st.session_state:
     st.session_state['tab2_results'] = None
 
@@ -55,14 +50,31 @@ elif data_source == "Tab 2 Filtered Results":
 
 elif data_source == "Upload Custom CSV":
     uploaded_file = st.sidebar.file_uploader("Upload your own dataset (.csv)", type=['csv'])
+    
     if uploaded_file is not None:
         try:
-            # Read the user's file and set it as the working dataframe
             custom_df = pd.read_csv(uploaded_file)
-            st.session_state['working_df'] = custom_df
-            st.sidebar.success("File uploaded and activated successfully!")
+            
+            # --- STRICT SCHEMA VALIDATION ---
+            # Define the exact columns your app needs to function
+            required_columns = [
+                'Species1', 'Mass', 'Wing.Length', 'Beak.Length_Culmen', 
+                'Tarsus.Length', 'Centroid.Latitude', 'Centroid.Longitude'
+            ]
+            
+            # Check if any are missing
+            missing_cols = [col for col in required_columns if col not in custom_df.columns]
+            
+            if missing_cols:
+                # Reject the upload and tell them exactly why
+                st.sidebar.error(f"❌ Upload Rejected. Your CSV must follow the exact AVONET format. Missing columns: {', '.join(missing_cols)}")
+            else:
+                # Accept the upload
+                st.session_state['working_df'] = custom_df
+                st.sidebar.success("✅ Valid file uploaded and activated successfully!")
+                
         except Exception as e:
-            st.sidebar.error("Error reading the CSV file. Please ensure it is formatted correctly.")
+            st.sidebar.error("Error reading the CSV file. Please ensure it is a valid text file.")
 
 st.title("🦅 Avian Trait Database Explorer")
 
@@ -126,6 +138,9 @@ tab1, tab2, tab3, tab4 = st.tabs(["🔍 Trait Lookup", "🎯 Reverse Matcher", "
 with tab1:
     st.header("Bird Trait Lookup")
 
+    # We pull whatever dataframe the user selected in the sidebar
+    df = st.session_state['working_df']
+
     bird_list = df['Species1'].unique()
     selected_bird = st.selectbox("Type or select a bird species to view its traits:", options=bird_list)
 
@@ -145,62 +160,7 @@ with tab1:
     with col3:
         st.metric(label="Beak Length (mm)", value=bird_data['Beak.Length_Culmen'].iloc[0])
 
-    st.write("---")
-    st.write("### Trait Relationship Analysis")
-    
-    # 1. Setup dropdown menus for the user to choose traits
-    # Replace these with the actual numeric column names from your group's CSV
-    numeric_columns = ['Mass', 'Wing.Length', 'Beak.Length_Culmen', 'Tarsus.Length'] 
 
-    col1, col2 = st.columns(2)
-    with col1:
-        x_trait = st.selectbox("Select X-Axis Trait:", options=numeric_columns, index=0)
-    with col2:
-        y_trait = st.selectbox("Select Y-Axis Trait:", options=numeric_columns, index=1)
-
-    # 2. Clean the data (Math functions will crash if there are blank/NaN values)
-    clean_df = df.dropna(subset=[x_trait, y_trait])
-
-    # 3. Extract the x and y columns as numpy arrays
-    x_vals = clean_df[x_trait]
-    y_vals = clean_df[y_trait]
-
-    # 4. Calculate the Line of Best Fit (Linear Regression)
-    # Degree 1 means a straight line. It returns the slope (m) and intercept (c)
-    slope, intercept = np.polyfit(x_vals, y_vals, 1)
-
-    # 5. Calculate the Correlation Coefficient (r) to see how strong the relationship is
-    correlation_matrix = np.corrcoef(x_vals, y_vals)
-    r_value = correlation_matrix[0, 1]
-
-    # 6. Display the Equation and Correlation to the user
-    st.success("Mathematical Relationship")
-
-    # Using LaTeX formatting to make the equation look like a real math formula
-    st.latex(rf"{y_trait} = {slope:.3f} \cdot {x_trait} + {intercept:.3f}")
-
-    st.write(f"**Pearson Correlation (r):** {r_value:.3f}")
-
-    # --- NEW PLOTLY CHART FOR TAB 1 ---
-    fig1 = px.scatter(
-        clean_df, 
-        x=x_trait, 
-        y=y_trait,
-        hover_data=['Species1'], # Lets the user see the bird's name when hovering!
-        title=f"Relationship: {y_trait} vs {x_trait}",
-        template="plotly_white"  # Gives it a clean, modern look
-    )
-    
-    # Add the line of best fit visually to the chart
-    fig1.add_scatter(
-        x=x_vals, 
-        y=(slope * x_vals + intercept), 
-        mode='lines', 
-        name='Trendline',
-        line=dict(color='red', dash='dash')
-    )
-    
-    st.plotly_chart(fig1, use_container_width=True)
 
 # --- Assuming your dataframe is already loaded as 'df' ---
 with tab2:
@@ -331,16 +291,32 @@ with tab2:
                 
             st.dataframe(results_df[columns_to_show])
             
-            # --- DOWNLOAD BUTTON ---
-            # Convert the specific filtered dataframe columns to a CSV string
-            csv = results_df[columns_to_show].to_csv(index=False).encode('utf-8')
+            # --- DOWNLOAD BUTTONS ---
+            st.write("---")
+            st.write("### 📥 Export Data")
             
-            st.download_button(
-                label="📥 Download Results as CSV",
-                data=csv,
-                file_name='bird_match_results.csv',
-                mime='text/csv',
-            )
+            # Place the buttons side-by-side to make the UI look clean
+            dl_col1, dl_col2 = st.columns(2)
+            
+            with dl_col1:
+                # Button 1: Just the columns shown on the screen
+                csv_summary = results_df[columns_to_show].to_csv(index=False).encode('utf-8')
+                st.download_button(
+                    label="📄 Download Summary (Visible Columns)",
+                    data=csv_summary,
+                    file_name='bird_match_summary.csv',
+                    mime='text/csv',
+                )
+                
+            with dl_col2:
+                # Button 2: EVERY column from the original dataset for the matched birds
+                csv_full = results_df.to_csv(index=False).encode('utf-8')
+                st.download_button(
+                    label="📦 Download Full Dataset (All AVONET Columns)",
+                    data=csv_full,
+                    file_name='bird_match_full_data.csv',
+                    mime='text/csv',
+                )
 
             # --- 4. MAP OF RESULTS ---
             st.write("---")
@@ -413,6 +389,64 @@ with tab2:
     
     
 with tab3:
+        
+    st.write("### Trait Relationship Analysis")
+    
+    # 1. Setup dropdown menus for the user to choose traits
+    # Replace these with the actual numeric column names from your group's CSV
+    numeric_columns = ['Mass', 'Wing.Length', 'Beak.Length_Culmen', 'Tarsus.Length'] 
+
+    col1, col2 = st.columns(2)
+    with col1:
+        x_trait = st.selectbox("Select X-Axis Trait:", options=numeric_columns, index=0)
+    with col2:
+        y_trait = st.selectbox("Select Y-Axis Trait:", options=numeric_columns, index=1)
+
+    # 2. Clean the data (Math functions will crash if there are blank/NaN values)
+    clean_df = df.dropna(subset=[x_trait, y_trait])
+
+    # 3. Extract the x and y columns as numpy arrays
+    x_vals = clean_df[x_trait]
+    y_vals = clean_df[y_trait]
+
+    # 4. Calculate the Line of Best Fit (Linear Regression)
+    # Degree 1 means a straight line. It returns the slope (m) and intercept (c)
+    slope, intercept = np.polyfit(x_vals, y_vals, 1)
+
+    # 5. Calculate the Correlation Coefficient (r) to see how strong the relationship is
+    correlation_matrix = np.corrcoef(x_vals, y_vals)
+    r_value = correlation_matrix[0, 1]
+
+    # 6. Display the Equation and Correlation to the user
+    st.success("Mathematical Relationship")
+
+    # Using LaTeX formatting to make the equation look like a real math formula
+    st.latex(rf"{y_trait} = {slope:.3f} \cdot {x_trait} + {intercept:.3f}")
+
+    st.write(f"**Pearson Correlation (r):** {r_value:.3f}")
+
+    # --- NEW PLOTLY CHART FOR TAB 1 ---
+    fig1 = px.scatter(
+        clean_df, 
+        x=x_trait, 
+        y=y_trait,
+        hover_data=['Species1'], # Lets the user see the bird's name when hovering!
+        title=f"Relationship: {y_trait} vs {x_trait}",
+        template="plotly_white"  # Gives it a clean, modern look
+    )
+    
+    # Add the line of best fit visually to the chart
+    fig1.add_scatter(
+        x=x_vals, 
+        y=(slope * x_vals + intercept), 
+        mode='lines', 
+        name='Trendline',
+        line=dict(color='red', dash='dash')
+    )
+    
+    st.plotly_chart(fig1, use_container_width=True)
+
+
     st.header("🧬 PCA Cluster Analysis & Predictive Equations")
     st.write("Evaluate if linear combinations of physical traits can predict ecological categories.")
 
