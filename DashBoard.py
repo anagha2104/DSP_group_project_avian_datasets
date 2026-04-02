@@ -19,7 +19,13 @@ def load_data():
     df = pd.read_csv('data/raw/core/AVONET1_BirdLife.csv') 
     return df
 
+@st.cache_data
+def load_image_data():
+    img_df = pd.read_csv('data/raw/bird_image_links.csv')
+    return img_df
+
 df = load_data()
+image_df = load_image_data()
 
 # --- GLOBAL STATE INITIALIZATION ---
 if 'raw_df' not in st.session_state:
@@ -130,7 +136,7 @@ def generate_map_circle(lat, lon, radius_km, num_points=64):
     return circle_lats, circle_lons
 
 # --- CREATE TABS TO PREVENT RENDER LAG ---
-tab1, tab2, tab3, tab4 = st.tabs(["🔍 Trait Lookup", "🎯 Reverse Matcher", "🧬 PCA Analysis", "🌍 Global Map"])
+tab1, tab2, tab3, tab4 = st.tabs(["🔍 Trait Lookup", "🎯 Reverse Matcher", "🧬 Trait Relationship Analysis and PCA", "🌍 Global Map"])
 
 # ==========================================
 # TAB 1: BIRD TRAIT LOOKUP & RELATIONSHIPS
@@ -146,6 +152,29 @@ with tab1:
 
 
     bird_data = df[df['Species1'] == selected_bird]
+
+    st.write("---")
+    
+    # --- NEW: SPLIT LAYOUT FOR IMAGE AND METRICS ---
+    # Create two columns: left for the image, right for the stats
+    profile_col1, profile_col2 = st.columns([1, 2])
+    
+    with profile_col1:
+        # Try to find the selected bird in the image dataframe
+        # Note: Depending on your taxonomies, you might need to ensure 'Species1' perfectly matches 'scientific_name'
+        matching_images = image_df[image_df['scientific_name'] == selected_bird]
+        
+        if not matching_images.empty:
+            # Your teammate's CSV has multiple pictures for some birds, so we just grab the first one (.iloc[0])
+            img_url = matching_images['image_url'].iloc[0]
+            st.image(img_url, caption=selected_bird, use_container_width=True)
+        else:
+            # Fallback if no picture exists for this specific bird
+            st.info("📷 No image available for this species.")
+
+
+
+
     st.subheader(f"Data for: {selected_bird}")
     st.dataframe(bird_data)
 
