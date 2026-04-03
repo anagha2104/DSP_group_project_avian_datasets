@@ -499,11 +499,12 @@ with tab3:
                 st.warning("⚠️ Not enough complete rows to run PCA on these selected traits.")
         else:
             st.info("Please select at least 2 numeric traits to run the PCA model.")
+            
 # ==========================================
-# TAB 4: ADVANCED BIOGEOGRAPHICAL MAP
+# TAB 4: 3D BIOGEOGRAPHICAL GLOBE
 # ==========================================
 with tab4:
-    st.header("🌍 Advanced Biogeographical Range Map")
+    st.header("🌍 3D Biogeographical Range Globe")
     active_df = st.session_state['working_df']
     
     # --- 1. DYNAMIC COLUMN SCANNER ---
@@ -512,97 +513,65 @@ with tab4:
     range_col = 'range_size' if 'range_size' in active_df.columns else 'Range.Size'
     name_col = 'species_birdlife' if 'species_birdlife' in active_df.columns else active_df.columns[0]
     
-    # Check for bounding box data for the single-species viewer
-    min_lat = 'lat_min' if 'lat_min' in active_df.columns else 'Min.Latitude'
-    max_lat = 'lat_max' if 'lat_max' in active_df.columns else 'Max.Latitude'
-    min_lon = 'lon_min' if 'lon_min' in active_df.columns else 'Min.Longitude'
-    max_lon = 'lon_max' if 'lon_max' in active_df.columns else 'Max.Longitude'
-    
-    has_bbox = all(c in active_df.columns for c in [min_lat, max_lat, min_lon, max_lon])
-
     if lat_col in active_df.columns and lon_col in active_df.columns:
-        st.write("Visualize how species are distributed globally.")
+        st.write("Visualize how species from the active dataset are distributed globally.")
         
         # --- 2. THE NULL ISLAND FIREWALL ---
-        # Drop true missing values (NaNs)
         map_df = active_df.dropna(subset=[lat_col, lon_col]).copy()
-        
-        # Filter out coordinates exactly at (0.0, 0.0) to remove the "Null Island" artifact!
         map_df = map_df[~((map_df[lat_col] == 0) & (map_df[lon_col] == 0))]
 
-        # UI Toggle
-        map_mode = st.radio("Visualization Mode:", ["🗺️ Single Species Range Explorer", "🔵 Multi-Species Centroid Clusters"], horizontal=True)
-
-        fig_map = go.Figure()
-
-        # ---------------------------------------------------------
-        # MODE 1: SINGLE SPECIES POLYGON
-        # ---------------------------------------------------------
-        if map_mode == "🗺️ Single Species Range Explorer":
-            if has_bbox:
-                clean_box_df = map_df.dropna(subset=[min_lat, max_lat, min_lon, max_lon]).copy()
-                
-                if not clean_box_df.empty:
-                    bird_list = clean_box_df[name_col].unique()
-                    selected_map_bird = st.selectbox("Select a species to view its geographic range polygon:", options=bird_list)
-                    bird_row = clean_box_df[clean_box_df[name_col] == selected_map_bird].iloc[0]
-
-                    # 4 Corners of the box
-                    box_lats = [bird_row[min_lat], bird_row[max_lat], bird_row[max_lat], bird_row[min_lat], bird_row[min_lat]]
-                    box_lons = [bird_row[min_lon], bird_row[min_lon], bird_row[max_lon], bird_row[max_lon], bird_row[min_lon]]
-
-                    fig_map.add_trace(go.Scattergeo(
-                        lon=box_lons, lat=box_lats, mode='lines', fill='toself', fillcolor='rgba(59, 130, 246, 0.4)',
-                        line=dict(color='#2563eb', width=2), name=f"Range Area"
-                    ))
-
-                    fig_map.add_trace(go.Scattergeo(
-                        lon=[bird_row[lon_col]], lat=[bird_row[lat_col]], mode='markers',
-                        marker=dict(size=12, color='red', symbol='star'), name="Population Centroid"
-                    ))
-                else:
-                    st.warning("No species found with complete bounding box coordinates.")
-            else:
-                st.error("Bounding box columns (Min/Max Latitude & Longitude) not found in this dataset.")
-                
-        # ---------------------------------------------------------
-        # MODE 2: MULTI-SPECIES DOT CLUSTERS
-        # ---------------------------------------------------------
-        else:
+        if not map_df.empty:
             # Handle Range Size safety
             if range_col in map_df.columns:
                 map_df[range_col] = map_df[range_col].fillna(map_df[range_col].median())
             else:
-                map_df['Plot_Size'] = 10 # Fallback size if range is completely missing
+                map_df['Plot_Size'] = 10 
                 range_col = 'Plot_Size'
 
-            # Dynamically find text columns for coloring
-            categorical_cols = map_df.select_dtypes(include=['object', 'category']).columns.tolist()
-            color_options = [c for c in ['habitat', 'primary_diet', 'trophic_niche', 'lifestyle', 'migration'] if c in categorical_cols]
+            # UI Controls
+            map_ui_col1, map_ui_col2 = st.columns(2)
+            with map_ui_col1:
+                categorical_cols = map_df.select_dtypes(include=['object', 'category']).columns.tolist()
+                color_options = [c for c in ['habitat', 'primary_diet', 'trophic_niche', 'lifestyle', 'migration'] if c in categorical_cols]
+                
+                map_color = None
+                if color_options:
+                    map_color = st.selectbox("Color globe points by:", options=color_options)
+                    map_df[map_color] = map_df[map_color].fillna("Unknown").astype(str)
             
-            map_color = None
-            if color_options:
-                map_color = st.selectbox("Color map points by:", options=color_options)
-                map_df[map_color] = map_df[map_color].fillna("Unknown").astype(str)
+            with map_ui_col2:
+                # Let the user control the blob size!
+                size_modifier = st.slider("Adjust Marker Size:", min_value=0.1, max_value=3.0, value=0.5, step=0.1)
 
-            # Draw the px map and port it to go.Figure
-            fig_px = px.scatter_geo(
-                map_df, lat=lat_col, lon=lon_col, hover_name=name_col, size=range_col, color=map_color,
+            # --- 3. THE 3D GLOBE ---
+            fig_globe = px.scatter_geo(
+                map_df, lat=lat_col, lon=lon_col, hover_name=name_col, 
+                size=range_col, color=map_color, projection="orthographic", 
+                template="plotly_white", title="Global Species Distribution"
             )
             
-            for trace in fig_px.data:
-                fig_map.add_trace(trace)
-                
-            fig_map.update_traces(marker=dict(sizemin=2, sizeref=20 if range_col != 'Plot_Size' else 1))
+            # --- THE FIX: Mathematical Sizing ---
+            if range_col != 'Plot_Size':
+                max_range = map_df[range_col].max()
+                # Plotly's formula for scaling areas perfectly. Base max size is 40 pixels.
+                base_max_size = 40 * size_modifier
+                dynamic_sizeref = 2. * max_range / (base_max_size ** 2) if base_max_size > 0 else 1
+            else:
+                dynamic_sizeref = 1 / size_modifier
 
-        # ---------------------------------------------------------
-        # FINAL MAP STYLING
-        # ---------------------------------------------------------
-        fig_map.update_layout(
-            template="plotly_white", margin=dict(l=0, r=0, t=30, b=0),
-            geo=dict(showcoastlines=True, showcountries=True, countrycolor="LightGrey", projection_type="natural earth")
-        )
-        st.plotly_chart(fig_map, use_container_width=True)
-        
+            # Apply the sizemode='area' to prevent giant linear blobs
+            fig_globe.update_traces(marker=dict(sizemin=1, sizeref=dynamic_sizeref, sizemode='area', opacity=0.7))
+
+            # Styling
+            fig_globe.update_layout(
+                margin=dict(l=0, r=0, t=30, b=0),
+                geo=dict(
+                    showcoastlines=True, showcountries=True, countrycolor="LightGrey",
+                    showocean=True, oceancolor="#e0f2fe", showland=True, landcolor="White"
+                )
+            )
+            st.plotly_chart(fig_globe, use_container_width=True)
+        else:
+            st.warning("No valid geographic coordinates found in this dataset after filtering out missing data.")
     else:
-        st.error("This dataset is missing Latitude and Longitude columns needed to draw the map.")
+        st.error("This dataset is missing Latitude and Longitude columns needed to draw the globe.")
