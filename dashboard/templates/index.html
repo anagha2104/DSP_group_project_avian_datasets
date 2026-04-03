@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bird World</title>
+  {% include 'partials/theme-head.html' %}
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    @keyframes Anime1 {
+      from { transform: translateY(3px); }
+      to { transform: translateY(-3px); }
+    }
+
+    @keyframes Anime2 {
+      0% { transform: translate(-30%, -30%); }
+      100% { transform: translate(-30%, 30%); }
+    }
+    @keyframes Anime3 {
+      0% { transform: translate(-10%, -30%); }
+      100% { transform: translate(50%, 12%); }
+    }
+
+    .bubbles .bubble2 {
+      animation-name: Anime2;
+      animation-iteration-count: infinite;
+      animation-duration: 3s;
+      animation-direction: alternate;
+      animation-timing-function: linear;
+    }
+    .bubbles .bubble3 {
+      animation-name: Anime3;
+      animation-iteration-count: infinite;
+      animation-duration: 4s;
+      animation-direction: alternate;
+      animation-timing-function: linear;
+    }
+  </style>
+</head>
+
+<body class="app-body bg-[#b1b0b0] w-screen h-screen overflow-hidden">
+
+  <div class="relative w-screen h-screen flex flex-col overflow-hidden">
+    {% include 'partials/navbar.html' %}
+
+    <div class="relative flex-1 min-h-0 px-[4vw] overflow-hidden">
+
+    <!-- Big Background Text -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <h1 class="absolute top-[15%] font-[Font1] tracking-tighter text-[17vw] leading-none z-[10]">
+        Birds World
+      </h1>
+    </div>
+
+    <!-- Bird Image -->
+    <div class="absolute w-fit h-fit top-[22%] left-[45%] -translate-x-1/2 z-[10]">
+      <img src="{{ url_for('static', filename='images/bird4.png') }}" alt="" class="h-[65vh] object-contain z-[10] opacity-[95%]" />
+      <div class="absolute bg-[#c4c2c249] blur-[0.6px] right-[2vw] top-[40vh] leading-none text-white text-sm p-[1vh] border border-[#dfdbdbac] flex flex-col justify-between gap-[2vw] h-[18vh] w-[22vw]">
+        <div>
+          <p class="uppercase tracking-widest text-xs">Panterpe </p>
+          <p class="uppercase tracking-widest text-xs">Insignis</p>
+        </div>
+        <div class="flex justify-between items-end">
+          <p class="text-xs mt-2">Trochilidae Family</p>
+          <div class="leading-none">
+             <p class="text-xs">Wingspan</p>
+             <h2 class="text-2xl leading-none">22cm</h2>
+           </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Left Card -->
+    <div class="absolute left-[65%] bottom-[3vh] bg-white/80 backdrop-blur-md p-[1.8vw] w-[16vw] shadow-lg">
+      <p class="text-xs text-gray-500"></p>
+      <h3 class="text-lg font-semibold uppercase">Start Exploring</h3>
+      <p class="text-xs text-gray-600 mt-2">
+        Avonet traits, maps &amp; comparisons
+      </p>
+      <a href="{{ url_for('section1') }}" class="inline-block mt-[2vh] bg-red-600 text-white px-[1.5vw] py-[1vh] text-xs no-underline hover:bg-red-700 transition-colors">
+        Explore
+      </a>
+    </div>
+
+    <!-- Bottom Text -->
+    <div class="absolute left-[63%] bottom-[25vh] font-semibold text-gray-600 text-[1vw] text-wrap w-[33vw] text-start">
+This dashboard explores the Avonet bird dataset where you can  filter species by ecology and geography, then inspect one trait at a time with histograms, bar charts, and summary statistics alongside an interactive world map. It links any two features using scatter plots, regression, and short takeaways. It compares multiple species with radar charts, trait tables, geographic layout, and optional phylogenetic distance, and ranks the closest species to your measured traits using normalized distances.
+    </div>
+
+    <div class="bubbles absolute bottom-[30%] left-[10%]">
+      <div class="bubble1 absolute top-[5vh] left-[2vw] -translate-x-1/2 -translate-y-1/2 w-[13vw] h-[15vw] bg-[#e650509a] rounded-full filter blur-2xl"></div>
+      <div class="bubble2 absolute top-[-10vh] left-0 -translate-x-1/2 -translate-y-1/2 w-[12vw] h-[11vw] bg-[#e6505082] rounded-full filter blur-2xl"></div>
+      <div class="bubble3 absolute top-[-10vh] left-[-5vw] -translate-x-1/2 -translate-y-1/2 w-[15vw] h-[13vw] bg-[#e65050c1] rounded-full filter blur-xl"></div>
+    </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

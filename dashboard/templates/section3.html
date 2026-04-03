@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section 3 - Species Comparison</title>
+    {% include 'partials/theme-head.html' %}
+    <script src="/static/js/plotly.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            height: 100vh;
+            overflow: hidden;
+            overflow-x: hidden;
+        }
+        .page-grid {
+            display: grid;
+            grid-template-columns: minmax(160px, 13rem) minmax(200px, 24vw) 1fr 1fr;
+            grid-template-rows: 1fr;
+            gap: 6px 8px;
+            padding: 8px;
+            height: 100%;
+            width: 100%;
+            max-width: 100%;
+        }
+        .panel,
+        .dropdown-menu {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+            overflow-x: hidden;
+        }
+        .panel::-webkit-scrollbar,
+        .dropdown-menu::-webkit-scrollbar { width: 2px; }
+        .panel::-webkit-scrollbar-thumb,
+        .dropdown-menu::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.18);
+            border-radius: 3px;
+        }
+        .panel::-webkit-scrollbar-track,
+        .dropdown-menu::-webkit-scrollbar-track { background: transparent; }
+        .panel {
+            background: #fff;
+            border-radius: 6px;
+            padding: 8px 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .left-panel { overflow-y: auto; }
+        .stats-panel {
+            overflow: hidden;
+            gap: 6px;
+        }
+        .stats-scroll {
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .rows-block, .dist-block {
+            flex: 0 1 auto;
+            min-height: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .rows-block { flex: 1 1 55%; }
+        .dist-block { flex: 0 1 45%; max-height: 42%; }
+        .rows-inner, .dist-inner {
+            flex: 1;
+            min-height: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+        }
+        .rows-inner::-webkit-scrollbar,
+        .dist-inner::-webkit-scrollbar { width: 2px; }
+        .rows-inner::-webkit-scrollbar-thumb,
+        .dist-inner::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.18);
+            border-radius: 3px;
+        }
+        .plot-panel {
+            padding: 6px 8px;
+            gap: 4px;
+        }
+        .plot-panel h2 {
+            flex: 0 0 auto;
+            margin-bottom: 2px;
+        }
+        .plot-slot {
+            flex: 1;
+            min-height: 0;
+            width: 100%;
+            overflow: hidden;
+        }
+        h2 {
+            font-size: 12px;
+            margin-bottom: 6px;
+            color: #333;
+            border-bottom: 1px solid #007bff;
+            padding-bottom: 4px;
+            font-weight: 700;
+        }
+        h3.mini {
+            font-size: 10px;
+            margin: 0 0 4px 0;
+            color: #555;
+            font-weight: 600;
+        }
+        .form-group { margin-bottom: 6px; }
+        label { display: block; font-size: 10px; font-weight: 600; color: #555; margin-bottom: 2px; }
+        input[type="text"] {
+            width: 100%;
+            padding: 4px 6px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 11px;
+        }
+        button {
+            width: 100%;
+            padding: 5px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+        .btn-primary { background: #007bff; color: #fff; }
+        .btn-danger { background: #dc3545; color: #fff; }
+        .badge {
+            display: inline-block;
+            background: #007bff;
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin: 2px 4px 0 0;
+            font-size: 10px;
+            cursor: pointer;
+        }
+        .badge .remove { margin-left: 4px; font-weight: bold; }
+        .dropdown { position: relative; }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+            display: none;
+            margin-top: 4px;
+        }
+        .dropdown-item {
+            padding: 5px 8px;
+            font-size: 11px;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        .dropdown-item:last-child { border-bottom: none; }
+        .dropdown-item.active { background: #e7f3ff; }
+        .hint { margin-top: 4px; font-size: 9px; color: #777; }
+        .loading {
+            display: none;
+            color: #007bff;
+            padding: 4px 0;
+            font-size: 10px;
+            flex: 0 0 auto;
+        }
+        .loading.active { display: block; }
+        .category-table {
+            width: 100%;
+            font-size: 10px;
+            border-collapse: collapse;
+        }
+        .category-table th, .category-table td {
+            padding: 3px 4px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .category-table th {
+            background: #f0f0f0;
+            position: sticky;
+            top: 0;
+        }
+        .counter {
+            background: #e7f3ff;
+            border-left: 3px solid #007bff;
+            padding: 4px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            margin: 6px 0 4px;
+        }
+        .conclusion {
+            flex: 0 0 auto;
+            margin-top: 6px;
+            padding: 0;
+            border-radius: 6px;
+            border: 1px solid rgba(21, 128, 61, 0.22);
+            background: linear-gradient(165deg, #f7fef9 0%, #ecfdf3 55%, #e8faf0 100%);
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+            max-height: 28%;
+            min-height: 52px;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+        }
+        .conclusion.is-open {
+            display: flex;
+        }
+        .conclusion-heading {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #15803d;
+            padding: 8px 12px 4px;
+            border-bottom: 1px solid rgba(21, 128, 61, 0.15);
+            flex: 0 0 auto;
+        }
+        .conclusion-inner {
+            padding: 8px 12px 10px;
+            font-size: 13px;
+            line-height: 1.55;
+            color: #0f172a;
+            font-weight: 500;
+            overflow-y: auto;
+            flex: 1;
+            min-height: 0;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+        }
+        .conclusion-inner::-webkit-scrollbar { width: 2px; }
+        .conclusion-inner::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.18);
+            border-radius: 3px;
+        }
+        .conclusion-inner strong {
+            color: #020617;
+            font-weight: 700;
+        }
+        .dist-legend {
+            font-size: 9px;
+            color: #64748b;
+            line-height: 1.35;
+            margin: 0 0 5px 0;
+        }
+        .distance-table .dist-pair {
+            font-weight: 600;
+            color: #334155;
+            max-width: 9rem;
+            word-break: break-word;
+        }
+        .distance-table .dist-morph,
+        .distance-table .dist-n {
+            font-variant-numeric: tabular-nums;
+            color: #475569;
+        }
+        .distance-table .dist-phylo-head,
+        .distance-table .dist-phylo {
+            font-variant-numeric: tabular-nums;
+            font-weight: 700;
+            color: #0c4a6e;
+            background: rgba(224, 242, 254, 0.45);
+        }
+        .distance-table th.dist-phylo-head {
+            background: #e0f2fe;
+        }
+        #map-missing {
+            font-size: 9px;
+            color: #92400e;
+            flex: 0 0 auto;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body class="app-body h-screen w-screen overflow-hidden flex flex-col bg-[#b1b0b0]">
+    {% include 'partials/navbar.html' %}
+    <div class="flex-1 min-h-0 overflow-hidden px-[2vw] pb-2">
+    <div class="page-grid">
+        <div class="panel left-panel">
+            <h2>Species selection</h2>
+            <div class="form-group">
+                <label for="species-input">species_birdtree</label>
+                <div class="dropdown">
+                    <input id="species-input" type="text" placeholder="Search…" autocomplete="off" />
+                    <div id="species-menu" class="dropdown-menu"></div>
+                </div>
+                <div class="hint">Type 2+ letters, ↑/↓, Enter.</div>
+            </div>
+            <button class="btn-primary" type="button" onclick="addSpecies()">Add species</button>
+            <div class="counter">Selected: <strong id="selected-count">0</strong></div>
+            <div id="selected-badges"></div>
+            <button class="btn-danger" type="button" style="margin-top:6px;" onclick="clearSpecies()">Clear</button>
+        </div>
+
+        <div class="panel stats-panel">
+            <h2>Stats &amp; distances</h2>
+            <div id="loading" class="loading">Loading…</div>
+            <div class="stats-scroll">
+                <div class="rows-block">
+                    <h3 class="mini">Trait values <span style="font-weight:400;color:#888;">(5 columns)</span></h3>
+                    <div class="rows-inner" id="rows-container"></div>
+                </div>
+                <div class="dist-block">
+                    <div class="dist-inner" id="distances"></div>
+                </div>
+            </div>
+            <div id="conclusion" class="conclusion" aria-live="polite"></div>
+        </div>
+
+        <div class="panel plot-panel">
+            <h2>Radar</h2>
+            <div id="radar" class="plot-slot" style="display:none;"></div>
+        </div>
+
+        <div class="panel plot-panel">
+            <h2>Range map</h2>
+            <div id="map" class="plot-slot" style="display:none;"></div>
+            <div id="map-missing" style="display:none;"></div>
+        </div>
+    </div>
+    </div>
+    <script src="/static/js/sectio3.js"></script>
+</body>
+</html>
