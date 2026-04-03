@@ -19,27 +19,27 @@ st.set_page_config(page_title="Avian Explorer", layout="wide")
 @st.cache_data
 def load_clean_data():
     # Added utf-8-sig to strip invisible characters that cause KeyError on avibase_id
-    return pd.read_csv('data/raw/avonet_FE_01.csv', encoding='utf-8-sig') 
+    return pd.read_csv('data_used/raw/avonet_FE_01.csv', encoding='utf-8-sig') 
 
 @st.cache_data
 def load_raw_data():
-    return pd.read_csv('data/raw/avonet_cleaned.csv', encoding='utf-8-sig')
+    return pd.read_csv('data_used/raw/avonet_cleaned.csv', encoding='utf-8-sig')
 
 @st.cache_data
 def load_image_data():
-    return pd.read_csv('data/raw/bird_image_links.csv', encoding='utf-8-sig')
+    return pd.read_csv('data_used/raw/bird_image_links.csv', encoding='utf-8-sig')
 
 df_clean = load_clean_data()
 df_raw = load_raw_data()
 image_df = load_image_data()
 
+# Initialize session state for filtering and persistence
 if 'tab2_results' not in st.session_state:
     st.session_state['tab2_results'] = None
 if 'working_df' not in st.session_state:
     st.session_state['working_df'] = df_clean
 
-# ADD THIS LINE HERE:
-# This creates a unique ID based on the column names of the active dataset
+# Generate a unique ID based on column count to force widget refresh on dataset swap
 st.session_state['dataset_id'] = f"ds_{len(st.session_state['working_df'].columns)}"
 
 st.sidebar.header("📁 Data Source Manager")
@@ -81,7 +81,10 @@ st.title("🦅 Avian Trait Database Explorer")
 # ==========================================
 # 2. THE DYNAMIC SCHEMA MAPPER
 # ==========================================
+
+
 # This automatically figures out what the columns are named in the currently selected dataset!
+# Handles inconsistent naming conventions across different AVONET versions
 active_df = st.session_state['working_df']
 
 cols = {
@@ -96,7 +99,7 @@ cols = {
 }
 
 # ==========================================
-# 3. HELPER MATH FUNCTIONS
+# 3. GEOSPATIAL & OVERLAP MATH
 # ==========================================
 def calculate_overlap_percentage(lat1, lon1, r_user, lat2, lon2, area_bird):
     R_earth = 6371.0 
@@ -132,18 +135,16 @@ def generate_map_circle(lat, lon, radius_km, num_points=64):
         circle_lons.append(math.degrees(new_lon))
     return circle_lats, circle_lons
 
-# --- TABS ---
+# Layout initialization
 tab1, tab2, tab3, tab4, tab5 = st.tabs(["🔍 Trait Lookup", "🎯 Reverse Matcher", "🧬 Trait Relationship Analysis and PCA", "🌍 Global Map", "🌳 Taxonomic Diversity Explore"])
 
 # ==========================================
-# TAB 1: BIRD TRAIT LOOKUP & RELATIONSHIPS
+# TAB 1: INDIVIDUAL SPECIES LOOKUP
 # ==========================================
 with tab1:
     st.header("Bird Trait Lookup")
 
-    # --- 1. CREATE FAST LOOKUP DICTIONARIES (Bulletproof Method) ---
-    
-    # 1a. Dynamically find the ID column name
+   # Dynamic ID identification
     if 'avibase_id' in active_df.columns:
         id_col = 'avibase_id'
     elif 'Avibase.ID' in active_df.columns:
@@ -151,7 +152,7 @@ with tab1:
     else:
         id_col = active_df.columns[0] # Ultimate fallback
 
-    # Safe Lookup Dictionaries
+    # Fast lookup mapping for UI selectors
     safe_lib1 = active_df['species_birdlife'].fillna("Name Unavailable") if 'species_birdlife' in active_df.columns else active_df[cols['id']]
     safe_lib2 = active_df['species_birdtree'].fillna("Name Unavailable") if 'species_birdtree' in active_df.columns else active_df[cols['id']]
     
@@ -162,6 +163,7 @@ with tab1:
     # --- THE PHANTOM BIRD FIX ---
     # If the user filtered the dataset and the currently saved bird is no longer in it,
     # we MUST reset the memory to the first available bird in the new filtered list!
+    # Reset current selection if filters exclude the previously selected species
     if st.session_state.get('current_bird_id') not in bird_ids:
         if len(bird_ids) > 0:
             st.session_state['current_bird_id'] = bird_ids[0]
@@ -225,7 +227,7 @@ with tab1:
 
 
 # ==========================================
-# TAB 2: REVERSE TRAIT MATCHER
+# TAB 2: MULTI-PARAMETER REVERSE SEARCH
 # ==========================================
 with tab2:
     st.header("🧬 Reverse Trait Matcher")
@@ -253,7 +255,7 @@ with tab2:
 
     st.write("Input specific measurements to find candidate species. Leave a trait unchecked to ignore it.")
 
-    # DYNAMIC SEARCHABLE TRAITS
+    # Dynamic filter generation based on available traits
     searchable_traits = [cols['mass'], cols['wing'], cols['beak'], cols['tarsus']]
     active_filters = {}
 
@@ -370,10 +372,7 @@ with tab2:
             st.plotly_chart(fig_results, use_container_width=True)       
     
 # ==========================================
-# TAB 3: EXPLORATORY ANALYSIS & PCA
-# ==========================================
-# ==========================================
-# TAB 3: EXPLORATORY ANALYSIS & PCA
+# TAB 3: ANALYSIS (HISTOGRAMS & PCA)
 # ==========================================
 with tab3:
     st.header("📊 Exploratory Data Analysis & Distributions")
@@ -383,9 +382,23 @@ with tab3:
     active_df = st.session_state['working_df']
     dataset_fingerprint = str(list(active_df.columns[:5])) # Unique ID based on headers
     
-    # --- 2. DYNAMIC COLUMN SCANNER ---
-    numeric_cols = active_df.select_dtypes(include=np.number).columns.tolist()
-    categorical_cols = active_df.select_dtypes(include=['object', 'category']).columns.tolist()
+    # --- 1. THE "CLEAN" COLUMN SCANNER ---
+    # List of keywords to exclude from our analysis dropdowns
+    exclude_keywords = ['id', 'species', 'name', 'source', 'inference', 'count', 'total', 'order', 'family']
+
+    # Filter Numeric Cols: Must be numbers AND not contain an excluded keyword
+    numeric_cols = [
+        col for col in active_df.select_dtypes(include=np.number).columns 
+        if not any(key in col.lower() for key in exclude_keywords)
+    ]
+
+    # Filter Categorical Cols: Must be text AND not contain an excluded keyword
+    # We also exclude columns that have too many unique values (like 11,000 unique species names)
+    categorical_cols = [
+        col for col in active_df.select_dtypes(include=['object', 'category']).columns 
+        if not any(key in col.lower() for key in exclude_keywords) 
+        and active_df[col].nunique() < 100  # Only show categories with less than 100 groups (like Habitat/Order)
+    ]
 
     # --- 3. THE FIREWALL ---
     # If the user switches datasets, we ensure we don't use old, dead column names
@@ -557,7 +570,7 @@ with tab4:
             st.warning("No valid geographic coordinates found in this dataset after filtering out missing data.")
     else:
         st.error("This dataset is missing Latitude and Longitude columns needed to draw the globe.")
-        
+
 # ==========================================
 # TAB 5: TAXONOMIC HIERARCHY (SUNBURST)
 # ==========================================
@@ -576,8 +589,15 @@ with tab5:
     if order_col in active_df.columns and family_col in active_df.columns:
         st.write("Click on the rings to 'Drill Down' from Orders to Families.")
         
-        numeric_params = active_df.select_dtypes(include=np.number).columns.tolist()
-        
+        exclude_keywords = ['dimorphism']
+
+        # Filter Numeric Cols: Must be numbers AND not contain an excluded keyword
+        numeric_params = [
+            col for col in active_df.select_dtypes(include=np.number).columns.tolist() 
+            if not any(key in col.lower() for key in exclude_keywords)
+        ]
+
+
         col1, col2 = st.columns(2)
         with col1:
             # Added a unique key here!
