@@ -1,0 +1,9 @@
+# Notebooks & data analysis (no Flask — use dashboard/requirements.txt for the app)
+pandas
+numpy
+scipy
+matplotlib
+seaborn
+scikit-learn
+plotly
+biopython
