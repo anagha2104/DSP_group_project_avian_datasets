@@ -5,7 +5,10 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 import plotly.express as px
 import math
+import os
 import plotly.graph_objects as go
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Make the dashboard utilize the full width of the monitor
 st.set_page_config(page_title="Avian Explorer", layout="wide")
@@ -272,8 +275,19 @@ with tab2:
             results_df = results_df[(results_df[trait] >= min_bound) & (results_df[trait] <= max_bound)]
 
         if use_map_filter:
-            results_df = results_df.dropna(subset=[cols['lat'], cols['lon'], cols['range']])
-            overlaps = results_df.apply(lambda row: calculate_overlap_percentage(target_lat, target_lon, search_radius, row[cols['lat']], row[cols['lon']], row[cols['range']]), axis=1)
+            # Dynamically find the coordinate columns for this dataset
+            lat_col = 'lat_centroid' if 'lat_centroid' in results_df.columns else 'Centroid.Latitude'
+            lon_col = 'lon_centroid' if 'lon_centroid' in results_df.columns else 'Centroid.Longitude'
+            range_col = 'range_size' if 'range_size' in results_df.columns else 'Range.Size'
+
+            # 1. Drop true missing values
+            results_df = results_df.dropna(subset=[lat_col, lon_col, range_col])
+            
+            # 2. THE NULL ISLAND FIREWALL (Strips out the fake 0, 0 coordinates)
+            results_df = results_df[~((results_df[lat_col] == 0) & (results_df[lon_col] == 0))]
+
+            # 3. Safely calculate the distance and overlap percentage
+            overlaps = results_df.apply(lambda row: calculate_overlap_percentage(target_lat, target_lon, search_radius, row[lat_col], row[lon_col], row[range_col]), axis=1)
             results_df['Overlap_%'] = overlaps
             results_df = results_df[results_df['Overlap_%'] >= min_overlap]
 
@@ -352,79 +366,139 @@ with tab2:
             st.plotly_chart(fig_results, use_container_width=True)       
     
 # ==========================================
-# TAB 3: PCA & RELATIONSHIPS
+# TAB 3: EXPLORATORY ANALYSIS & PCA
 # ==========================================
 with tab3:
-    st.write("### Trait Relationship Analysis")
-    numeric_columns = [cols['mass'], cols['wing'], cols['beak'], cols['tarsus']]
-    numeric_columns = [c for c in numeric_columns if c in active_df.columns]
-
-    if len(numeric_columns) >= 2:
-        col1, col2 = st.columns(2)
-        with col1: x_trait = st.selectbox("Select X-Axis Trait:", options=numeric_columns, index=0)
-        with col2: y_trait = st.selectbox("Select Y-Axis Trait:", options=numeric_columns, index=1)
-
-        clean_df = active_df.dropna(subset=[x_trait, y_trait])
-        x_vals, y_vals = clean_df[x_trait], clean_df[y_trait]
-        slope, intercept = np.polyfit(x_vals, y_vals, 1)
-        r_value = np.corrcoef(x_vals, y_vals)[0, 1]
-
-        st.success("Mathematical Relationship")
-        st.latex(rf"{y_trait} = {slope:.3f} \cdot {x_trait} + {intercept:.3f}")
-        st.write(f"**Pearson Correlation (r):** {r_value:.3f}")
-
-        fig1 = px.scatter(
-            clean_df, x=x_trait, y=y_trait,
-            hover_data=['species_birdlife', 'species_birdtree'] if 'species_birdlife' in clean_df.columns else [cols['id']],
-            title=f"Relationship: {y_trait} vs {x_trait}", template="plotly_white"
-        )
-        fig1.add_scatter(x=x_vals, y=(slope * x_vals + intercept), mode='lines', name='Trendline', line=dict(color='red', dash='dash'))
-        st.plotly_chart(fig1, use_container_width=True)
-
-        st.header("🧬 PCA Cluster Analysis & Predictive Equations")
+    st.header("📊 Exploratory Data Analysis & Distributions")
+    active_df = st.session_state['working_df']
+    
+    # --- DYNAMIC COLUMN SCANNER ---
+    # Automatically find all numeric columns (for math) and text columns (for categories)
+    numeric_cols = active_df.select_dtypes(include=np.number).columns.tolist()
+    categorical_cols = active_df.select_dtypes(include=['object', 'category']).columns.tolist()
+    
+    # --- PART 1: INTERACTIVE HISTOGRAMS ---
+    if numeric_cols:
+        st.write("Explore the distribution of individual traits across the dataset.")
         
-        categorical_factors = ['Migration', 'Habitat', 'Diet', 'Trophic.Level', 'Trophic.Niche','Primary.Lifestyle', 'migration', 'habitat', 'primary_diet']
-        available_factors = [f for f in categorical_factors if f in active_df.columns] 
-
-        col1, col2 = st.columns(2)
-        with col1: selected_traits = st.multiselect("Select Traits for PCA:", options=numeric_columns, default=numeric_columns)
-        with col2: grouping_factor = st.selectbox("Select Category to Color By:", options=available_factors) if available_factors else None
-
-        if len(selected_traits) >= 2 and grouping_factor:
-            pca_df = active_df.dropna(subset=selected_traits + [grouping_factor]).copy()
-            pca_df[grouping_factor] = pca_df[grouping_factor].astype(str)
-
-            X_scaled = StandardScaler().fit_transform(pca_df[selected_traits].values)
-            eigenvalues, eigenvectors = np.linalg.eig(np.corrcoef(X_scaled.T))
+        # Default to mass or wing length if available
+        hist_default = 0
+        if 'mass' in numeric_cols: hist_default = numeric_cols.index('mass')
+        elif 'mass_avg' in numeric_cols: hist_default = numeric_cols.index('mass_avg')
             
-            sorted_indices = np.argsort(eigenvalues)[::-1]
-            sorted_eigenvalues = eigenvalues[sorted_indices]
-            projection_matrix = eigenvectors[:, sorted_indices][:, 0:2]
-            
-            X_pca = X_scaled.dot(projection_matrix)
-            pca_df['PC1'], pca_df['PC2'] = X_pca[:, 0], X_pca[:, 1]
-            loadings = projection_matrix.T
-
-            def build_equation(pc_index):
-                return " ".join([f"{'+' if loadings[pc_index, i] >= 0 else ''}{loadings[pc_index, i]:.3f}({t})" for i, t in enumerate(selected_traits)])
-
-            st.subheader("Linear Combinations (The Equations)")
-            st.latex(rf"PC_1 = {build_equation(0)}")
-            st.latex(rf"PC_2 = {build_equation(1)}")
-
-            total_var = np.sum(sorted_eigenvalues)
-            st.caption(f"**Variance Explained:** PC1 ({(sorted_eigenvalues[0]/total_var)*100:.1f}%) | PC2 ({(sorted_eigenvalues[1]/total_var)*100:.1f}%)")
-
-            fig_pca = px.scatter(
-                pca_df, x='PC1', y='PC2', color=grouping_factor,
-                hover_data=['species_birdlife'] + selected_traits if 'species_birdlife' in pca_df.columns else [cols['id']] + selected_traits,
-                title=f"PCA Clustering by {grouping_factor}", template="plotly_white"
-            )
-            fig_pca.update_traces(marker=dict(size=8, opacity=0.7, line=dict(width=1, color='DarkSlateGrey')))
-            st.plotly_chart(fig_pca, use_container_width=True)
+        selected_dist = st.selectbox("Select a trait to view its distribution:", options=numeric_cols, index=hist_default)
+        
+        fig_hist = px.histogram(
+            active_df, x=selected_dist, nbins=50, 
+            title=f"Distribution of {selected_dist}",
+            template="plotly_white", color_discrete_sequence=['#3b82f6']
+        )
+        st.plotly_chart(fig_hist, use_container_width=True)
     else:
-        st.warning("Not enough numeric columns found in this dataset for relationship tracking.")
+        st.info("No numerical columns found for distribution plotting.")
+        
+    st.write("---")
 
+    # --- PART 2A: CATEGORICAL BAR CHARTS ---
+    st.subheader("📋 Categorical Trait Distributions")
+    
+    if categorical_cols:
+        # Default to habitat or order if available
+        cat_default = 0
+        if 'habitat' in categorical_cols: cat_default = categorical_cols.index('habitat')
+            
+        selected_cat = st.selectbox("Select a category to view the top 15 groups:", options=categorical_cols, index=cat_default)
+        
+        counts = active_df[selected_cat].value_counts().head(15).reset_index()
+        counts.columns = [selected_cat, 'Count']
+        
+        fig_bar = px.bar(
+            counts, x=selected_cat, y='Count', 
+            title=f"Top 15 {selected_cat} Groups",
+            template="plotly_white", color_discrete_sequence=['#f56565'] 
+        )
+        fig_bar.update_layout(xaxis_tickangle=-45) 
+        st.plotly_chart(fig_bar, use_container_width=True)
+
+    # --- PART 2B: INTERACTIVE BOXPLOTS ---
+    st.write("---")
+    st.subheader("📦 Trait Variation by Category (Boxplots)")
+    st.write("Compare how a numeric measurement changes across different categories.")
+
+    if categorical_cols and numeric_cols:
+        box_col1, box_col2 = st.columns(2)
+        with box_col1: 
+            box_cat = st.selectbox("Select X-Axis (Grouping Category):", options=categorical_cols, index=cat_default, key='box_cat')
+        with box_col2: 
+            box_num = st.selectbox("Select Y-Axis (Numeric Trait):", options=numeric_cols, index=hist_default, key='box_num')
+
+        clean_box_df = active_df.dropna(subset=[box_cat, box_num])
+
+        if not clean_box_df.empty:
+            fig_box = px.box(
+                clean_box_df, x=box_cat, y=box_num, color=box_cat, 
+                title=f"Distribution of {box_num} across {box_cat}", template="plotly_white"
+            )
+            st.plotly_chart(fig_box, use_container_width=True)
+        else:
+            st.warning(f"⚠️ No data available to plot **{box_num}** across **{box_cat}**. The overlapping rows only contain missing values.")
+
+    # --- PART 3: INTERACTIVE PCA MODEL ---
+    st.write("---")
+    st.subheader("🧬 Interactive PCA Cluster Analysis")
+    st.write("Run a custom Principal Component Analysis (PCA) to reduce dimensions and view clustering.")
+
+    if categorical_cols and len(numeric_cols) >= 2:
+        pca_col1, pca_col2 = st.columns(2)
+
+        with pca_col1:
+            # Try to default to some standard measurements
+            default_pca_traits = [c for c in ['wing_len', 'mass', 'beak_culmen', 'tarsus', 'wing_len_avg', 'mass_avg'] if c in numeric_cols]
+            if len(default_pca_traits) < 2: default_pca_traits = numeric_cols[:2]
+                
+            selected_pca_traits = st.multiselect("Select Numeric Traits for PCA:", options=numeric_cols, default=default_pca_traits)
+
+        with pca_col2:
+            pca_group = st.selectbox("Select Category to Color By (Hue):", options=categorical_cols, index=cat_default, key='pca_cat')
+
+        if len(selected_pca_traits) >= 2:
+            df_pca_ready = active_df.dropna(subset=selected_pca_traits + [pca_group]).copy()
+
+            if len(df_pca_ready) > 5:
+                scaler = StandardScaler()
+                X_scaled = scaler.fit_transform(df_pca_ready[selected_pca_traits])
+
+                pca = PCA(n_components=2)
+                pcs = pca.fit_transform(X_scaled)
+
+                df_pca_ready['PC1'] = pcs[:, 0]
+                df_pca_ready['PC2'] = pcs[:, 1]
+
+                var_pc1 = pca.explained_variance_ratio_[0] * 100
+                var_pc2 = pca.explained_variance_ratio_[1] * 100
+
+                fig_pca = px.scatter(
+                    df_pca_ready, x='PC1', y='PC2', color=pca_group,
+                    hover_name='species_birdlife' if 'species_birdlife' in df_pca_ready.columns else None,
+                    title=f"PCA of Selected Traits (Colored by {pca_group})",
+                    labels={'PC1': f'PC1 ({var_pc1:.1f}%)', 'PC2': f'PC2 ({var_pc2:.1f}%)'},
+                    template="plotly_white",
+                    color_discrete_sequence=px.colors.qualitative.Alphabet 
+                )
+                
+                fig_pca.update_traces(marker=dict(size=7, opacity=0.8, line=dict(width=1, color='DarkSlateGrey')))
+                st.plotly_chart(fig_pca, use_container_width=True)
+
+                st.write("**PCA Loadings (Feature Importance):**")
+                st.write("This table shows how much each physical trait contributes to the X and Y axes of the graph.")
+                
+                loadings = pd.DataFrame(pca.components_.T, columns=['PC1', 'PC2'], index=selected_pca_traits)
+                st.dataframe(loadings.style.background_gradient(cmap='Blues')) 
+
+            else:
+                st.warning("⚠️ Not enough complete rows to run PCA on these selected traits.")
+        else:
+            st.info("Please select at least 2 numeric traits to run the PCA model.")
 # ==========================================
 # TAB 4: ADVANCED BIOGEOGRAPHICAL MAP
 # ==========================================
@@ -432,124 +506,102 @@ with tab4:
     st.header("🌍 Advanced Biogeographical Range Map")
     active_df = st.session_state['working_df']
     
-    # --- 1. Dynamic Column Check (Now including Bounding Box coordinates!) ---
-    cols_map = {
-        'lat': 'lat_centroid' if 'lat_centroid' in active_df.columns else 'Centroid.Latitude',
-        'lon': 'lon_centroid' if 'lon_centroid' in active_df.columns else 'Centroid.Longitude',
-        'range': 'range_size' if 'range_size' in active_df.columns else 'Range.Size',
-        'min_lat': 'min_lat' if 'min_lat' in active_df.columns else 'Min.Latitude',
-        'max_lat': 'max_lat' if 'max_lat' in active_df.columns else 'Max.Latitude',
-        'min_lon': 'min_lon' if 'min_lon' in active_df.columns else 'Min.Longitude',
-        'max_lon': 'max_lon' if 'max_lon' in active_df.columns else 'Max.Longitude',
-        'name': 'species_birdlife' if 'species_birdlife' in active_df.columns else active_df.columns[0]
-    }
+    # --- 1. DYNAMIC COLUMN SCANNER ---
+    lat_col = 'lat_centroid' if 'lat_centroid' in active_df.columns else 'Centroid.Latitude'
+    lon_col = 'lon_centroid' if 'lon_centroid' in active_df.columns else 'Centroid.Longitude'
+    range_col = 'range_size' if 'range_size' in active_df.columns else 'Range.Size'
+    name_col = 'species_birdlife' if 'species_birdlife' in active_df.columns else active_df.columns[0]
+    
+    # Check for bounding box data for the single-species viewer
+    min_lat = 'lat_min' if 'lat_min' in active_df.columns else 'Min.Latitude'
+    max_lat = 'lat_max' if 'lat_max' in active_df.columns else 'Max.Latitude'
+    min_lon = 'lon_min' if 'lon_min' in active_df.columns else 'Min.Longitude'
+    max_lon = 'lon_max' if 'lon_max' in active_df.columns else 'Max.Longitude'
+    
+    has_bbox = all(c in active_df.columns for c in [min_lat, max_lat, min_lon, max_lon])
 
-    # Check if this dataset actually has the bounding box data
-    has_bbox = all(c in active_df.columns for c in [cols_map['min_lat'], cols_map['max_lat'], cols_map['min_lon'], cols_map['max_lon']])
-
-    if cols_map['lat'] in active_df.columns and cols_map['lon'] in active_df.columns:
-        
+    if lat_col in active_df.columns and lon_col in active_df.columns:
         st.write("Visualize how species are distributed globally.")
         
-        # UI Toggle: Protects the browser from trying to draw 11,000 polygons at once
-        map_mode = st.radio(
-            "Visualization Mode:", 
-            ["🗺️ Single Species Range Explorer", "🔵 Multi-Species Centroid Clusters"], 
-            horizontal=True
-        )
+        # --- 2. THE NULL ISLAND FIREWALL ---
+        # Drop true missing values (NaNs)
+        map_df = active_df.dropna(subset=[lat_col, lon_col]).copy()
+        
+        # Filter out coordinates exactly at (0.0, 0.0) to remove the "Null Island" artifact!
+        map_df = map_df[~((map_df[lat_col] == 0) & (map_df[lon_col] == 0))]
+
+        # UI Toggle
+        map_mode = st.radio("Visualization Mode:", ["🗺️ Single Species Range Explorer", "🔵 Multi-Species Centroid Clusters"], horizontal=True)
 
         fig_map = go.Figure()
 
         # ---------------------------------------------------------
-        # MODE 1: THE ADVANCED BOUNDING BOX (Polygons)
+        # MODE 1: SINGLE SPECIES POLYGON
         # ---------------------------------------------------------
         if map_mode == "🗺️ Single Species Range Explorer":
             if has_bbox:
-                # Clean out rows missing bounding box data
-                clean_box_df = active_df.dropna(subset=[cols_map['min_lat'], cols_map['max_lat'], cols_map['min_lon'], cols_map['max_lon']]).copy()
-                bird_list = clean_box_df[cols_map['name']].unique()
+                clean_box_df = map_df.dropna(subset=[min_lat, max_lat, min_lon, max_lon]).copy()
                 
-                selected_map_bird = st.selectbox("Select a species to view its geographic range polygon:", options=bird_list)
-                bird_row = clean_box_df[clean_box_df[cols_map['name']] == selected_map_bird].iloc[0]
+                if not clean_box_df.empty:
+                    bird_list = clean_box_df[name_col].unique()
+                    selected_map_bird = st.selectbox("Select a species to view its geographic range polygon:", options=bird_list)
+                    bird_row = clean_box_df[clean_box_df[name_col] == selected_map_bird].iloc[0]
 
-                # Define the 4 corners of the geographic bounding box to draw a complete shape
-                box_lats = [bird_row[cols_map['min_lat']], bird_row[cols_map['max_lat']], bird_row[cols_map['max_lat']], bird_row[cols_map['min_lat']], bird_row[cols_map['min_lat']]]
-                box_lons = [bird_row[cols_map['min_lon']], bird_row[cols_map['min_lon']], bird_row[cols_map['max_lon']], bird_row[cols_map['max_lon']], bird_row[cols_map['min_lon']]]
+                    # 4 Corners of the box
+                    box_lats = [bird_row[min_lat], bird_row[max_lat], bird_row[max_lat], bird_row[min_lat], bird_row[min_lat]]
+                    box_lons = [bird_row[min_lon], bird_row[min_lon], bird_row[max_lon], bird_row[max_lon], bird_row[min_lon]]
 
-                # Draw the Shaded Polygon
-                fig_map.add_trace(go.Scattergeo(
-                    lon=box_lons,
-                    lat=box_lats,
-                    mode='lines',
-                    fill='toself', # This fills the inside of the box with color!
-                    fillcolor='rgba(59, 130, 246, 0.4)',
-                    line=dict(color='#2563eb', width=2),
-                    name=f"Range Area"
-                ))
+                    fig_map.add_trace(go.Scattergeo(
+                        lon=box_lons, lat=box_lats, mode='lines', fill='toself', fillcolor='rgba(59, 130, 246, 0.4)',
+                        line=dict(color='#2563eb', width=2), name=f"Range Area"
+                    ))
 
-                # Draw the specific Centroid Center as a red star
-                fig_map.add_trace(go.Scattergeo(
-                    lon=[bird_row[cols_map['lon']]],
-                    lat=[bird_row[cols_map['lat']]],
-                    mode='markers',
-                    marker=dict(size=12, color='red', symbol='star'),
-                    name="Population Centroid"
-                ))
-
-                st.info(f"**Geographic Spread:** Longitude {bird_row[cols_map['min_lon']]}° to {bird_row[cols_map['max_lon']]}° | Latitude {bird_row[cols_map['min_lat']]}° to {bird_row[cols_map['max_lat']]}°")
+                    fig_map.add_trace(go.Scattergeo(
+                        lon=[bird_row[lon_col]], lat=[bird_row[lat_col]], mode='markers',
+                        marker=dict(size=12, color='red', symbol='star'), name="Population Centroid"
+                    ))
+                else:
+                    st.warning("No species found with complete bounding box coordinates.")
             else:
-                st.error("Bounding box columns (Min/Max Latitude & Longitude) not found in this specific dataset.")
-
+                st.error("Bounding box columns (Min/Max Latitude & Longitude) not found in this dataset.")
+                
         # ---------------------------------------------------------
-        # MODE 2: THE DOT CLUSTERS (With the Crash Fixed!)
+        # MODE 2: MULTI-SPECIES DOT CLUSTERS
         # ---------------------------------------------------------
         else:
-            # 1. Clean the core coordinates
-            map_df = active_df.dropna(subset=[cols_map['lat'], cols_map['lon']]).copy()
-            
-            # CRITICAL CRASH FIX: Fill NaNs in the size column with the median size so Plotly doesn't panic
-            if cols_map['range'] in map_df.columns:
-                map_df[cols_map['range']] = map_df[cols_map['range']].fillna(map_df[cols_map['range']].median())
+            # Handle Range Size safety
+            if range_col in map_df.columns:
+                map_df[range_col] = map_df[range_col].fillna(map_df[range_col].median())
+            else:
+                map_df['Plot_Size'] = 10 # Fallback size if range is completely missing
+                range_col = 'Plot_Size'
 
-            # UI for Coloring
-            color_options = ['migration', 'habitat', 'primary_diet', 'Migration', 'Habitat', 'Diet']
-            available_colors = [c for c in color_options if c in active_df.columns]
+            # Dynamically find text columns for coloring
+            categorical_cols = map_df.select_dtypes(include=['object', 'category']).columns.tolist()
+            color_options = [c for c in ['habitat', 'primary_diet', 'trophic_niche', 'lifestyle', 'migration'] if c in categorical_cols]
             
             map_color = None
-            if available_colors:
-                map_color = st.selectbox("Color map points by:", options=available_colors)
-                # CRITICAL CRASH FIX: Fill NaNs in the color column with "Unknown" 
+            if color_options:
+                map_color = st.selectbox("Color map points by:", options=color_options)
                 map_df[map_color] = map_df[map_color].fillna("Unknown").astype(str)
 
-            # Draw the Plotly Express Map
+            # Draw the px map and port it to go.Figure
             fig_px = px.scatter_geo(
-                map_df, 
-                lat=cols_map['lat'], 
-                lon=cols_map['lon'],
-                hover_name=cols_map['name'],       
-                size=cols_map['range'] if cols_map['range'] in map_df.columns else None,
-                color=map_color,             
+                map_df, lat=lat_col, lon=lon_col, hover_name=name_col, size=range_col, color=map_color,
             )
-            # Add the dots from px to our master figure
+            
             for trace in fig_px.data:
                 fig_map.add_trace(trace)
                 
-            fig_map.update_traces(marker=dict(sizemin=2, sizeref=20))
+            fig_map.update_traces(marker=dict(sizemin=2, sizeref=20 if range_col != 'Plot_Size' else 1))
 
         # ---------------------------------------------------------
-        # FINAL MAP STYLING (Applies to both modes)
+        # FINAL MAP STYLING
         # ---------------------------------------------------------
         fig_map.update_layout(
-            template="plotly_white",
-            margin=dict(l=0, r=0, t=30, b=0),
-            geo=dict(
-                showcoastlines=True, 
-                showcountries=True, 
-                countrycolor="LightGrey", 
-                projection_type="natural earth"
-            )
+            template="plotly_white", margin=dict(l=0, r=0, t=30, b=0),
+            geo=dict(showcoastlines=True, showcountries=True, countrycolor="LightGrey", projection_type="natural earth")
         )
-        
         st.plotly_chart(fig_map, use_container_width=True)
         
     else:
