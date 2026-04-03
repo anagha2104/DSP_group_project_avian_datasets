@@ -38,6 +38,10 @@ if 'tab2_results' not in st.session_state:
 if 'working_df' not in st.session_state:
     st.session_state['working_df'] = df_clean
 
+# ADD THIS LINE HERE:
+# This creates a unique ID based on the column names of the active dataset
+st.session_state['dataset_id'] = f"ds_{len(st.session_state['working_df'].columns)}"
+
 st.sidebar.header("📁 Data Source Manager")
 st.sidebar.write("Select the dataset to use for Analysis:")
 
@@ -129,7 +133,7 @@ def generate_map_circle(lat, lon, radius_km, num_points=64):
     return circle_lats, circle_lons
 
 # --- TABS ---
-tab1, tab2, tab3, tab4 = st.tabs(["🔍 Trait Lookup", "🎯 Reverse Matcher", "🧬 Trait Relationship Analysis and PCA", "🌍 Global Map"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["🔍 Trait Lookup", "🎯 Reverse Matcher", "🧬 Trait Relationship Analysis and PCA", "🌍 Global Map", "🌳 Taxonomic Diversity Explore"])
 
 # ==========================================
 # TAB 1: BIRD TRAIT LOOKUP & RELATIONSHIPS
@@ -368,25 +372,38 @@ with tab2:
 # ==========================================
 # TAB 3: EXPLORATORY ANALYSIS & PCA
 # ==========================================
+# ==========================================
+# TAB 3: EXPLORATORY ANALYSIS & PCA
+# ==========================================
 with tab3:
     st.header("📊 Exploratory Data Analysis & Distributions")
-    active_df = st.session_state['working_df']
     
-    # --- DYNAMIC COLUMN SCANNER ---
-    # Automatically find all numeric columns (for math) and text columns (for categories)
+    # --- 1. THE DATASET RECOGNIZER ---
+    # We create a unique fingerprint based on the columns in the active dataframe
+    active_df = st.session_state['working_df']
+    dataset_fingerprint = str(list(active_df.columns[:5])) # Unique ID based on headers
+    
+    # --- 2. DYNAMIC COLUMN SCANNER ---
     numeric_cols = active_df.select_dtypes(include=np.number).columns.tolist()
     categorical_cols = active_df.select_dtypes(include=['object', 'category']).columns.tolist()
-    
-    # --- PART 1: INTERACTIVE HISTOGRAMS ---
+
+    # --- 3. THE FIREWALL ---
+    # If the user switches datasets, we ensure we don't use old, dead column names
     if numeric_cols:
-        st.write("Explore the distribution of individual traits across the dataset.")
+        # Re-verify that our defaults actually exist in THIS specific dataset
+        hist_idx = 0
+        for preferred in ['mass', 'mass_avg', 'beak_culmen']:
+            if preferred in numeric_cols:
+                hist_idx = numeric_cols.index(preferred)
+                break
         
-        # Default to mass or wing length if available
-        hist_default = 0
-        if 'mass' in numeric_cols: hist_default = numeric_cols.index('mass')
-        elif 'mass_avg' in numeric_cols: hist_default = numeric_cols.index('mass_avg')
-            
-        selected_dist = st.selectbox("Select a trait to view its distribution:", options=numeric_cols, index=hist_default)
+        # We add the fingerprint to the key to FORCE a fresh widget on dataset swap
+        selected_dist = st.selectbox(
+            "Select a trait to view its distribution:", 
+            options=numeric_cols, 
+            index=hist_idx,
+            key=f"hist_select_{dataset_fingerprint}" 
+        )
         
         fig_hist = px.histogram(
             active_df, x=selected_dist, nbins=50, 
@@ -394,54 +411,24 @@ with tab3:
             template="plotly_white", color_discrete_sequence=['#3b82f6']
         )
         st.plotly_chart(fig_hist, use_container_width=True)
-    else:
-        st.info("No numerical columns found for distribution plotting.")
-        
-    st.write("---")
-
-    # --- PART 2A: CATEGORICAL BAR CHARTS ---
-    st.subheader("📋 Categorical Trait Distributions")
     
-    if categorical_cols:
-        # Default to habitat or order if available
-        cat_default = 0
-        if 'habitat' in categorical_cols: cat_default = categorical_cols.index('habitat')
-            
-        selected_cat = st.selectbox("Select a category to view the top 15 groups:", options=categorical_cols, index=cat_default)
-        
-        counts = active_df[selected_cat].value_counts().head(15).reset_index()
-        counts.columns = [selected_cat, 'Count']
-        
-        fig_bar = px.bar(
-            counts, x=selected_cat, y='Count', 
-            title=f"Top 15 {selected_cat} Groups",
-            template="plotly_white", color_discrete_sequence=['#f56565'] 
-        )
-        fig_bar.update_layout(xaxis_tickangle=-45) 
-        st.plotly_chart(fig_bar, use_container_width=True)
-
-    # --- PART 2B: INTERACTIVE BOXPLOTS ---
     st.write("---")
-    st.subheader("📦 Trait Variation by Category (Boxplots)")
-    st.write("Compare how a numeric measurement changes across different categories.")
 
+    # --- PART 2B: BOXPLOTS (Applying the same key logic) ---
     if categorical_cols and numeric_cols:
-        box_col1, box_col2 = st.columns(2)
-        with box_col1: 
-            box_cat = st.selectbox("Select X-Axis (Grouping Category):", options=categorical_cols, index=cat_default, key='box_cat')
-        with box_col2: 
-            box_num = st.selectbox("Select Y-Axis (Numeric Trait):", options=numeric_cols, index=hist_default, key='box_num')
+        st.subheader("📦 Trait Variation by Category")
+        bcol1, bcol2 = st.columns(2)
+        with bcol1:
+            box_cat = st.selectbox("Category:", options=categorical_cols, key=f"bc_{st.session_state['dataset_id']}")
+        with bcol2:
+            box_num = st.selectbox("Numeric:", options=numeric_cols, key=f"bn_{st.session_state['dataset_id']}")
 
-        clean_box_df = active_df.dropna(subset=[box_cat, box_num])
-
-        if not clean_box_df.empty:
-            fig_box = px.box(
-                clean_box_df, x=box_cat, y=box_num, color=box_cat, 
-                title=f"Distribution of {box_num} across {box_cat}", template="plotly_white"
-            )
-            st.plotly_chart(fig_box, use_container_width=True)
-        else:
-            st.warning(f"⚠️ No data available to plot **{box_num}** across **{box_cat}**. The overlapping rows only contain missing values.")
+        # Final check before plotting
+        if box_cat in active_df.columns and box_num in active_df.columns:
+            clean_box_df = active_df.dropna(subset=[box_cat, box_num])
+            if not clean_box_df.empty:
+                fig_box = px.box(clean_box_df, x=box_cat, y=box_num, color=box_cat)
+                st.plotly_chart(fig_box, use_container_width=True)
 
     # --- PART 3: INTERACTIVE PCA MODEL ---
     st.write("---")
@@ -452,14 +439,9 @@ with tab3:
         pca_col1, pca_col2 = st.columns(2)
 
         with pca_col1:
-            # Try to default to some standard measurements
-            default_pca_traits = [c for c in ['wing_len', 'mass', 'beak_culmen', 'tarsus', 'wing_len_avg', 'mass_avg'] if c in numeric_cols]
-            if len(default_pca_traits) < 2: default_pca_traits = numeric_cols[:2]
-                
-            selected_pca_traits = st.multiselect("Select Numeric Traits for PCA:", options=numeric_cols, default=default_pca_traits)
-
+            selected_pca_traits = st.multiselect("Select Traits:", options=numeric_cols, key=f"pca_m_{st.session_state['dataset_id']}")
         with pca_col2:
-            pca_group = st.selectbox("Select Category to Color By (Hue):", options=categorical_cols, index=cat_default, key='pca_cat')
+            pca_group = st.selectbox("Color By:", options=categorical_cols, key=f"pca_c_{st.session_state['dataset_id']}")
 
         if len(selected_pca_traits) >= 2:
             df_pca_ready = active_df.dropna(subset=selected_pca_traits + [pca_group]).copy()
@@ -575,3 +557,59 @@ with tab4:
             st.warning("No valid geographic coordinates found in this dataset after filtering out missing data.")
     else:
         st.error("This dataset is missing Latitude and Longitude columns needed to draw the globe.")
+        
+# ==========================================
+# TAB 5: TAXONOMIC HIERARCHY (SUNBURST)
+# ==========================================
+with tab5:
+    st.header("🌳 Taxonomic Diversity Explorer")
+    active_df = st.session_state['working_df']
+    
+    # 1. Identify Taxonomy Columns
+    order_col = 'order_birdlife' if 'order_birdlife' in active_df.columns else 'order_birdtree'
+    family_col = 'family_birdlife' if 'family_birdlife' in active_df.columns else 'family_birdtree'
+    
+    # --- DYNAMIC KEY FIX ---
+    # We use the same dataset_id logic to prevent the KeyError crash
+    ds_id = st.session_state.get('dataset_id', 'default')
+
+    if order_col in active_df.columns and family_col in active_df.columns:
+        st.write("Click on the rings to 'Drill Down' from Orders to Families.")
+        
+        numeric_params = active_df.select_dtypes(include=np.number).columns.tolist()
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            # Added a unique key here!
+            color_trait = st.selectbox(
+                "Color Hierarchy by (Mean Value):", 
+                options=[None] + numeric_params,
+                key=f"sun_color_{ds_id}"
+            )
+        with col2:
+            st.info("💡 Pro Tip: Sunburst charts are interactive. Click the inner rings to zoom in on a specific Order!")
+
+        # 2. Build the Sunburst
+        # Use a small sample or limit if the dataset is massive to prevent browser lag
+        plot_df = active_df.dropna(subset=[order_col, family_col])
+        
+        if color_trait:
+            plot_df = plot_df.dropna(subset=[color_trait])
+
+        fig_sun = px.sunburst(
+            plot_df,
+            path=[order_col, family_col], 
+            values=color_trait if color_trait else None,
+            color=color_trait if color_trait else order_col,
+            color_continuous_scale='Viridis',
+            title=f"Taxonomic Distribution",
+            template="plotly_white",
+            # Added a key to the chart's internal state via the session ID
+            ids=None 
+        )
+        
+        fig_sun.update_layout(height=700, margin=dict(l=0, r=0, t=50, b=0))
+        st.plotly_chart(fig_sun, use_container_width=True)
+        
+    else:
+        st.error("Taxonomic columns (Order/Family) not found in the current dataset.")
