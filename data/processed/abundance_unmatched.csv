@@ -1,0 +1,753 @@
+Common name,scientific_name,Order,Family,95% Lower CI,Abundance estimate,95% Upper CI,Range adjusted,Training species
+Tennessee Warbler,oreothlypis peregrina,Passeriformes,Parulidae (New World Warblers),8020862,169906051,3224633644,True,True
+Brown Skua,stercorarius antarcticus,Charadriiformes,Stercorariidae (Skuas and Jaegers),1936281,157734474,16126172081,True,False
+Ruby-crowned Kinglet,regulus calendula,Passeriformes,Regulidae (Kinglets),13301937,131624404,1221623098,True,True
+Franklin's Gull,leucophaeus pipixcan,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",1135134,108014410,8636740617,True,False
+Wedge-rumped Storm-Petrel,oceanodroma tethys,Procellariiformes,Hydrobatidae (Northern Storm-Petrels),1129366,95696643,7760594171,False,False
+Black-headed Gull,chroicocephalus ridibundus,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",2537682,78878122,2386322004,False,True
+Laughing Gull,leucophaeus atricilla,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",897047,71587859,5486167208,True,False
+Orange-crowned Warbler,oreothlypis celata,Passeriformes,Parulidae (New World Warblers),1918357,68141881,2282400794,True,True
+Laughing Dove,streptopelia senegalensis,Columbiformes,Columbidae (Pigeons and Doves),632592,54486713,5148561251,True,False
+Neotropic Cormorant,phalacrocorax brasilianus,Suliformes,Phalacrocoracidae (Cormorants and Shags),599093,47778576,3652932205,False,False
+Rose-ringed Parakeet,psittacula krameri,Psittaciformes,Psittaculidae (Old World Parrots),607411,47500445,4031050917,True,False
+Nashville Warbler,oreothlypis ruficapilla,Passeriformes,Parulidae (New World Warblers),3179740,47482936,657698733,True,True
+Hoary Redpoll,acanthis hornemanni,Passeriformes,"Fringillidae (Finches, Euphonias, and Allies)",2224263,41585696,786801330,False,True
+Gray-hooded Gull,chroicocephalus cirrocephalus,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",465713,39064338,3486898469,True,False
+Spotted Dove,streptopelia chinensis,Columbiformes,Columbidae (Pigeons and Doves),369899,33939591,3089768740,False,False
+Wilson's Phalarope,phalaropus tricolor,Charadriiformes,Scolopacidae (Sandpipers and Allies),465955,32852008,2707361652,True,False
+Bonaparte's Gull,chroicocephalus philadelphia,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",449297,31849163,2494366460,True,False
+South Polar Skua,stercorarius maccormicki,Charadriiformes,Stercorariidae (Skuas and Jaegers),361919,31456159,2901734113,True,False
+Double-crested Cormorant,phalacrocorax auritus,Suliformes,Phalacrocoracidae (Cormorants and Shags),397292,30734496,2149082202,True,False
+Slender-billed Gull,chroicocephalus genei,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",359851,27058725,2114347191,True,False
+Lesser Whitethroat,sylvia curruca,Passeriformes,Sylviidae (Sylviid Warblers),277601,25679850,2279252769,True,False
+American Tree Sparrow,spizelloides arborea,Passeriformes,Passerellidae (New World Sparrows),895355,25128656,746018865,True,True
+Silver Gull,chroicocephalus novaehollandiae,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",324581,24355851,2008035089,True,False
+Leach's Storm-Petrel,oceanodroma leucorhoa,Procellariiformes,Hydrobatidae (Northern Storm-Petrels),269169,22039393,2038964095,False,False
+Alpine Swift,apus melba,Caprimulgiformes,Apodidae (Swifts),249931,19996974,1826176973,True,False
+Blue-gray Tanager,thraupis episcopus,Passeriformes,Thraupidae (Tanagers and Allies),223790,19696488,1917174923,False,False
+Gray Gull,leucophaeus modestus,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",256667,19675324,1583637315,True,False
+Brown-hooded Gull,chroicocephalus maculipennis,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",242520,19629212,1486883964,True,False
+Pallas's Grasshopper-Warbler,locustella certhiola,Passeriformes,Locustellidae (Grassbirds and Allies),216938,19047346,1757823706,True,False
+White-breasted Woodswallow,artamus leucorynchus,Passeriformes,Artamidae (Woodswallows),212251,17943903,1625254781,True,False
+Sandhill Crane,antigone canadensis,Gruiformes,Gruidae (Cranes),263247,17295706,1110527069,True,False
+Greater Whitethroat,sylvia communis,Passeriformes,Sylviidae (Sylviid Warblers),201967,17111613,1587718731,True,False
+Hairy Woodpecker,dryobates villosus,Piciformes,Picidae (Woodpeckers),1292859,16835765,211104808,True,True
+Palm Tanager,thraupis palmarum,Passeriformes,Thraupidae (Tanagers and Allies),187142,16724904,1530093148,True,False
+Australian Ibis,threskiornis molucca,Pelecaniformes,Threskiornithidae (Ibises and Spoonbills),174941,15010179,1252912104,False,False
+Guanay Cormorant,phalacrocorax bougainvillii,Suliformes,Phalacrocoracidae (Cormorants and Shags),229111,13494661,863363287,True,False
+Germain's Swiftlet,aerodramus germani,Caprimulgiformes,Apodidae (Swifts),139958,12759674,1160439319,False,False
+Vinous-throated Parrotbill,sinosuthora webbiana,Passeriformes,"Paradoxornithidae (Parrotbills, Wrentit, and Allies)",154891,12065836,1118121146,True,False
+Sooty Gull,ichthyaetus hemprichii,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",133905,11656878,1028564328,True,False
+Brown-headed Gull,chroicocephalus brunnicephalus,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",131445,11391240,932248397,True,False
+Sardinian Warbler,sylvia melanocephala,Passeriformes,Sylviidae (Sylviid Warblers),129628,11186971,868925203,True,False
+Jungle Babbler,turdoides striata,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),109033,11034641,983001933,True,False
+Sayaca Tanager,thraupis sayaca,Passeriformes,Thraupidae (Tanagers and Allies),123847,10983662,1057813885,True,False
+Japanese Tit,parus minor,Passeriformes,"Paridae (Tits, Chickadees, and Titmice)",126433,10958544,1037077100,False,False
+Chilean Swallow,tachycineta leucopyga,Passeriformes,Hirundinidae (Swallows),128000,10142947,867416491,True,False
+Fork-tailed Storm-Petrel,oceanodroma furcata,Procellariiformes,Hydrobatidae (Northern Storm-Petrels),128397,10065987,886567439,False,False
+Chimango Caracara,milvago chimango,Falconiformes,Falconidae (Falcons and Caracaras),118627,9561508,769955884,True,False
+Imperial Cormorant,phalacrocorax atriceps,Suliformes,Phalacrocoracidae (Cormorants and Shags),119766,9373582,627182466,False,False
+White-browed Laughingthrush,ianthocincla sannio,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),94243,8853720,761907410,True,False
+Pallas's Gull,ichthyaetus ichthyaetus,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",98024,8423486,726242945,True,False
+Great Skua,stercorarius skua,Charadriiformes,Stercorariidae (Skuas and Jaegers),92115,8375158,750221239,True,False
+Swan Goose,anser cygnoides,Anseriformes,"Anatidae (Ducks, Geese, and Waterfowl)",102522,8363956,759822351,True,False
+Pelagic Cormorant,phalacrocorax pelagicus,Suliformes,Phalacrocoracidae (Cormorants and Shags),97288,8134007,705291344,True,False
+Blue-crowned Parakeet,thectocercus acuticaudatus,Psittaciformes,Psittacidae (New World and African Parrots),91672,8014633,692384693,True,False
+Pygmy Cormorant,microcarbo pygmeus,Suliformes,Phalacrocoracidae (Cormorants and Shags),98918,7950950,619117315,True,False
+European Shag,phalacrocorax aristotelis,Suliformes,Phalacrocoracidae (Cormorants and Shags),80561,7664287,678173054,True,False
+Red-billed Gull,chroicocephalus scopulinus,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",117338,7185948,491082723,False,False
+Purple Gallinule,porphyrio martinica,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",75154,7016619,617638671,False,False
+Alexandrine Parakeet,psittacula eupatria,Psittaciformes,Psittaculidae (Old World Parrots),83654,6830440,616186988,True,False
+Gray Francolin,francolinus pondicerianus,Galliformes,"Phasianidae (Pheasants, Grouse, and Allies)",74399,6795912,589197520,True,False
+Common Babbler,turdoides caudata,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),85770,6551419,604348362,True,False
+Mourning Sierra-Finch,phrygilus fruticeti,Passeriformes,Thraupidae (Tanagers and Allies),74693,6551360,574781421,False,False
+Mediterranean Gull,ichthyaetus melanocephalus,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",87111,6494278,580119459,True,False
+Rufous-necked Snowfinch,montifringilla ruficollis,Passeriformes,Passeridae (Old World Sparrows),74191,6064162,525817352,True,False
+Glittering-throated Emerald,amazilia fimbriata,Caprimulgiformes,Trochilidae (Hummingbirds),73979,6062298,572790751,True,False
+Spectacled Warbler,sylvia conspicillata,Passeriformes,Sylviidae (Sylviid Warblers),63986,5995782,503637035,True,False
+Andean Gull,chroicocephalus serranus,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",62402,5930437,545357251,True,False
+Black-faced Grassquit,tiaris bicolor,Passeriformes,Thraupidae (Tanagers and Allies),68394,5858675,502189718,False,False
+Hartlaub's Gull,chroicocephalus hartlaubii,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",58977,5528736,471074181,True,False
+Subalpine Warbler,sylvia cantillans,Passeriformes,Sylviidae (Sylviid Warblers),57805,5396444,454775538,True,False
+Plum-headed Parakeet,psittacula cyanocephala,Psittaciformes,Psittaculidae (Old World Parrots),58970,5385052,453156241,False,False
+Bullock's Oriole,icterus bullockii,Passeriformes,Icteridae (Troupials and Allies),185149,5303019,157889914,False,True
+Audouin's Gull,ichthyaetus audouinii,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",51784,5057157,452595795,True,False
+Lesser Kiskadee,pitangus lictor,Passeriformes,Tyrannidae (Tyrant Flycatchers),55211,5038957,451262962,True,False
+Striated Swallow,cecropis striolata,Passeriformes,Hirundinidae (Swallows),54250,5038848,393640136,False,False
+Buff-banded Rail,gallirallus philippensis,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",55637,4868290,425742997,True,False
+Yellow-bellied Tit,periparus venustulus,Passeriformes,"Paridae (Tits, Chickadees, and Titmice)",64672,4766383,389725234,True,False
+Yellow-billed Babbler,turdoides affinis,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),48861,4463891,426684123,False,False
+Mountain White-eye,zosterops montanus,Passeriformes,"Zosteropidae (White-eyes, Yuhinas, and Allies)",55948,4372438,368415189,True,False
+White-naped Crane,antigone vipio,Gruiformes,Gruidae (Cranes),51182,4361199,409028406,True,False
+Barred Warbler,sylvia nisoria,Passeriformes,Sylviidae (Sylviid Warblers),46536,4337432,434118629,True,False
+Java Sparrow,lonchura oryzivora,Passeriformes,Estrildidae (Waxbills and Allies),62279,4331958,318879518,True,True
+Familiar Chat,cercomela familiaris,Passeriformes,Muscicapidae (Old World Flycatchers),40772,4302395,387174733,True,False
+Evening Grosbeak,coccothraustes vespertinus,Passeriformes,"Fringillidae (Finches, Euphonias, and Allies)",187842,4277167,99083534,True,True
+Crowned Slaty Flycatcher,empidonomus aurantioatrocristatus,Passeriformes,Tyrannidae (Tyrant Flycatchers),44733,4158039,404304459,True,False
+Pied Lapwing,vanellus cayanus,Charadriiformes,Charadriidae (Plovers and Lapwings),44483,4155949,391919630,True,False
+Chestnut-shouldered Petronia,gymnornis xanthocollis,Passeriformes,Passeridae (Old World Sparrows),48149,4144951,375756337,False,False
+Zebra Waxbill,sporaeginthus subflavus,Passeriformes,Estrildidae (Waxbills and Allies),43388,3948498,389143900,False,False
+Yellowish Pipit,anthus lutescens,Passeriformes,Motacillidae (Wagtails and Pipits),43719,3947244,349320789,True,False
+Lesser Redpoll,acanthis cabaret,Passeriformes,"Fringillidae (Finches, Euphonias, and Allies)",41187,3944783,370916231,False,False
+Large Gray Babbler,turdoides malcolmi,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),40893,3942640,367394449,False,False
+Lineated Woodpecker,dryocopus lineatus,Piciformes,Picidae (Woodpeckers),43116,3811840,354005280,True,False
+Antarctic Shag,phalacrocorax bransfieldensis,Suliformes,Phalacrocoracidae (Cormorants and Shags),77023,3745523,184264157,False,False
+Blackstart,cercomela melanura,Passeriformes,Muscicapidae (Old World Flycatchers),41816,3715694,332935381,True,False
+Dolphin Gull,leucophaeus scoresbii,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",45420,3561641,301568810,True,False
+Blue-winged Minla,actinodura cyanouroptera,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),37723,3485691,297846894,True,False
+Tawny Grassbird,megalurus timoriensis,Passeriformes,Locustellidae (Grassbirds and Allies),34834,3445599,329745232,True,False
+Little Woodpecker,dryobates passerinus,Piciformes,Picidae (Woodpeckers),36358,3346739,302144037,True,False
+Gray-capped Woodpecker,yungipicus canicapillus,Piciformes,Picidae (Woodpeckers),32919,3329661,307619009,False,False
+White-throated Laughingthrush,ianthocincla albogularis,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),39814,3295550,286386605,True,False
+Baird's Sparrow,centronyx bairdii,Passeriformes,Passerellidae (New World Sparrows),38493,3282848,328569039,False,True
+Versicolored Emerald,amazilia versicolor,Caprimulgiformes,Trochilidae (Hummingbirds),37832,3236919,285366798,True,False
+White-chinned Sapphire,hylocharis cyanus,Caprimulgiformes,Trochilidae (Hummingbirds),32668,3202093,248985511,True,False
+Black Sunbird,leptocoma sericea,Passeriformes,Nectariniidae (Sunbirds and Spiderhunters),34245,3186395,289696986,True,False
+Red-legged Cormorant,phalacrocorax gaimardi,Suliformes,Phalacrocoracidae (Cormorants and Shags),37726,3098473,262166117,True,False
+Crested Caracara,caracara cheriway,Falconiformes,Falconidae (Falcons and Caracaras),42311,3060221,202344556,True,True
+Pileated Woodpecker,dryocopus pileatus,Piciformes,Picidae (Woodpeckers),97867,3047091,94735246,True,True
+Brandt's Cormorant,phalacrocorax penicillatus,Suliformes,Phalacrocoracidae (Cormorants and Shags),46873,3034404,231202874,True,False
+Gray Noddy,anous albivitta,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",43623,3002491,220214412,False,False
+Rufous Songlark,megalurus mathewsi,Passeriformes,Locustellidae (Grassbirds and Allies),35028,2971611,267662576,True,False
+White-rumped Snowfinch,montifringilla taczanowskii,Passeriformes,Passeridae (Old World Sparrows),31639,2962135,257104849,True,False
+Magellanic Cormorant,phalacrocorax magellanicus,Suliformes,Phalacrocoracidae (Cormorants and Shags),32748,2901066,250479715,False,False
+White-throated Magpie-Jay,calocitta formosa,Passeriformes,"Corvidae (Crows, Jays, and Magpies)",31447,2891247,273246905,False,False
+Relict Gull,ichthyaetus relictus,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",33698,2887615,275360122,True,False
+White-eared Hummingbird,hylocharis leucotis,Caprimulgiformes,Trochilidae (Hummingbirds),28772,2882317,245402606,False,False
+Red-billed Oxpecker,buphagus erythrorhynchus,Passeriformes,Buphagidae (Oxpeckers),33824,2857479,277241167,True,False
+Gouldian Finch,erythrura gouldiae,Passeriformes,Estrildidae (Waxbills and Allies),29911,2829837,260247912,False,False
+Black-billed Gull,chroicocephalus bulleri,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",31122,2766255,244257030,False,False
+Shining Bronze-Cuckoo,chrysococcyx lucidus,Cuculiformes,Cuculidae (Cuckoos),27554,2766066,252830872,False,False
+Masked Laughingthrush,garrulax perspicillatus,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),28747,2763142,241349274,True,False
+Pygmy Woodpecker,yungipicus kizuki,Piciformes,Picidae (Woodpeckers),32539,2747936,238077049,False,False
+Violet-crowned Hummingbird,amazilia violiceps,Caprimulgiformes,Trochilidae (Hummingbirds),27418,2695102,272247745,False,False
+Cape Robin-Chat,cossypha caffra,Passeriformes,Muscicapidae (Old World Flycatchers),30472,2672783,240359452,False,False
+Brolga,antigone rubicunda,Gruiformes,Gruidae (Cranes),30915,2665127,224149976,True,False
+Brown Jay,psilorhinus morio,Passeriformes,"Corvidae (Crows, Jays, and Magpies)",29233,2644335,227055121,False,False
+Yellow-billed Shrike,corvinella corvina,Passeriformes,Laniidae (Shrikes),27427,2628378,227330511,True,False
+Cardinal Woodpecker,chloropicus fuscescens,Piciformes,Picidae (Woodpeckers),28705,2608507,235413084,True,False
+Asian Desert Warbler,sylvia nana,Passeriformes,Sylviidae (Sylviid Warblers),29118,2571063,247646527,True,False
+White-shouldered Tanager,tachyphonus luctuosus,Passeriformes,Thraupidae (Tanagers and Allies),29274,2565768,233217630,True,False
+Mulga Parrot,psephotus varius,Psittaciformes,Psittaculidae (Old World Parrots),26209,2561545,243563054,True,False
+Pink Cockatoo,lophochroa leadbeateri,Psittaciformes,Cacatuidae (Cockatoos),27370,2520597,232148327,True,False
+Flame-crested Tanager,tachyphonus cristatus,Passeriformes,Thraupidae (Tanagers and Allies),29012,2493523,229486088,True,False
+African Reed Warbler,acrocephalus baeticatus,Passeriformes,Acrocephalidae (Reed Warblers and Allies),26514,2476116,231134755,False,False
+Indonesian Honeyeater,lichmera limbata,Passeriformes,Meliphagidae (Honeyeaters),24802,2465291,225246760,False,False
+White-eyed Gull,ichthyaetus leucophthalmus,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",29745,2454416,215921618,True,False
+Menetries's Warbler,sylvia mystacea,Passeriformes,Sylviidae (Sylviid Warblers),24947,2407110,213902254,True,False
+Indochinese Yuhina,yuhina torqueola,Passeriformes,"Zosteropidae (White-eyes, Yuhinas, and Allies)",28422,2383634,220616698,True,False
+Lavender Waxbill,estrilda caerulescens,Passeriformes,Estrildidae (Waxbills and Allies),23154,2332748,206132121,True,False
+Little Grassbird,megalurus gramineus,Passeriformes,Locustellidae (Grassbirds and Allies),25994,2305951,216508653,True,False
+Eurasian Dotterel,charadrius morinellus,Charadriiformes,Charadriidae (Plovers and Lapwings),25355,2280418,218698073,True,False
+Madagascar Turtle-Dove,streptopelia picturata,Columbiformes,Columbidae (Pigeons and Doves),23765,2256943,195655374,False,False
+Bush Petronia,gymnornis dentata,Passeriformes,Passeridae (Old World Sparrows),26544,2242788,188314763,False,False
+Ash-throated Crake,mustelirallus albicollis,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",24175,2240632,205293348,True,False
+Amazonian Swift,chaetura viridipennis,Caprimulgiformes,Apodidae (Swifts),24728,2217761,188053259,False,False
+White-crowned Manakin,dixiphia pipra,Passeriformes,Pipridae (Manakins),26615,2216003,197978112,True,False
+Andean Goose,oressochen melanopterus,Anseriformes,"Anatidae (Ducks, Geese, and Waterfowl)",25616,2199890,182512989,False,False
+White-bellied Go-away-bird,corythaixoides leucogaster,Musophagiformes,Musophagidae (Turacos),27993,2166449,187104783,True,False
+Western Orphean Warbler,sylvia hortensis,Passeriformes,Sylviidae (Sylviid Warblers),24190,2154577,211808283,True,False
+Amazilia Hummingbird,amazilia amazilia,Caprimulgiformes,Trochilidae (Hummingbirds),29696,2114308,183129732,True,False
+White-bellied Hummingbird,amazilia chionogaster,Caprimulgiformes,Trochilidae (Hummingbirds),23798,2095941,190842078,False,False
+Banded Martin,riparia cincta,Passeriformes,Hirundinidae (Swallows),22859,2093091,217152701,True,False
+Middendorff's Grasshopper-Warbler,locustella ochotensis,Passeriformes,Locustellidae (Grassbirds and Allies),20352,2058886,201444488,True,False
+Red-stained Woodpecker,dryobates affinis,Piciformes,Picidae (Woodpeckers),22261,2058253,188104321,True,False
+Black Grouse,tetrao tetrix,Galliformes,"Phasianidae (Pheasants, Grouse, and Allies)",20246,2034333,173054340,True,False
+Hume's Whitethroat,sylvia althaea,Passeriformes,Sylviidae (Sylviid Warblers),22226,1955510,173040931,False,False
+Fulvous Chatterer,turdoides fulva,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),25147,1953555,174046592,False,False
+Red-faced Cormorant,phalacrocorax urile,Suliformes,Phalacrocoracidae (Cormorants and Shags),21312,1951475,195759231,True,False
+Long-tailed Parakeet,psittacula longicauda,Psittaciformes,Psittaculidae (Old World Parrots),19644,1924037,198178763,True,False
+Eastern Orphean Warbler,sylvia crassirostris,Passeriformes,Sylviidae (Sylviid Warblers),19344,1912703,187684035,True,False
+Black-throated Magpie-Jay,calocitta colliei,Passeriformes,"Corvidae (Crows, Jays, and Magpies)",20901,1905422,167898918,False,False
+Streaked Xenops,xenops rutilans,Passeriformes,Furnariidae (Ovenbirds and Woodcreepers),19447,1895600,173049912,True,False
+Lesser Moorhen,gallinula angulata,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",22034,1868416,186230566,True,False
+Black-bellied Starling,notopholia corrusca,Passeriformes,Sturnidae (Starlings),20891,1843533,169286494,False,False
+Russet-crowned Crake,anurolimnas viridis,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",22304,1839102,163347362,True,False
+Horsfield's Bronze-Cuckoo,chrysococcyx basalis,Cuculiformes,Cuculidae (Cuckoos),19203,1760382,164976837,False,False
+Sulphur-breasted Bushshrike,telophorus sulfureopectus,Passeriformes,Malaconotidae (Bushshrikes and Allies),19504,1724455,178732240,False,False
+Little Bronze-Cuckoo,chrysococcyx minutillus,Cuculiformes,Cuculidae (Cuckoos),17853,1717422,156801039,False,False
+Berylline Hummingbird,amazilia beryllina,Caprimulgiformes,Trochilidae (Hummingbirds),19834,1705217,153803493,False,False
+Brown Songlark,megalurus cruralis,Passeriformes,Locustellidae (Grassbirds and Allies),19911,1693680,147051603,True,False
+Orinoco Goose,oressochen jubatus,Anseriformes,"Anatidae (Ducks, Geese, and Waterfowl)",17489,1693386,145508682,True,False
+Fulvous-crested Tanager,tachyphonus surinamus,Passeriformes,Thraupidae (Tanagers and Allies),19013,1689750,146886571,True,False
+Black-throated Saltator,saltatricula atricollis,Passeriformes,Thraupidae (Tanagers and Allies),20472,1670823,150736389,True,False
+Greater Necklaced Laughingthrush,ianthocincla pectoralis,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),18348,1667887,147645387,True,False
+Spotted Tanager,ixothraupis punctata,Passeriformes,Thraupidae (Tanagers and Allies),18581,1666464,156039065,False,False
+Yellow-winged Tanager,thraupis abbas,Passeriformes,Thraupidae (Tanagers and Allies),18814,1631856,146240673,False,False
+Band-rumped Storm-Petrel,oceanodroma castro,Procellariiformes,Hydrobatidae (Northern Storm-Petrels),21039,1616076,144984164,False,False
+Sulawesi Swiftlet,aerodramus sororum,Caprimulgiformes,Apodidae (Swifts),18386,1597123,142088366,False,False
+Double-toothed Barbet,lybius bidentatus,Piciformes,Lybiidae (African Barbets),17725,1584003,141485458,True,False
+Stewart Island Shag,phalacrocorax chalconotus,Suliformes,Phalacrocoracidae (Cormorants and Shags),18790,1573077,123864054,False,False
+Afghan Babbler,turdoides huttoni,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),18409,1569661,136397986,False,False
+Manchurian Bush Warbler,horornis borealis,Passeriformes,Scotocercidae (Bush Warblers and Allies),18404,1554873,134789107,False,False
+Plain-bellied Emerald,amazilia leucogaster,Caprimulgiformes,Trochilidae (Hummingbirds),17420,1538146,131320559,True,False
+Striated Yuhina,yuhina castaniceps,Passeriformes,"Zosteropidae (White-eyes, Yuhinas, and Allies)",16659,1522437,135252187,True,False
+Chinese Babax,ianthocincla lanceolata,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),17928,1496742,131677142,True,False
+Sapphire-spangled Emerald,amazilia lactea,Caprimulgiformes,Trochilidae (Hummingbirds),17731,1480996,147458087,False,False
+Band-tailed Sierra-Finch,phrygilus alaudinus,Passeriformes,Thraupidae (Tanagers and Allies),16384,1477559,137578147,False,False
+Yellow-tailed Black-Cockatoo,calyptorhynchus funereus,Psittaciformes,Cacatuidae (Cockatoos),17666,1460262,133394371,False,False
+Yellow-throated Petronia,gymnornis superciliaris,Passeriformes,Passeridae (Old World Sparrows),18292,1449542,124761620,False,False
+Crested Francolin,dendroperdix sephaena,Galliformes,"Phasianidae (Pheasants, Grouse, and Allies)",16347,1433807,113146131,True,False
+Many-colored Chaco Finch,saltatricula multicolor,Passeriformes,Thraupidae (Tanagers and Allies),13802,1395308,121886179,False,False
+Chilean Skua,stercorarius chilensis,Charadriiformes,Stercorariidae (Skuas and Jaegers),15930,1391969,118131418,True,False
+Arabian Babbler,turdoides squamiceps,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),15842,1388514,119533387,True,False
+Purple-crested Turaco,tauraco porphyreolophus,Musophagiformes,Musophagidae (Turacos),13660,1361078,116149936,True,False
+Indian Chat,cercomela fusca,Passeriformes,Muscicapidae (Old World Flycatchers),14830,1359818,124549150,False,False
+Chestnut-tailed Minla,actinodura strigula,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),14765,1346637,118985383,False,False
+Ashy-throated Parrotbill,sinosuthora alphonsiana,Passeriformes,"Paradoxornithidae (Parrotbills, Wrentit, and Allies)",14613,1335380,120001942,False,False
+Gray's Grasshopper-Warbler,locustella fasciolata,Passeriformes,Locustellidae (Grassbirds and Allies),14376,1333208,125846435,True,False
+Chestnut Wattle-eye,platysteira castanea,Passeriformes,Platysteiridae (Wattle-eyes and Batises),15327,1330140,108346039,True,False
+Collared Crow,corvus torquatus,Passeriformes,"Corvidae (Crows, Jays, and Magpies)",13548,1301809,122932364,True,False
+Azure-crowned Hummingbird,amazilia cyanocephala,Caprimulgiformes,Trochilidae (Hummingbirds),16338,1283046,106802280,False,False
+White-bellied Emerald,amazilia candida,Caprimulgiformes,Trochilidae (Hummingbirds),15721,1276824,111050274,False,False
+White-chested Emerald,amazilia brevirostris,Caprimulgiformes,Trochilidae (Hummingbirds),15401,1275215,115837569,False,False
+African Gray Woodpecker,chloropicus goertae,Piciformes,Picidae (Woodpeckers),14726,1265716,107399704,False,False
+Madagascar Munia,lonchura nana,Passeriformes,Estrildidae (Waxbills and Allies),15763,1265207,115652535,True,False
+Carbonated Sierra-Finch,phrygilus carbonarius,Passeriformes,Thraupidae (Tanagers and Allies),13146,1261933,124854835,False,False
+Slaty-headed Parakeet,psittacula himalayana,Psittaciformes,Psittaculidae (Old World Parrots),13496,1254235,113448809,True,False
+Singing Bushlark,mirafra cantillans,Passeriformes,Alaudidae (Larks),13718,1253912,111379248,False,False
+Black-eared Cuckoo,chrysococcyx osculans,Cuculiformes,Cuculidae (Cuckoos),12764,1244455,118977686,True,False
+Rufous-vented Warbler,sylvia subcaerulea,Passeriformes,Sylviidae (Sylviid Warblers),13110,1244379,112208933,False,False
+Black-faced Waxbill,estrilda erythronotos,Passeriformes,Estrildidae (Waxbills and Allies),14390,1243782,97553690,True,False
+White-bellied Tyrannulet,serpophaga munda,Passeriformes,Tyrannidae (Tyrant Flycatchers),12933,1234884,111430485,False,False
+Lucy's Warbler,oreothlypis luciae,Passeriformes,Parulidae (New World Warblers),18054,1216891,71501571,False,True
+Cuban Emerald,chlorostilbon ricordii,Caprimulgiformes,Trochilidae (Hummingbirds),14657,1214739,111545709,False,False
+Rufous Flycatcher-Thrush,neocossyphus fraseri,Passeriformes,Turdidae (Thrushes and Allies),13667,1212590,109059265,True,False
+Elegant Tit,periparus elegans,Passeriformes,"Paridae (Tits, Chickadees, and Titmice)",14573,1207715,120311082,True,False
+Bright-rumped Yellow-Finch,sicalis uropygialis,Passeriformes,Thraupidae (Tanagers and Allies),12396,1202284,98012543,False,False
+Changeable Hawk-Eagle,nisaetus limnaeetus,Accipitriformes,"Accipitridae (Hawks, Eagles, and Kites)",13224,1198304,104964175,False,False
+Yellow-billed Magpie,pica nuttalli,Passeriformes,"Corvidae (Crows, Jays, and Magpies)",13289,1195742,117080952,False,True
+Marsh Grassbird,locustella pryeri,Passeriformes,Locustellidae (Grassbirds and Allies),13920,1195264,111166799,True,False
+Black-streaked Scimitar-Babbler,megapomatorhinus gravivox,Passeriformes,"Timaliidae (Tree-Babblers, Scimitar-Babblers, and Allies)",13921,1175808,115343100,False,False
+Chestnut-crested Yuhina,yuhina everetti,Passeriformes,"Zosteropidae (White-eyes, Yuhinas, and Allies)",13406,1170986,106513455,True,False
+Copper-rumped Hummingbird,amazilia tobaci,Caprimulgiformes,Trochilidae (Hummingbirds),15526,1165644,103927095,False,False
+Tristram's Warbler,sylvia deserticola,Passeriformes,Sylviidae (Sylviid Warblers),12884,1161095,120229484,True,False
+White-collared Yuhina,yuhina diademata,Passeriformes,"Zosteropidae (White-eyes, Yuhinas, and Allies)",14076,1160639,102039735,True,False
+Cuban Grassquit,tiaris canorus,Passeriformes,Thraupidae (Tanagers and Allies),13302,1124461,110448157,False,False
+Matsudaira's Storm-Petrel,oceanodroma matsudairae,Procellariiformes,Hydrobatidae (Northern Storm-Petrels),13598,1119153,99694381,False,False
+Alpine Leaf Warbler,phylloscopus occisinensis,Passeriformes,Phylloscopidae (Leaf Warblers),12421,1114402,95978421,False,False
+Black Butcherbird,cracticus quoyi,Passeriformes,Cracticidae (Bellmagpies and Allies),11709,1105563,85625570,True,False
+Bourke's Parrot,neophema bourkii,Psittaciformes,Psittaculidae (Old World Parrots),9752,1091306,89467532,True,False
+Pallid Cuckoo,cacomantis pallidus,Cuculiformes,Cuculidae (Cuckoos),11972,1078014,96860016,True,False
+Checkered Woodpecker,dryobates mixtus,Piciformes,Picidae (Woodpeckers),12613,1070115,101563671,True,False
+Bearded Scrub-Robin,cercotrichas quadrivirgata,Passeriformes,Muscicapidae (Old World Flycatchers),10673,1067193,99492148,False,False
+Striated Babbler,turdoides earlei,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),11921,1062887,99074386,True,False
+Streak-breasted Honeyeater,meliphaga reticulata,Passeriformes,Meliphagidae (Honeyeaters),12113,1059256,89000997,False,False
+Mountain Wheatear,oenanthe monticola,Passeriformes,Muscicapidae (Old World Flycatchers),11343,1056283,104113092,True,False
+Bearded Woodpecker,chloropicus namaquus,Piciformes,Picidae (Woodpeckers),10812,1051199,105174804,True,False
+Moorland Chat,cercomela sordida,Passeriformes,Muscicapidae (Old World Flycatchers),11394,1048429,99886157,True,False
+Spruce Grouse,falcipennis canadensis,Galliformes,"Phasianidae (Pheasants, Grouse, and Allies)",11126,1046139,100856626,True,False
+Sunda Woodpecker,yungipicus moluccensis,Piciformes,Picidae (Woodpeckers),11114,1037808,99488791,False,False
+Fiscal Flycatcher,melaenornis silens,Passeriformes,Muscicapidae (Old World Flycatchers),11808,1006970,95629218,True,False
+Barred Rail,gallirallus torquatus,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",10999,999864,91729794,True,False
+Steely-vented Hummingbird,amazilia saucerottei,Caprimulgiformes,Trochilidae (Hummingbirds),10536,992110,82849689,False,False
+Canivet's Emerald,chlorostilbon canivetii,Caprimulgiformes,Trochilidae (Hummingbirds),11049,991489,86919783,False,False
+Slaty-backed Flycatcher,ficedula sordida,Passeriformes,Muscicapidae (Old World Flycatchers),10531,981322,98605670,True,False
+Spotted Puffbird,bucco tamatia,Galbuliformes,Bucconidae (Puffbirds),10125,967264,88142630,True,False
+Dartford Warbler,sylvia undata,Passeriformes,Sylviidae (Sylviid Warblers),11098,964162,89554851,True,False
+Sombre Hummingbird,aphantochroa cirrochloris,Caprimulgiformes,Trochilidae (Hummingbirds),9971,962118,89995989,True,False
+Spectacled Bulbul,rubigula erythropthalmos,Passeriformes,Pycnonotidae (Bulbuls),9692,953920,82879035,True,False
+Rufous Chatterer,turdoides rubiginosa,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),10441,953307,76532904,True,False
+South Georgia Shag,phalacrocorax georgianus,Suliformes,Phalacrocoracidae (Cormorants and Shags),12871,940102,64417023,False,False
+Speckled Tanager,ixothraupis guttata,Passeriformes,Thraupidae (Tanagers and Allies),10227,938501,82911380,False,False
+Gray-headed Parrotbill,psittiparus gularis,Passeriformes,"Paradoxornithidae (Parrotbills, Wrentit, and Allies)",10293,932451,95890279,True,False
+Glaucous Tanager,thraupis glaucocolpa,Passeriformes,Thraupidae (Tanagers and Allies),9714,918496,83524278,False,False
+Bearded Barbet,lybius dubius,Piciformes,Lybiidae (African Barbets),9480,912407,79668754,True,False
+Horsfield's Babbler,turdinus sepiarius,Passeriformes,Pellorneidae (Ground Babblers and Allies),9834,901694,84868666,True,False
+Middle Spotted Woodpecker,dendrocoptes medius,Piciformes,Picidae (Woodpeckers),9554,899396,88149659,True,False
+Sarus Crane,antigone antigone,Gruiformes,Gruidae (Cranes),9439,888558,76439517,True,False
+Sooty Flycatcher,bradornis fuliginosus,Passeriformes,Muscicapidae (Old World Flycatchers),9674,887763,87235049,True,False
+African Desert Warbler,sylvia deserti,Passeriformes,Sylviidae (Sylviid Warblers),11191,883032,80858851,True,False
+Lemon Dove,columba larvata,Columbiformes,Columbidae (Pigeons and Doves),9480,880853,80206610,True,False
+Bahama Woodstar,calliphlox evelynae,Caprimulgiformes,Trochilidae (Hummingbirds),9219,880312,74361902,False,False
+Carnaby's Black-Cockatoo,calyptorhynchus latirostris,Psittaciformes,Cacatuidae (Cockatoos),9616,879807,77987989,False,False
+White-breasted Cuckooshrike,coracina pectoralis,Passeriformes,Campephagidae (Cuckooshrikes),10715,863560,88305627,True,False
+Pere David's Laughingthrush,ianthocincla davidi,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),9732,862665,82681323,True,False
+Graceful Honeyeater,meliphaga gracilis,Passeriformes,Meliphagidae (Honeyeaters),9183,836073,78660145,True,False
+Dull-colored Grassquit,tiaris obscurus,Passeriformes,Thraupidae (Tanagers and Allies),9167,834974,71123678,False,False
+Black-banded Crake,anurolimnas fasciatus,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",9369,830478,67171919,False,False
+Yellow-bellied Tanager,ixothraupis xanthogastra,Passeriformes,Thraupidae (Tanagers and Allies),8457,815730,80775493,False,False
+Blue-throated Goldentail,hylocharis eliciae,Caprimulgiformes,Trochilidae (Hummingbirds),8368,813068,75815491,False,False
+Blue-chested Hummingbird,amazilia amabilis,Caprimulgiformes,Trochilidae (Hummingbirds),8739,809883,75419432,True,False
+Abbott's Babbler,turdinus abbotti,Passeriformes,Pellorneidae (Ground Babblers and Allies),9771,808106,71330755,True,False
+Rusty-cheeked Scimitar-Babbler,megapomatorhinus erythrogenys,Passeriformes,"Timaliidae (Tree-Babblers, Scimitar-Babblers, and Allies)",9120,798866,74046192,False,False
+Buff-fronted Foliage-gleaner,philydor rufum,Passeriformes,Furnariidae (Ovenbirds and Woodcreepers),9716,786435,69646090,False,False
+Rufous Babbler,turdoides subrufa,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),8836,782668,70139747,False,False
+Tawny-crested Tanager,tachyphonus delatrii,Passeriformes,Thraupidae (Tanagers and Allies),8459,782014,73876604,False,False
+Scale-breasted Woodpecker,celeus grammicus,Piciformes,Picidae (Woodpeckers),9480,775142,74388029,True,False
+White-quilled Bustard,eupodotis afraoides,Otidiformes,Otididae (Bustards),8000,762506,71642769,False,False
+Magpie Shrike,corvinella melanoleuca,Passeriformes,Laniidae (Shrikes),8825,751714,68761814,True,False
+Virginia's Warbler,oreothlypis virginiae,Passeriformes,Parulidae (New World Warblers),9027,742823,62139757,False,True
+Layard's Woodcreeper,lepidocolaptes layardi,Passeriformes,Furnariidae (Ovenbirds and Woodcreepers),9131,740196,65619265,False,False
+Iraq Babbler,turdoides altirostris,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),7547,736188,65675609,False,False
+Yellow-browed Bulbul,iole indica,Passeriformes,Pycnonotidae (Bulbuls),8303,727113,70888366,False,False
+Yellow-spotted Petronia,gymnornis pyrgita,Passeriformes,Passeridae (Old World Sparrows),7269,718024,58943914,False,False
+Western Whistler,pachycephala occidentalis,Passeriformes,Pachycephalidae (Whistlers and Allies),7205,715278,61122302,False,False
+Spinifexbird,megalurus carteri,Passeriformes,Locustellidae (Grassbirds and Allies),7252,714671,52163861,True,False
+Violet-bellied Hummingbird,juliamyia julie,Caprimulgiformes,Trochilidae (Hummingbirds),8532,707818,68586119,True,False
+Chestnut-hooded Laughingthrush,ianthocincla treacheri,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),8838,702527,69943891,False,False
+Golden-chevroned Tanager,thraupis ornata,Passeriformes,Thraupidae (Tanagers and Allies),7464,702262,66011113,False,False
+Bare-eyed White-eye,woodfordia superciliosa,Passeriformes,"Zosteropidae (White-eyes, Yuhinas, and Allies)",7351,693117,66317955,True,False
+Carmiol's Tanager,chlorothraupis carmioli,Passeriformes,Cardinalidae (Cardinals and Allies),6642,690220,64149575,False,False
+Auckland Islands Shag,phalacrocorax colensoi,Suliformes,Phalacrocoracidae (Cormorants and Shags),7968,689714,61095804,False,False
+Black-backed Barbet,lybius minor,Piciformes,Lybiidae (African Barbets),7550,677364,67523032,False,False
+Desert Whitethroat,sylvia minula,Passeriformes,Sylviidae (Sylviid Warblers),6848,673804,64789816,False,False
+Smoky-brown Woodpecker,dryobates fumigatus,Piciformes,Picidae (Woodpeckers),7280,665046,68709189,False,False
+White-winged Diuca-Finch,idiopsar speculifer,Passeriformes,Thraupidae (Tanagers and Allies),7606,660144,59028376,False,False
+Mimic Honeyeater,meliphaga analoga,Passeriformes,Meliphagidae (Honeyeaters),6747,655170,58726456,True,False
+Lava Gull,leucophaeus fuliginosus,Charadriiformes,"Laridae (Gulls, Terns, and Skimmers)",7587,652957,60589660,True,False
+Blue-tailed Hummingbird,amazilia cyanura,Caprimulgiformes,Trochilidae (Hummingbirds),6584,648529,59078070,False,False
+Brown-capped Woodpecker,yungipicus nanus,Piciformes,Picidae (Woodpeckers),7413,643638,65041557,False,False
+Amazonian Antpitta,hylopezus berlepschi,Passeriformes,Grallariidae (Antpittas),7469,637094,60218908,True,False
+Blossom-headed Parakeet,psittacula roseata,Psittaciformes,Psittaculidae (Old World Parrots),6513,637014,55312899,True,False
+Mottled Swift,apus aequatorialis,Caprimulgiformes,Apodidae (Swifts),6865,632917,57789373,True,False
+Ashy Cuckooshrike,coracina cinerea,Passeriformes,Campephagidae (Cuckooshrikes),6605,631490,64022655,False,False
+Sunda Bush Warbler,horornis vulcanius,Passeriformes,Scotocercidae (Bush Warblers and Allies),7360,623239,69628743,False,False
+Sooty Grassquit,tiaris fuliginosus,Passeriformes,Thraupidae (Tanagers and Allies),6727,619709,57213585,False,False
+Blue-capped Tanager,thraupis cyanocephala,Passeriformes,Thraupidae (Tanagers and Allies),7144,619181,58076187,False,False
+Malabar Parakeet,psittacula columboides,Psittaciformes,Psittaculidae (Old World Parrots),7308,616482,59802800,False,False
+Ashy Storm-Petrel,oceanodroma homochroa,Procellariiformes,Hydrobatidae (Northern Storm-Petrels),6831,616002,53497465,False,False
+Olive Woodpecker,chloropicus griseocephalus,Piciformes,Picidae (Woodpeckers),7223,614179,62496641,True,False
+Wedge-tailed Sabrewing,campylopterus curvipennis,Caprimulgiformes,Trochilidae (Hummingbirds),6794,610589,57680293,False,False
+Golden-crowned Emerald,chlorostilbon auriceps,Caprimulgiformes,Trochilidae (Hummingbirds),6813,593176,57358676,False,False
+White-spotted Woodpecker,dryobates spilogaster,Piciformes,Picidae (Woodpeckers),6263,590546,50845729,False,False
+Buff-spotted Woodpecker,campethera nivosa,Piciformes,Picidae (Woodpeckers),5889,580879,54911593,True,False
+Azure-shouldered Tanager,thraupis cyanoptera,Passeriformes,Thraupidae (Tanagers and Allies),5921,579232,53026921,False,False
+Striated Bulbul,pycnonotus striatus,Passeriformes,Pycnonotidae (Bulbuls),6373,578644,53878923,True,False
+Fan-tailed Grassbird,schoenicola brevirostris,Passeriformes,Locustellidae (Grassbirds and Allies),5999,576811,51056482,True,False
+Brown-eared Woodpecker,campethera caroli,Piciformes,Picidae (Woodpeckers),6404,574588,50396199,True,False
+Blanford's Snowfinch,montifringilla blanfordi,Passeriformes,Passeridae (Old World Sparrows),6197,574427,50945494,False,False
+Rufous-necked Laughingthrush,ianthocincla ruficollis,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),6362,572457,56894327,False,False
+Chestnut-headed Crake,anurolimnas castaneiceps,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",6252,572447,52304459,True,False
+Golden Vireo,vireo hypochryseus,Passeriformes,"Vireonidae (Vireos, Shrike-Babblers, and Erpornis)",5911,566412,58349801,False,False
+Gray Cuckooshrike,coracina caesia,Passeriformes,Campephagidae (Cuckooshrikes),5824,562552,50230095,False,False
+African Quailfinch,ortygospiza fuscocrissa,Passeriformes,Estrildidae (Waxbills and Allies),6918,556584,49979621,False,False
+Striped Woodpecker,dryobates lignarius,Piciformes,Picidae (Woodpeckers),5086,548273,48145951,False,False
+Paint-billed Crake,mustelirallus erythrops,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",5961,541893,45897607,True,False
+Spoon-billed Sandpiper,calidris pygmea,Charadriiformes,Scolopacidae (Sandpipers and Allies),6053,537531,46588235,True,False
+Lord Howe White-eye,zosterops tephropleurus,Passeriformes,"Zosteropidae (White-eyes, Yuhinas, and Allies)",6030,534129,53233179,False,False
+Hooded Grosbeak,coccothraustes abeillei,Passeriformes,"Fringillidae (Finches, Euphonias, and Allies)",6213,531374,51523822,False,False
+Scarlet-backed Woodpecker,dryobates callonotus,Piciformes,Picidae (Woodpeckers),5764,530644,51269662,True,False
+Curl-crested Aracari,pteroglossus beauharnaesii,Piciformes,Ramphastidae (Toucans),5649,529601,52332667,False,False
+Dark-fronted Babbler,rhopocichla atriceps,Passeriformes,"Timaliidae (Tree-Babblers, Scimitar-Babblers, and Allies)",6091,521689,49795730,False,False
+Philippine Woodpecker,yungipicus maculatus,Piciformes,Picidae (Woodpeckers),5006,500581,43196727,False,False
+Speckled Spinetail,cranioleuca gutturata,Passeriformes,Furnariidae (Ovenbirds and Woodcreepers),5523,492569,45331441,True,False
+Wompoo Fruit-Dove,ptilinopus magnificus,Columbiformes,Columbidae (Pigeons and Doves),5298,491832,45571244,False,False
+Chestnut-capped Puffbird,bucco macrodactylus,Galbuliformes,Bucconidae (Puffbirds),5260,490197,45634121,True,False
+Yellow-bellied Wattle-eye,platysteira concreta,Passeriformes,Platysteiridae (Wattle-eyes and Batises),5054,482625,39970233,True,False
+Magnificent Riflebird,ptiloris magnificus,Passeriformes,Paradisaeidae (Birds-of-Paradise),4853,480786,44394676,True,False
+Hispaniolan Emerald,chlorostilbon swainsonii,Caprimulgiformes,Trochilidae (Hummingbirds),5456,480379,44033329,False,False
+Seram Swiftlet,aerodramus ceramensis,Caprimulgiformes,Apodidae (Swifts),7179,480276,30479271,False,False
+Moltoni's Warbler,sylvia subalpina,Passeriformes,Sylviidae (Sylviid Warblers),4399,450833,40804504,True,False
+Yellow-wattled Bulbul,brachypodius urostictus,Passeriformes,Pycnonotidae (Bulbuls),5197,449696,41686683,True,False
+Marsh Tchagra,tchagra minutus,Passeriformes,Malaconotidae (Bushshrikes and Allies),5380,448211,38686593,True,False
+Azure Jay,cyanocorax caeruleus,Passeriformes,"Corvidae (Crows, Jays, and Magpies)",5017,446590,43406864,False,False
+Karoo Scrub-Robin,cercotrichas coryphoeus,Passeriformes,Muscicapidae (Old World Flycatchers),4726,441182,35971756,False,False
+Olive-spotted Hummingbird,leucippus chlorocercus,Caprimulgiformes,Trochilidae (Hummingbirds),4782,438933,40020028,False,False
+Gray-headed Parakeet,psittacula finschii,Psittaciformes,Psittaculidae (Old World Parrots),4648,437870,36978673,True,False
+Yellow-breasted Crake,hapalocrex flaviventer,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",4545,433216,39458772,False,False
+Little Gray Woodpecker,chloropicus elachus,Piciformes,Picidae (Woodpeckers),5229,432680,40543941,True,False
+Pygmy White-eye,oculocincta squamifrons,Passeriformes,"Zosteropidae (White-eyes, Yuhinas, and Allies)",5156,425434,37307750,True,False
+White-throated Babbler,turdoides gularis,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),4533,422318,36037905,True,False
+Rufous-sided Warbling-Finch,poospiza hypochondria,Passeriformes,Thraupidae (Tanagers and Allies),5035,420403,41971747,False,False
+Gray-headed Fish-Eagle,haliaeetus ichthyaetus,Accipitriformes,"Accipitridae (Hawks, Eagles, and Kites)",5417,418977,42563929,False,False
+Brown-backed Woodpecker,chloropicus obsoletus,Piciformes,Picidae (Woodpeckers),5108,418250,32091778,True,False
+Large Scimitar-Babbler,megapomatorhinus hypoleucos,Passeriformes,"Timaliidae (Tree-Babblers, Scimitar-Babblers, and Allies)",5078,413388,38694786,False,False
+Des Murs's Wiretail,sylviorthorhynchus desmursii,Passeriformes,Furnariidae (Ovenbirds and Woodcreepers),4754,410768,40202059,True,False
+Black-chinned Fruit-Dove,ptilinopus leclancheri,Columbiformes,Columbidae (Pigeons and Doves),4509,405173,39710121,False,False
+Elliot's Woodpecker,chloropicus elliotii,Piciformes,Picidae (Woodpeckers),4038,403778,38192428,True,False
+Yellow-throated Scrubwren,sericornis citreogularis,Passeriformes,Acanthizidae (Thornbills and Allies),4509,399400,38506305,True,False
+Sulawesi Woodpecker,yungipicus temminckii,Piciformes,Picidae (Woodpeckers),4269,398101,36541362,False,False
+White-breasted Robin,eopsaltria georgiana,Passeriformes,Petroicidae (Australasian Robins),3982,396701,35519953,True,False
+Small Tree-Finch,camarhynchus parvulus,Passeriformes,Thraupidae (Tanagers and Allies),4984,394909,30349934,False,False
+Purple-naped Spiderhunter,arachnothera hypogrammicum,Passeriformes,Nectariniidae (Sunbirds and Spiderhunters),3809,394674,34930426,False,False
+Buff-crested Bustard,eupodotis gindiana,Otidiformes,Otididae (Bustards),4343,392612,34422289,True,False
+Arabian Warbler,sylvia leucomelaena,Passeriformes,Sylviidae (Sylviid Warblers),4796,386690,33922250,True,False
+Streaked Wren-Babbler,turdinus brevicaudatus,Passeriformes,Pellorneidae (Ground Babblers and Allies),4519,384715,36963378,True,False
+Leaf-love,phyllastrephus scandens,Passeriformes,Pycnonotidae (Bulbuls),4311,382965,33037479,True,False
+Brown-breasted Barbet,lybius melanopterus,Piciformes,Lybiidae (African Barbets),4425,382749,36074575,True,False
+Fernbird,megalurus punctatus,Passeriformes,Locustellidae (Grassbirds and Allies),4569,381804,37775447,False,False
+Yellow-spectacled White-eye,zosterops wallacei,Passeriformes,"Zosteropidae (White-eyes, Yuhinas, and Allies)",4427,381787,35520755,True,False
+Bristled Grassbird,chaetornis striata,Passeriformes,Locustellidae (Grassbirds and Allies),4122,377667,36039912,True,True
+Black-fronted Bushshrike,telophorus nigrifrons,Passeriformes,Malaconotidae (Bushshrikes and Allies),3672,372027,32565441,False,False
+Tractrac Chat,cercomela tractrac,Passeriformes,Muscicapidae (Old World Flycatchers),4214,366626,34126670,True,False
+Brown-fronted Woodpecker,dendrocoptes auriceps,Piciformes,Picidae (Woodpeckers),3683,366299,29738143,True,False
+Red-rumped Woodpecker,dryobates kirkii,Piciformes,Picidae (Woodpeckers),3679,366014,37291559,True,False
+Black Storm-Petrel,oceanodroma melania,Procellariiformes,Hydrobatidae (Northern Storm-Petrels),3835,360974,33820837,False,False
+Chapada Flycatcher,suiriri affinis,Passeriformes,Tyrannidae (Tyrant Flycatchers),3974,356455,27417797,True,False
+Lesser Fish-Eagle,haliaeetus humilis,Accipitriformes,"Accipitridae (Hawks, Eagles, and Kites)",4188,356208,36217868,False,False
+Mangrove Robin,eopsaltria pulverulenta,Passeriformes,Petroicidae (Australasian Robins),4131,353296,32865441,True,False
+Dark-crowned White-eye,lophozosterops dohertyi,Passeriformes,"Zosteropidae (White-eyes, Yuhinas, and Allies)",4625,353214,33311397,False,False
+Yellow-billed Barbet,trachyphonus purpuratus,Piciformes,Lybiidae (African Barbets),4135,352291,33583764,False,False
+Black-tailed Waxbill,estrilda perreini,Passeriformes,Estrildidae (Waxbills and Allies),3782,348337,32543681,True,False
+Papuan Babbler,pomatostomus isidorei,Passeriformes,Pomatostomidae (Pseudo-Babblers),3213,346519,32471144,False,False
+Golden-collared Woodpecker,dryobates cassini,Piciformes,Picidae (Woodpeckers),3753,343243,33569814,True,False
+Gray-bellied Bulbul,rubigula cyaniventris,Passeriformes,Pycnonotidae (Bulbuls),3957,342497,33889003,True,False
+Red-crested Bustard,eupodotis ruficrista,Otidiformes,Otididae (Bustards),3777,341055,30537516,True,False
+White-backed Night-Heron,gorsachius leuconotus,Pelecaniformes,"Ardeidae (Herons, Egrets, and Bitterns)",3573,340647,30791398,False,False
+Rufous-backed Sibia,minla annectens,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),4185,338521,29506411,False,False
+Yellow-breasted Fruit-Dove,ptilinopus occipitalis,Columbiformes,Columbidae (Pigeons and Doves),3689,333004,28623810,False,False
+Least Storm-Petrel,oceanodroma microsoma,Procellariiformes,Hydrobatidae (Northern Storm-Petrels),4052,331573,28053052,False,False
+White-throated Ground-Dove,alopecoenas xanthonurus,Columbiformes,Columbidae (Pigeons and Doves),3988,330624,27957961,True,False
+Gray Emutail,amphilais seebohmi,Passeriformes,Locustellidae (Grassbirds and Allies),3628,325747,31230891,True,False
+Olive Bushshrike,telophorus olivaceus,Passeriformes,Malaconotidae (Bushshrikes and Allies),3818,324000,25700750,False,False
+Compact Weaver,pachyphantes superciliosus,Passeriformes,Ploceidae (Weavers and Allies),3206,322309,28882919,True,False
+Swinhoe's Storm-Petrel,oceanodroma monorhis,Procellariiformes,Hydrobatidae (Northern Storm-Petrels),3587,316141,29355386,False,False
+Mouse-colored Sunbird,cyanomitra veroxii,Passeriformes,Nectariniidae (Sunbirds and Spiderhunters),3763,310321,30685529,False,False
+Foxy Lark,calendulauda alopex,Passeriformes,Alaudidae (Larks),3617,306443,26802372,True,False
+Buru Golden-Bulbul,alophoixus mystacalis,Passeriformes,Pycnonotidae (Bulbuls),3240,305365,27776629,False,False
+Shining-green Hummingbird,lepidopyga goudoti,Caprimulgiformes,Trochilidae (Hummingbirds),3427,302956,29184971,False,False
+Buff-chested Babbler,cyanoderma ambiguum,Passeriformes,"Timaliidae (Tree-Babblers, Scimitar-Babblers, and Allies)",3139,295943,28885088,False,False
+Gray-green Bushshrike,telophorus bocagei,Passeriformes,Malaconotidae (Bushshrikes and Allies),3668,295604,28213956,False,False
+Red-backed Sierra-Finch,phrygilus dorsalis,Passeriformes,Thraupidae (Tanagers and Allies),3456,292415,27870706,False,False
+Henslow's Sparrow,centronyx henslowii,Passeriformes,Passerellidae (New World Sparrows),4102,283124,19371138,False,True
+Savile's Bustard,eupodotis savilei,Otidiformes,Otididae (Bustards),2859,278620,23734991,True,False
+Puna Canastero,asthenes sclateri,Passeriformes,Furnariidae (Ovenbirds and Woodcreepers),2897,274678,24707036,False,False
+Mountain Gray Woodpecker,chloropicus spodocephalus,Piciformes,Picidae (Woodpeckers),2808,273802,23913761,True,False
+African Scrub-Robin,cercotrichas minor,Passeriformes,Muscicapidae (Old World Flycatchers),2834,273465,24128098,False,False
+Green Barbet,stactolaema olivacea,Piciformes,Lybiidae (African Barbets),2911,270022,25465796,True,False
+Many-colored Bushshrike,telophorus multicolor,Passeriformes,Malaconotidae (Bushshrikes and Allies),2632,269047,24084761,False,False
+Scaly Chatterer,turdoides aylmeri,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),3207,266948,24256637,True,False
+Gold-faced Barbet,psilopogon chrysopsis,Piciformes,Megalaimidae (Asian Barbets),2807,265406,23597445,False,False
+White-throated Robin-Chat,cossypha humeralis,Passeriformes,Muscicapidae (Old World Flycatchers),3085,259122,22996922,False,False
+Chestnut-capped Laughingthrush,ianthocincla mitrata,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),2890,257573,25156688,True,False
+Rusty Mouse-Warbler,crateroscelis murina,Passeriformes,Acanthizidae (Thornbills and Allies),2957,257440,22077602,True,False
+Brown Parisoma,sylvia lugens,Passeriformes,Sylviidae (Sylviid Warblers),2797,253273,24177305,True,False
+Gray-headed Silverbill,odontospiza griseicapilla,Passeriformes,Estrildidae (Waxbills and Allies),2914,253048,22757580,True,False
+Black-shouldered Nightjar,caprimulgus nigriscapularis,Caprimulgiformes,Caprimulgidae (Nightjars and Allies),2721,250284,22362170,False,False
+Sapphire-throated Hummingbird,lepidopyga coeruleogularis,Caprimulgiformes,Trochilidae (Hummingbirds),2416,250005,22528067,False,False
+Scaly-breasted Partridge,arborophila chloropus,Galliformes,"Phasianidae (Pheasants, Grouse, and Allies)",2874,249477,21947620,False,False
+Hooded Parrot,psephotus dissimilis,Psittaciformes,Psittaculidae (Old World Parrots),2778,248446,21883795,False,False
+Papuan Scrubwren,sericornis papuensis,Passeriformes,Acanthizidae (Thornbills and Allies),2766,244039,22276263,True,False
+Banded Parisoma,sylvia boehmi,Passeriformes,Sylviidae (Sylviid Warblers),2486,242206,20214012,True,False
+Black Cicadabird,edolisoma melan,Passeriformes,Campephagidae (Cuckooshrikes),2763,240395,19069924,False,False
+Short-tailed Parrotbill,neosuthora davidiana,Passeriformes,"Paradoxornithidae (Parrotbills, Wrentit, and Allies)",2893,239945,20933713,False,False
+Dusky Hummingbird,cynanthus sordidus,Caprimulgiformes,Trochilidae (Hummingbirds),2476,237126,20204015,False,False
+Silverbird,melaenornis semipartitus,Passeriformes,Muscicapidae (Old World Flycatchers),2341,236455,21398134,True,False
+Dotted Tanager,ixothraupis varia,Passeriformes,Thraupidae (Tanagers and Allies),2553,233453,20731654,True,False
+Mountain Meliphaga,meliphaga orientalis,Passeriformes,Meliphagidae (Honeyeaters),2504,231764,21644532,False,False
+Halmahera Golden-Bulbul,alophoixus chloris,Passeriformes,Pycnonotidae (Bulbuls),2334,229925,20455559,False,False
+Ringed Storm-Petrel,oceanodroma hornbyi,Procellariiformes,Hydrobatidae (Northern Storm-Petrels),2558,229079,20801738,False,False
+Red-eared Fruit-Dove,ptilinopus fischeri,Columbiformes,Columbidae (Pigeons and Doves),2278,227426,19019076,False,False
+Sulphur-throated Spinetail,cranioleuca sulphurifera,Passeriformes,Furnariidae (Ovenbirds and Woodcreepers),2720,225218,20515537,False,False
+Thicket Antpitta,hylopezus dives,Passeriformes,Grallariidae (Antpittas),2502,225022,21884052,False,False
+Yellow-bellied Flowerpecker,dicaeum melanoxanthum,Passeriformes,Dicaeidae (Flowerpeckers),2472,222168,20906542,True,False
+Bronze Ground-Dove,alopecoenas beccarii,Columbiformes,Columbidae (Pigeons and Doves),2461,218169,18618169,True,False
+Pale-footed Bush Warbler,urosphena pallidipes,Passeriformes,Scotocercidae (Bush Warblers and Allies),2536,217362,19661942,False,False
+Black-necklaced Scimitar-Babbler,megapomatorhinus erythrocnemis,Passeriformes,"Timaliidae (Tree-Babblers, Scimitar-Babblers, and Allies)",2280,213170,18329828,False,False
+Scaly-breasted Bulbul,rubigula squamata,Passeriformes,Pycnonotidae (Bulbuls),2417,211868,20222553,True,False
+Marble-faced Bristle-Tyrant,phylloscartes ophthalmicus,Passeriformes,Tyrannidae (Tyrant Flycatchers),2276,210199,19669158,False,False
+Limestone Wren-Babbler,turdinus crispifrons,Passeriformes,Pellorneidae (Ground Babblers and Allies),2206,209702,20625866,False,False
+Puff-backed Bulbul,brachypodius eutilotus,Passeriformes,Pycnonotidae (Bulbuls),2244,209111,19846972,True,False
+Seram Golden-Bulbul,alophoixus affinis,Passeriformes,Pycnonotidae (Bulbuls),2387,208323,19756677,False,False
+Markham's Storm-Petrel,oceanodroma markhami,Procellariiformes,Hydrobatidae (Northern Storm-Petrels),2137,207827,19148696,False,False
+Brown-tailed Chat,cercomela scotocerca,Passeriformes,Muscicapidae (Old World Flycatchers),2420,207306,17921331,True,False
+Chestnut-winged Foliage-gleaner,philydor erythropterum,Passeriformes,Furnariidae (Ovenbirds and Woodcreepers),2175,206744,21016731,True,False
+Black-cheeked Waxbill,estrilda charmosyna,Passeriformes,Estrildidae (Waxbills and Allies),2277,205596,18529103,True,False
+Yellow-gaped Honeyeater,meliphaga flavirictus,Passeriformes,Meliphagidae (Honeyeaters),2125,203535,19205024,True,False
+White-throated Sierra-Finch,phrygilus erythronotus,Passeriformes,Thraupidae (Tanagers and Allies),2495,202043,19586749,False,False
+Papuan Flycatcher,microeca papuana,Passeriformes,Petroicidae (Australasian Robins),2277,201341,19425526,False,False
+Mindanao White-eye,lophozosterops goodfellowi,Passeriformes,"Zosteropidae (White-eyes, Yuhinas, and Allies)",2167,201312,19328282,False,False
+Brown Parrotbill,cholornis unicolor,Passeriformes,"Paradoxornithidae (Parrotbills, Wrentit, and Allies)",2020,197971,17386553,False,False
+Mountain Robin-Chat,cossypha isabellae,Passeriformes,Muscicapidae (Old World Flycatchers),1890,194737,16112559,False,False
+White-eared Night-Heron,gorsachius magnificus,Pelecaniformes,"Ardeidae (Herons, Egrets, and Bitterns)",1933,193540,18500313,True,False
+Kimberley Honeyeater,meliphaga fordiana,Passeriformes,Meliphagidae (Honeyeaters),2079,192110,18669990,False,False
+Streak-headed White-eye,lophozosterops squamiceps,Passeriformes,"Zosteropidae (White-eyes, Yuhinas, and Allies)",2182,191551,17275629,False,False
+Coqui Francolin,peliperdix coqui,Galliformes,"Phasianidae (Pheasants, Grouse, and Allies)",2143,189113,17318678,True,False
+Cape Verde Storm-Petrel,oceanodroma jabejabe,Procellariiformes,Hydrobatidae (Northern Storm-Petrels),2078,188692,18133612,False,False
+Mountain Black-eye,chlorocharis emiliae,Passeriformes,"Zosteropidae (White-eyes, Yuhinas, and Allies)",1985,185670,16838169,True,False
+Black-necked Wattle-eye,platysteira chalybea,Passeriformes,Platysteiridae (Wattle-eyes and Batises),2059,182886,15929120,True,False
+Pere David's Snowfinch,montifringilla davidiana,Passeriformes,Passeridae (Old World Sparrows),1884,182701,17292572,False,False
+Woodpecker Finch,camarhynchus pallidus,Passeriformes,Thraupidae (Tanagers and Allies),1972,182259,17373034,True,False
+Sakhalin Grasshopper-Warbler,locustella amnicola,Passeriformes,Locustellidae (Grassbirds and Allies),2043,180291,15252456,True,False
+Scrub Honeyeater,meliphaga albonotata,Passeriformes,Meliphagidae (Honeyeaters),2028,179997,17078347,True,False
+West African Wattle-eye,platysteira hormophora,Passeriformes,Platysteiridae (Wattle-eyes and Batises),2001,179604,16051624,False,False
+Layard's Warbler,sylvia layardi,Passeriformes,Sylviidae (Sylviid Warblers),2282,174050,17821580,True,False
+Dot-fronted Woodpecker,dryobates frontalis,Piciformes,Picidae (Woodpeckers),1866,173684,14041810,False,False
+Black-collared Apalis,oreolais pulchra,Passeriformes,Cisticolidae (Cisticolas and Allies),1951,171122,16006869,True,False
+Crimson-collared Grosbeak,rhodothraupis celaeno,Passeriformes,Cardinalidae (Cardinals and Allies),1667,170974,14358354,False,False
+Black-throated Robin,poecilodryas albonotata,Passeriformes,Petroicidae (Australasian Robins),1671,168538,15366830,True,False
+Streaked Tuftedcheek,pseudocolaptes boissonneautii,Passeriformes,Furnariidae (Ovenbirds and Woodcreepers),1944,164595,14264108,False,False
+Tristram's Storm-Petrel,oceanodroma tristrami,Procellariiformes,Hydrobatidae (Northern Storm-Petrels),1748,163371,15647262,False,False
+Gray-sided Laughingthrush,ianthocincla caerulata,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),1889,158671,14764174,True,False
+Lord Howe Rail,gallirallus sylvestris,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",1630,158356,16135553,False,False
+Pale-billed Parrotbill,chleuasicus atrosuperciliaris,Passeriformes,"Paradoxornithidae (Parrotbills, Wrentit, and Allies)",1736,155198,14296911,False,False
+Tibetan Babax,ianthocincla koslowi,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),1654,154503,11479563,True,False
+Colima Warbler,oreothlypis crissalis,Passeriformes,Parulidae (New World Warblers),1807,154166,13938272,False,False
+Buff-faced Scrubwren,sericornis perspicillatus,Passeriformes,Acanthizidae (Thornbills and Allies),1752,153313,15542914,True,False
+Red-cockaded Woodpecker,dryobates borealis,Piciformes,Picidae (Woodpeckers),1635,152263,13797950,False,False
+Gray-sided Scimitar-Babbler,megapomatorhinus swinhoei,Passeriformes,"Timaliidae (Tree-Babblers, Scimitar-Babblers, and Allies)",1733,150580,14122894,False,False
+White-browed White-eye,lophozosterops superciliaris,Passeriformes,"Zosteropidae (White-eyes, Yuhinas, and Allies)",1746,150211,13279589,False,False
+Tawny Tit-Spinetail,leptasthenura yanacensis,Passeriformes,Furnariidae (Ovenbirds and Woodcreepers),1574,149453,14304004,False,False
+Maroon-chinned Fruit-Dove,ptilinopus epius,Columbiformes,Columbidae (Pigeons and Doves),1485,148833,13251678,False,False
+Orange-backed Woodpecker,reinwardtipicus validus,Piciformes,Picidae (Woodpeckers),1573,148787,14538813,True,False
+Yellow-bellied Robin,eopsaltria flaviventris,Passeriformes,Petroicidae (Australasian Robins),1810,147140,13228382,True,False
+Inagua Woodstar,calliphlox lyrura,Caprimulgiformes,Trochilidae (Hummingbirds),1522,146366,14350105,False,False
+Red-and-black Grosbeak,periporphyrus erythromelas,Passeriformes,Cardinalidae (Cardinals and Allies),1750,142996,12854369,False,False
+Finsch's Flycatcher-Thrush,neocossyphus finschi,Passeriformes,Turdidae (Thrushes and Allies),1711,142354,11703000,True,False
+Finsch's Bulbul,alophoixus finschii,Passeriformes,Pycnonotidae (Bulbuls),1471,142250,12564195,True,False
+Orange-bellied Trogon,trogon aurantiiventris,Trogoniformes,Trogonidae (Trogons),1500,141584,14954519,False,False
+White-throated Mountain-Babbler,turdoides gilberti,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),1574,140814,12996304,True,False
+White-fronted Black-Chat,myrmecocichla albifrons,Passeriformes,Muscicapidae (Old World Flycatchers),1381,138762,12513904,False,False
+Ludlow's Fulvetta,alcippe ludlowi,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),1636,138274,12622581,False,False
+Black-bodied Woodpecker,dryocopus schulzi,Piciformes,Picidae (Woodpeckers),1602,137704,14220606,False,False
+Miombo Scrub-Robin,cercotrichas barbata,Passeriformes,Muscicapidae (Old World Flycatchers),1389,136080,10595087,False,False
+Mountain Sunbird,aethopyga jefferyi,Passeriformes,Nectariniidae (Sunbirds and Spiderhunters),1497,135754,11382341,False,False
+Brown Scrub-Robin,cercotrichas signata,Passeriformes,Muscicapidae (Old World Flycatchers),1443,133880,12464409,False,False
+Forest Scrub-Robin,cercotrichas leucosticta,Passeriformes,Muscicapidae (Old World Flycatchers),1463,133114,11085287,False,False
+Himalayan Shrike-Babbler,pteruthius ripleyi,Passeriformes,"Vireonidae (Vireos, Shrike-Babblers, and Erpornis)",1528,132051,13035706,False,False
+Karoo Chat,cercomela schlegelii,Passeriformes,Muscicapidae (Old World Flycatchers),1529,131881,11198951,True,False
+Fire-bellied Woodpecker,chloropicus pyrrhogaster,Piciformes,Picidae (Woodpeckers),1293,129958,13587741,True,False
+Yellow-legged Flycatcher,microeca griseoceps,Passeriformes,Petroicidae (Australasian Robins),1372,127905,11424730,False,False
+Cyprus Warbler,sylvia melanothorax,Passeriformes,Sylviidae (Sylviid Warblers),1482,127706,10029702,True,False
+Mountain Mouse-Warbler,crateroscelis robusta,Passeriformes,Acanthizidae (Thornbills and Allies),1514,125611,10335573,True,False
+Baudin's Black-Cockatoo,calyptorhynchus baudinii,Psittaciformes,Cacatuidae (Cockatoos),1357,124913,11956742,False,False
+Olive Flyrobin,microeca flavovirescens,Passeriformes,Petroicidae (Australasian Robins),1349,124513,11728210,True,False
+Streaked Barwing,actinodura souliei,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),1367,124081,11312086,False,False
+Capuchin Babbler,turdoides atripennis,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),1508,122598,11659626,True,False
+Black-and-white Bulbul,brachypodius melanoleucos,Passeriformes,Pycnonotidae (Bulbuls),1513,122496,11764702,True,False
+Ussher's Flycatcher,bradornis ussheri,Passeriformes,Muscicapidae (Old World Flycatchers),1374,121975,11367551,True,False
+Forsten's Scrubfowl,megapodius forsteni,Galliformes,Megapodiidae (Megapodes),1511,121073,10724953,False,False
+Shy Ground-Dove,alopecoenas stairi,Columbiformes,Columbidae (Pigeons and Doves),1322,120628,11706934,True,True
+Rufous Potoo,nyctibius bracteatus,Caprimulgiformes,Nyctibiidae (Potoos),1350,120623,10660070,False,False
+Arizona Woodpecker,dryobates arizonae,Piciformes,Picidae (Woodpeckers),1438,120506,10506863,False,True
+Marmora's Warbler,sylvia sarda,Passeriformes,Sylviidae (Sylviid Warblers),1320,119406,10139516,True,False
+Gray-green Scrubwren,sericornis arfakianus,Passeriformes,Acanthizidae (Thornbills and Allies),1361,118068,11443802,True,False
+Pygmy Cuckooshrike,celebesia abbotti,Passeriformes,Campephagidae (Cuckooshrikes),1276,118066,11360476,True,False
+Rufous-headed Parrotbill,psittiparus bakeri,Passeriformes,"Paradoxornithidae (Parrotbills, Wrentit, and Allies)",1359,116890,10178976,True,False
+Cinderella Waxbill,estrilda thomensis,Passeriformes,Estrildidae (Waxbills and Allies),1252,115138,10150339,True,False
+Gabon Woodpecker,chloropicus gabonensis,Piciformes,Picidae (Woodpeckers),1262,115074,10719966,True,False
+White-crowned Koel,cacomantis leucolophus,Cuculiformes,Cuculidae (Cuckoos),1182,113204,10638606,True,False
+Fulvous-throated Antwren,epinecrophylla pyrrhonota,Passeriformes,Thamnophilidae (Typical Antbirds),1166,112993,9677112,False,False
+Great Parrotbill,conostoma aemodium,Passeriformes,"Paradoxornithidae (Parrotbills, Wrentit, and Allies)",1306,112215,9159255,True,False
+Yellow-bellied Chat-Tyrant,ochthoeca diadema,Passeriformes,Tyrannidae (Tyrant Flycatchers),1206,111945,9888058,False,False
+Abyssinian Catbird,parophasma galinieri,Passeriformes,Sylviidae (Sylviid Warblers),1310,111248,10214525,True,False
+Thick-billed Honeyguide,indicator conirostris,Piciformes,Indicatoridae (Honeyguides),1202,110997,10412678,False,False
+New Caledonian Grassbird,megalurulus mariei,Passeriformes,Locustellidae (Grassbirds and Allies),1200,110305,9944545,False,False
+Flightless Cormorant,phalacrocorax harrisi,Suliformes,Phalacrocoracidae (Cormorants and Shags),1256,109205,10792007,True,False
+Olive-backed Woodpecker,dinopium rafflesii,Piciformes,Picidae (Woodpeckers),1126,109181,9888918,True,False
+Wine-throated Hummingbird,atthis ellioti,Caprimulgiformes,Trochilidae (Hummingbirds),1221,108878,10712289,False,False
+Yellow-crested Tanager,tachyphonus rufiventer,Passeriformes,Thraupidae (Tanagers and Allies),1189,108456,9724377,False,False
+Large Tree-Finch,camarhynchus psittacula,Passeriformes,Thraupidae (Tanagers and Allies),1262,108053,9311858,False,False
+Yellow-eared Woodpecker,dryobates maculifrons,Piciformes,Picidae (Woodpeckers),1122,106087,9282309,False,False
+Buff-streaked Bushchat,saxicola bifasciatus,Passeriformes,Muscicapidae (Old World Flycatchers),1110,105576,9053421,False,False
+White-throated Francolin,peliperdix albogularis,Galliformes,"Phasianidae (Pheasants, Grouse, and Allies)",1128,105154,9277461,True,False
+Gray-winged Robin-Chat,cossypha polioptera,Passeriformes,Muscicapidae (Old World Flycatchers),1335,103949,10876755,False,False
+Streak-throated Barwing,actinodura waldeni,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),1140,103203,10047874,True,False
+Bumblebee Hummingbird,atthis heloisa,Caprimulgiformes,Trochilidae (Hummingbirds),1108,100354,9056431,False,False
+Forest Woodhoopoe,phoeniculus castaneiceps,Bucerotiformes,Phoeniculidae (Woodhoopoes and Scimitarbills),1140,100076,9023390,False,False
+Tawny Piculet,picumnus fulvescens,Piciformes,Picidae (Woodpeckers),1039,99835,9284798,False,False
+Rufous-throated Bronze-Cuckoo,chrysococcyx ruficollis,Cuculiformes,Cuculidae (Cuckoos),1065,99536,9346051,False,False
+Chestnut-necklaced Partridge,arborophila charltonii,Galliformes,"Phasianidae (Pheasants, Grouse, and Allies)",1046,98868,8758358,True,True
+Brown-winged Parrotbill,sinosuthora brunnea,Passeriformes,"Paradoxornithidae (Parrotbills, Wrentit, and Allies)",1120,98697,8839128,False,False
+Spot-throated Hummingbird,leucippus taczanowskii,Caprimulgiformes,Trochilidae (Hummingbirds),1322,98194,7779894,False,False
+Gillett's Lark,mirafra gilletti,Passeriformes,Alaudidae (Larks),938,97135,9180574,True,False
+Erlanger's Lark,calandrella erlangeri,Passeriformes,Alaudidae (Larks),1050,97088,9365566,False,False
+Hoary-throated Barwing,actinodura nipalensis,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),1069,95617,9215405,False,False
+Sicklewing Chat,cercomela sinuata,Passeriformes,Muscicapidae (Old World Flycatchers),1140,95052,8251326,False,False
+Rwenzori Nightjar,caprimulgus ruwenzorii,Caprimulgiformes,Caprimulgidae (Nightjars and Allies),1052,94382,7914628,False,False
+Red-cheeked Wattle-eye,platysteira blissetti,Passeriformes,Platysteiridae (Wattle-eyes and Batises),1005,93681,9420370,True,False
+Blue-fronted Flycatcher,cyornis hoevelli,Passeriformes,Muscicapidae (Old World Flycatchers),1175,92904,8202470,True,False
+Chatham Islands Shag,phalacrocorax onslowi,Suliformes,Phalacrocoracidae (Cormorants and Shags),1017,91967,8904991,False,False
+Spectacled Parrotbill,sinosuthora conspicillata,Passeriformes,"Paradoxornithidae (Parrotbills, Wrentit, and Allies)",1046,89332,7705435,False,False
+Brown Nightjar,caprimulgus binotatus,Caprimulgiformes,Caprimulgidae (Nightjars and Allies),1011,88407,7597942,True,False
+Growling Riflebird,ptiloris intercedens,Passeriformes,Paradisaeidae (Birds-of-Paradise),798,86661,7548238,False,False
+Jameson's Wattle-eye,platysteira jamesoni,Passeriformes,Platysteiridae (Wattle-eyes and Batises),865,86632,8324749,True,False
+Chinese Cupwing,pnoepyga mutica,Passeriformes,Pnoepygidae (Cupwings),913,85904,8197482,False,False
+Herero Chat,melaenornis herero,Passeriformes,Muscicapidae (Old World Flycatchers),876,84743,6964953,True,False
+Archer's Robin-Chat,cossypha archeri,Passeriformes,Muscicapidae (Old World Flycatchers),1040,83017,7261395,False,False
+Rufous-tailed Babbler,chrysomma poecilotis,Passeriformes,"Paradoxornithidae (Parrotbills, Wrentit, and Allies)",913,82550,7217116,False,False
+Crowned Chat-Tyrant,ochthoeca frontalis,Passeriformes,Tyrannidae (Tyrant Flycatchers),914,82178,7371193,False,False
+Swamp Francolin,francolinus gularis,Galliformes,"Phasianidae (Pheasants, Grouse, and Allies)",954,81737,8086200,False,False
+Speckle-breasted Antpitta,hylopezus nattereri,Passeriformes,Grallariidae (Antpittas),890,81250,7347147,False,False
+Gray-headed Oliveback,nesocharis capistrata,Passeriformes,Estrildidae (Waxbills and Allies),887,81007,7364180,True,False
+White-eared Bronze-Cuckoo,chrysococcyx meyerii,Cuculiformes,Cuculidae (Cuckoos),776,78973,7154428,False,False
+Spotted Berrypecker,melanocharis crassirostris,Passeriformes,Melanocharitidae (Berrypeckers and Longbills),811,78909,6716357,True,False
+White-headed Woodpecker,dryobates albolarvatus,Piciformes,Picidae (Woodpeckers),792,78716,7750777,False,True
+Chestnut-breasted Mountain-Finch,poospiza caesar,Passeriformes,Thraupidae (Tanagers and Allies),844,78671,7581534,False,False
+Obi Golden-Bulbul,alophoixus lucasi,Passeriformes,Pycnonotidae (Bulbuls),887,78091,7185294,False,False
+Southern Bristle-Tyrant,phylloscartes eximius,Passeriformes,Tyrannidae (Tyrant Flycatchers),731,74569,6813568,False,False
+Melancholy Woodpecker,chloropicus lugubris,Piciformes,Picidae (Woodpeckers),791,74397,6613174,True,False
+Shovel-billed Kookaburra,clytoceyx rex,Coraciiformes,Alcedinidae (Kingfishers),770,73423,6218292,True,False
+Variegated Bristle-Tyrant,phylloscartes poecilotis,Passeriformes,Tyrannidae (Tyrant Flycatchers),687,72177,6750545,False,False
+Madagascar Wood-Rail,canirallus kioloides,Gruiformes,Sarothruridae (Flufftails),746,71473,6821784,False,False
+Maroon-chested Ground-Dove,claravis mondetoura,Columbiformes,Columbidae (Pigeons and Doves),764,71090,6202583,False,False
+Bush Blackcap,sylvia nigricapilla,Passeriformes,Sylviidae (Sylviid Warblers),754,70780,5679460,True,False
+Northern Silvery-Kingfisher,ceyx flumenicolus,Coraciiformes,Alcedinidae (Kingfishers),805,70213,6389242,False,False
+Dot-winged Crake,porzana spiloptera,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",693,68087,6079946,False,False
+White-winged Cliff-Chat,thamnolaea semirufa,Passeriformes,Muscicapidae (Old World Flycatchers),741,67996,6682212,False,False
+Bohol Sunbird,aethopyga decorosa,Passeriformes,Nectariniidae (Sunbirds and Spiderhunters),704,67319,5731628,False,False
+Pale-billed Scrubwren,sericornis spilodera,Passeriformes,Acanthizidae (Thornbills and Allies),745,66264,6024246,True,False
+Margelanic Whitethroat,sylvia margelanica,Passeriformes,Sylviidae (Sylviid Warblers),774,66002,6352941,False,False
+Speckle-breasted Woodpecker,chloropicus poecilolaemus,Piciformes,Picidae (Woodpeckers),731,65782,6166434,True,False
+Wynaad Laughingthrush,ianthocincla delesserti,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),687,65760,6295755,False,False
+Forest Swallow,petrochelidon fuliginosa,Passeriformes,Hirundinidae (Swallows),745,64762,5871921,True,False
+Blue Bird-of-Paradise,paradisaea rudolphi,Passeriformes,Paradisaeidae (Birds-of-Paradise),761,64743,6862526,False,False
+Campbell Islands Shag,phalacrocorax campbelli,Suliformes,Phalacrocoracidae (Cormorants and Shags),796,64652,5972839,False,False
+Perplexing Scrubwren,sericornis virgatus,Passeriformes,Acanthizidae (Thornbills and Allies),734,64159,6041711,False,False
+Spot-breasted Scimitar-Babbler,megapomatorhinus mcclellandi,Passeriformes,"Timaliidae (Tree-Babblers, Scimitar-Babblers, and Allies)",754,64112,5022255,False,False
+Black Bustard,eupodotis afra,Otidiformes,Otididae (Bustards),782,63746,5726563,False,False
+Scarlet-breasted Fruit-Dove,ptilinopus bernsteinii,Columbiformes,Columbidae (Pigeons and Doves),687,63564,5882095,False,False
+Jambu Fruit-Dove,ptilinopus jambu,Columbiformes,Columbidae (Pigeons and Doves),713,61365,5014519,False,False
+Victoria's Riflebird,ptiloris victoriae,Passeriformes,Paradisaeidae (Birds-of-Paradise),584,60884,5622739,True,False
+Caucasian Grouse,tetrao mlokosiewiczi,Galliformes,"Phasianidae (Pheasants, Grouse, and Allies)",703,60436,5904385,False,False
+White-breasted Parrotbill,psittiparus ruficeps,Passeriformes,"Paradoxornithidae (Parrotbills, Wrentit, and Allies)",663,59924,5714625,False,False
+Medium Tree-Finch,camarhynchus pauper,Passeriformes,Thraupidae (Tanagers and Allies),677,57516,5352848,False,False
+Vogelkop Lophorina,lophorina niedda,Passeriformes,Paradisaeidae (Birds-of-Paradise),632,57457,5460248,False,False
+Green-fronted Hummingbird,amazilia viridifrons,Caprimulgiformes,Trochilidae (Hummingbirds),610,57157,4980327,False,False
+Golden-crowned Woodpecker,chloropicus xantholophus,Piciformes,Picidae (Woodpeckers),708,57031,5125449,False,False
+Wattled Broadbill,eurylaimus steerii,Passeriformes,Eurylaimidae (Asian and Grauer's Broadbills),661,56325,4990929,False,False
+Blackish Cuckooshrike,analisoma coerulescens,Passeriformes,Campephagidae (Cuckooshrikes),536,55496,4332773,False,False
+New Zealand King Shag,phalacrocorax carunculatus,Suliformes,Phalacrocoracidae (Cormorants and Shags),624,55028,4753185,False,False
+Scaly Ground-Roller,brachypteracias squamiger,Coraciiformes,Brachypteraciidae (Ground-Rollers),647,54695,4571076,False,False
+Mountain Wren-Babbler,turdinus crassus,Passeriformes,Pellorneidae (Ground Babblers and Allies),558,53112,5271200,True,False
+Halmahera Cuckooshrike,celebesia parvula,Passeriformes,Campephagidae (Cuckooshrikes),579,52432,4540461,False,False
+Buffy Helmetcrest,oxypogon stubelii,Caprimulgiformes,Trochilidae (Hummingbirds),547,52098,4917985,False,False
+White-bibbed Ground-Dove,alopecoenas jobiensis,Columbiformes,Columbidae (Pigeons and Doves),597,51955,5192818,True,False
+Paradise Riflebird,ptiloris paradiseus,Passeriformes,Paradisaeidae (Birds-of-Paradise),564,51126,4650780,False,False
+Bar-bellied Woodpecker,dryobates nigriceps,Piciformes,Picidae (Woodpeckers),540,50151,5324840,False,False
+Elegant Honeyeater,meliphaga cinereifrons,Passeriformes,Meliphagidae (Honeyeaters),632,49855,5005858,False,False
+Three-toed Parrotbill,cholornis paradoxa,Passeriformes,"Paradoxornithidae (Parrotbills, Wrentit, and Allies)",592,49491,4351888,False,False
+White-winged Cuckooshrike,analisoma ostenta,Passeriformes,Campephagidae (Cuckooshrikes),524,49359,3990958,False,False
+White-rumped Falcon,polihierax insignis,Falconiformes,Falconidae (Falcons and Caracaras),548,48246,4341627,True,False
+Chestnut Rail,gallirallus castaneoventris,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",542,48034,4313032,True,False
+Abyssinian Woodpecker,chloropicus abyssinicus,Piciformes,Picidae (Woodpeckers),535,47981,4722391,True,False
+Karoo Bustard,eupodotis vigorsii,Otidiformes,Otididae (Bustards),588,47804,4164984,True,False
+New Caledonian Cuckooshrike,analisoma analis,Passeriformes,Campephagidae (Cuckooshrikes),467,47121,4541923,False,False
+Rusty-breasted Wren-Babbler,turdinus rufipectus,Passeriformes,Pellorneidae (Ground Babblers and Allies),540,44621,4577926,True,False
+Yellow-vented Woodpecker,dryobates dignus,Piciformes,Picidae (Woodpeckers),490,43952,3944842,False,False
+Damara Canary,serinus leucolaemus,Passeriformes,"Fringillidae (Finches, Euphonias, and Allies)",484,42518,3807498,False,False
+White-striped Forest-Rail,rallina leucospila,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",410,42217,3474333,False,False
+Mount Kupe Bushshrike,telophorus kupeensis,Passeriformes,Malaconotidae (Bushshrikes and Allies),414,41350,3977586,False,False
+Usambara Eagle-Owl,bubo vosseleri,Strigiformes,Strigidae (Owls),477,40564,3909639,False,False
+Sooty Melidectes,melidectes fuscus,Passeriformes,Meliphagidae (Honeyeaters),491,40335,3990903,True,False
+Visayan Broadbill,eurylaimus samarensis,Passeriformes,Eurylaimidae (Asian and Grauer's Broadbills),445,39471,3607624,False,False
+Golden-browed Chat-Tyrant,ochthoeca pulchella,Passeriformes,Tyrannidae (Tyrant Flycatchers),427,38925,3794126,False,False
+Vincent's Bunting,emberiza vincenti,Passeriformes,Emberizidae (Old World Buntings),475,38754,3544884,False,False
+Long-tailed Sabrewing,campylopterus excellens,Caprimulgiformes,Trochilidae (Hummingbirds),394,37312,3249446,False,False
+Rwenzori Turaco,ruwenzorornis johnstoni,Musophagiformes,Musophagidae (Turacos),405,35907,3389362,False,False
+Gold-fronted Fulvetta,alcippe variegaticeps,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),380,35802,3383595,False,False
+Sombre Chat,cercomela dubia,Passeriformes,Muscicapidae (Old World Flycatchers),383,34484,3046192,False,False
+Blue-headed Sapphire,hylocharis grayi,Caprimulgiformes,Trochilidae (Hummingbirds),373,33654,3441221,False,False
+Cream-breasted Fruit-Dove,ptilinopus merrilli,Columbiformes,Columbidae (Pigeons and Doves),381,32405,2876949,False,False
+Dalat Shrike-Babbler,pteruthius annamensis,Passeriformes,"Vireonidae (Vireos, Shrike-Babblers, and Erpornis)",326,31377,3027541,False,False
+Stierling's Woodpecker,chloropicus stierlingi,Piciformes,Picidae (Woodpeckers),344,31102,3021878,True,False
+Black-capped Bulbul,rubigula melanicterus,Passeriformes,Pycnonotidae (Bulbuls),346,30406,2635059,True,False
+Woodford's Rail,gallirallus woodfordi,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",316,30246,2610491,False,False
+Restinga Antwren,formicivora littoralis,Passeriformes,Thamnophilidae (Typical Antbirds),352,30195,2975724,False,False
+Flame-breasted Fruit-Dove,ptilinopus marchei,Columbiformes,Columbidae (Pigeons and Doves),366,29715,2459259,False,False
+Malaita Dwarf-Kingfisher,ceyx malaitae,Coraciiformes,Alcedinidae (Kingfishers),303,28177,2367725,False,False
+Purple-throated Woodstar,calliphlox mitchellii,Caprimulgiformes,Trochilidae (Hummingbirds),306,27844,2209389,True,False
+Townsend's Storm-Petrel,oceanodroma socorroensis,Procellariiformes,Hydrobatidae (Northern Storm-Petrels),324,27660,2515936,False,False
+Sumatran Trogon,harpactes mackloti,Trogoniformes,Trogonidae (Trogons),313,26439,2521509,True,False
+Tinian Monarch,monarcha takatsukasae,Passeriformes,Monarchidae (Monarch Flycatchers),296,25837,2260139,True,False
+Black-breasted Barbet,lybius rolleti,Piciformes,Lybiidae (African Barbets),291,25670,2395701,True,False
+Red-collared Mountain-Babbler,turdoides rufocincta,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),261,25411,2553280,True,False
+Antioquia Bristle-Tyrant,phylloscartes lanyoni,Passeriformes,Tyrannidae (Tyrant Flycatchers),267,24973,2176800,False,False
+North Moluccan Dwarf-Kingfisher,ceyx uropygialis,Coraciiformes,Alcedinidae (Kingfishers),253,24778,2192925,False,False
+Velvet Dove,ptilinopus layardi,Columbiformes,Columbidae (Pigeons and Doves),264,23370,2001334,False,False
+Gould's Shortwing,brachypteryx stellata,Passeriformes,Muscicapidae (Old World Flycatchers),279,22736,2072324,False,False
+Xantus's Hummingbird,hylocharis xantusii,Caprimulgiformes,Trochilidae (Hummingbirds),239,20678,1896779,True,False
+White-lored Antpitta,hylopezus fulviventris,Passeriformes,Grallariidae (Antpittas),235,20135,1865657,False,False
+Giant Babax,ianthocincla waddelli,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),210,19788,1575147,True,False
+Neumann's Warbler,urosphena neumanni,Passeriformes,Scotocercidae (Bush Warblers and Allies),195,18885,1665393,True,False
+Sula Golden-Bulbul,alophoixus longirostris,Passeriformes,Pycnonotidae (Bulbuls),214,18746,1592562,False,False
+Masked Mountain-Tanager,buthraupis wetmorei,Passeriformes,Thraupidae (Tanagers and Allies),194,18496,1835920,False,False
+Cream-striped Bulbul,pycnonotus leucogrammicus,Passeriformes,Pycnonotidae (Bulbuls),172,17355,1694038,True,False
+Blood-colored Woodpecker,dryobates sanguineus,Piciformes,Picidae (Woodpeckers),167,16582,1457692,True,False
+Snowy-bellied Hummingbird,amazilia edward,Caprimulgiformes,Trochilidae (Hummingbirds),184,16545,1674236,True,False
+Long-billed Cuckoo,chrysococcyx megarhynchus,Cuculiformes,Cuculidae (Cuckoos),191,15391,1625564,True,False
+Forbes's Rail,rallina forbesi,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",150,14685,1353557,False,False
+Jelski's Chat-Tyrant,ochthoeca jelskii,Passeriformes,Tyrannidae (Tyrant Flycatchers),179,13953,1168511,False,False
+Black-throated Laughingthrush,ianthocincla chinensis,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),146,13398,1131650,True,False
+Black Laughingthrush,garrulax lugubris,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),145,13069,1201120,True,False
+Black-chinned Quailfinch,ortygospiza gabonensis,Passeriformes,Estrildidae (Waxbills and Allies),136,12951,1130419,False,False
+Olive-flanked Robin-Chat,cossypha anomala,Passeriformes,Muscicapidae (Old World Flycatchers),142,12725,1086207,False,False
+Timor Blue Flycatcher,cyornis hyacinthinus,Passeriformes,Muscicapidae (Old World Flycatchers),138,12207,1188141,True,False
+Lemon-spectacled Tanager,chlorothraupis olivacea,Passeriformes,Cardinalidae (Cardinals and Allies),127,12173,1080608,False,False
+Spectacled Bristle-Tyrant,phylloscartes orbitalis,Passeriformes,Tyrannidae (Tyrant Flycatchers),132,11891,1068735,False,False
+Rufous Sabrewing,campylopterus rufus,Caprimulgiformes,Trochilidae (Hummingbirds),120,11474,1009117,True,False
+Monteiro's Storm-Petrel,oceanodroma monteiroi,Procellariiformes,Hydrobatidae (Northern Storm-Petrels),122,11303,1069923,False,False
+Long-legged Warbler,trichocichla rufa,Passeriformes,Locustellidae (Grassbirds and Allies),109,10962,1025742,False,False
+Green-and-white Hummingbird,amazilia viridicauda,Caprimulgiformes,Trochilidae (Hummingbirds),106,10907,1074619,True,False
+Gray-hooded White-eye,lophozosterops pinaiae,Passeriformes,"Zosteropidae (White-eyes, Yuhinas, and Allies)",120,10809,1013426,False,False
+Layard's Parakeet,psittacula calthrapae,Psittaciformes,Psittaculidae (Old World Parrots),116,10635,896095,True,False
+Forest Honeyeater,meliphaga montana,Passeriformes,Meliphagidae (Honeyeaters),102,9950,1005947,True,False
+Kivu Ground-Thrush,geokichla tanganjicae,Passeriformes,Turdidae (Thrushes and Allies),115,9475,859793,False,False
+Chaco Nothura,nothura chacoensis,Tinamiformes,Tinamidae (Tinamous),114,9222,834724,False,False
+Yellow-green Chlorospingus,chlorospingus flavovirens,Passeriformes,Passerellidae (New World Sparrows),99,8984,729846,False,False
+Orange-billed Babbler,turdoides rufescens,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),73,7550,697596,True,False
+Scale-feathered Malkoha,dasylophus cumingi,Cuculiformes,Cuculidae (Cuckoos),88,7324,621518,True,False
+Palawan Tit,periparus amabilis,Passeriformes,"Paridae (Tits, Chickadees, and Titmice)",76,7185,616812,True,False
+Buff-banded Bushbird,buettikoferella bivittata,Passeriformes,Locustellidae (Grassbirds and Allies),74,6790,637577,True,False
+Spot-breasted Meliphaga,meliphaga mimikae,Passeriformes,Meliphagidae (Honeyeaters),74,6784,624242,False,False
+Rufous-vented Laughingthrush,ianthocincla gularis,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),76,6536,672018,False,False
+Chestnut-backed Laughingthrush,ianthocincla nuchalis,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),72,6355,552492,True,False
+Golden Dove,ptilinopus luteovirens,Columbiformes,Columbidae (Pigeons and Doves),70,6341,555520,True,False
+Green-bellied Hummingbird,amazilia viridigaster,Caprimulgiformes,Trochilidae (Hummingbirds),74,6274,567621,True,False
+Humboldt's Sapphire,hylocharis humboldtii,Caprimulgiformes,Trochilidae (Hummingbirds),75,6210,540017,False,False
+Gray-winged Cotinga,tijuca condita,Passeriformes,Cotingidae (Cotingas),68,6057,571098,False,False
+Tumbes Hummingbird,leucippus baeri,Caprimulgiformes,Trochilidae (Hummingbirds),65,5883,490468,True,False
+Choco Woodpecker,dryobates chocoensis,Piciformes,Picidae (Woodpeckers),65,5784,454085,True,False
+Gray-hooded Parrotbill,sinosuthora zappeyi,Passeriformes,"Paradoxornithidae (Parrotbills, Wrentit, and Allies)",73,5684,548558,True,False
+Ochre-breasted Tanager,chlorothraupis stolzmanni,Passeriformes,Cardinalidae (Cardinals and Allies),57,5224,520369,True,False
+Solomons Boobook,ninox jacquinoti,Strigiformes,Strigidae (Owls),50,4885,410405,True,False
+Venezuelan Bristle-Tyrant,phylloscartes venezuelanus,Passeriformes,Tyrannidae (Tyrant Flycatchers),53,4800,441441,False,False
+White-lined Honeyeater,meliphaga albilineata,Passeriformes,Meliphagidae (Honeyeaters),53,4710,437011,True,False
+Vogelkop Scrubwren,sericornis rufescens,Passeriformes,Acanthizidae (Thornbills and Allies),52,4583,407168,True,False
+Ashy-headed Laughingthrush,garrulax cinereifrons,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),49,4289,407390,True,False
+Rufous-throated Tanager,ixothraupis rufigula,Passeriformes,Thraupidae (Tanagers and Allies),41,3896,323919,True,False
+Tumbes Tyrant,tumbezia salvini,Passeriformes,Tyrannidae (Tyrant Flycatchers),37,3454,319648,True,False
+Purple-chested Hummingbird,amazilia rosenbergi,Caprimulgiformes,Trochilidae (Hummingbirds),34,3361,347915,True,False
+Taiwan Barwing,actinodura morrisoniana,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),35,3251,329351,True,False
+Yellow-throated Laughingthrush,ianthocincla galbana,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),36,2956,247967,True,False
+Brown-backed Antwren,epinecrophylla fjeldsaai,Passeriformes,Thamnophilidae (Typical Antbirds),33,2950,281637,False,False
+Coppery-headed Emerald,elvira cupreiceps,Caprimulgiformes,Trochilidae (Hummingbirds),30,2840,267211,True,False
+Charming Hummingbird,amazilia decora,Caprimulgiformes,Trochilidae (Hummingbirds),31,2820,247233,True,False
+Puerto Rican Emerald,chlorostilbon maugaeus,Caprimulgiformes,Trochilidae (Hummingbirds),29,2778,249379,True,False
+Flores Jungle-Flycatcher,cyornis oscillans,Passeriformes,Muscicapidae (Old World Flycatchers),27,2490,229142,True,False
+Hispaniolan Trogon,priotelus roseigaster,Trogoniformes,Trogonidae (Trogons),27,2472,221250,True,False
+Urrao Antpitta,grallaria urraoensis,Passeriformes,Grallariidae (Antpittas),26,2329,217802,False,False
+Bare-headed Laughingthrush,garrulax calvus,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),24,2250,212396,True,False
+Spiny Babbler,turdoides nipalensis,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),21,2186,194446,True,False
+Chestnut Forest-Rail,rallina rubra,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",22,2010,188372,False,False
+Orange Dove,ptilinopus victor,Columbiformes,Columbidae (Pigeons and Doves),17,1477,147013,True,False
+Balearic Warbler,sylvia balearica,Passeriformes,Sylviidae (Sylviid Warblers),16,1474,137128,True,False
+Giant Ibis,pseudibis gigantea,Pelecaniformes,Threskiornithidae (Ibises and Spoonbills),17,1473,137204,True,False
+Golden-shouldered Parrot,psephotus chrysopterygius,Psittaciformes,Psittaculidae (Old World Parrots),17,1458,139047,True,False
+Magenta-throated Woodstar,calliphlox bryantae,Caprimulgiformes,Trochilidae (Hummingbirds),16,1434,123890,True,False
+Rusty Laughingthrush,ianthocincla poecilorhyncha,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),15,1398,113774,True,False
+Chestnut-bellied Hummingbird,amazilia castaneiventris,Caprimulgiformes,Trochilidae (Hummingbirds),14,1257,115180,True,True
+Puerto Rican Screech-Owl,megascops nudipes,Strigiformes,Strigidae (Owls),14,1249,127394,True,False
+Strickland's Woodpecker,dryobates stricklandi,Piciformes,Picidae (Woodpeckers),12,1168,103614,True,False
+Black-and-gold Cotinga,tijuca atra,Passeriformes,Cotingidae (Cotingas),14,1131,96523,True,False
+Invisible Rail,gallirallus wallacii,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",11,1104,105249,True,False
+Mexican Woodnymph,thalurania ridgwayi,Caprimulgiformes,Trochilidae (Hummingbirds),12,1095,98549,True,False
+Rufous-crowned Laughingthrush,ianthocincla ruficeps,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),11,1000,93938,True,False
+Pleske's Grasshopper-Warbler,locustella pleskei,Passeriformes,Locustellidae (Grassbirds and Allies),11,999,88873,True,False
+Black-headed Parrotbill,psittiparus margaritae,Passeriformes,"Paradoxornithidae (Parrotbills, Wrentit, and Allies)",10,988,89978,True,False
+Colombian Crake,mustelirallus colombianus,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",9,915,75732,True,False
+White-tailed Emerald,elvira chionura,Caprimulgiformes,Trochilidae (Hummingbirds),9,799,74078,True,False
+Slender-billed Babbler,turdoides longirostris,Passeriformes,Leiothrichidae (Laughingthrushes and Allies),7,704,69083,True,False
+Javan Trogon,harpactes reinwardtii,Trogoniformes,Trogonidae (Trogons),6,597,54170,True,False
+Echo Parakeet,psittacula eques,Psittaciformes,Psittaculidae (Old World Parrots),5,455,40520,True,False
+Matinan Flycatcher,cyornis sanfordi,Passeriformes,Muscicapidae (Old World Flycatchers),4,327,30064,True,False
+Sooty-capped Puffbird,bucco noanamae,Galbuliformes,Bucconidae (Puffbirds),3,269,23352,True,False
+Sharpe's Longclaw,hemimacronyx sharpei,Passeriformes,Motacillidae (Wagtails and Pipits),2,219,19930,True,False
+Hawaii Creeper,loxops mana,Passeriformes,"Fringillidae (Finches, Euphonias, and Allies)",2,217,20667,True,False
+Palau Ground-Dove,alopecoenas canifrons,Columbiformes,Columbidae (Pigeons and Doves),2,216,21208,True,True
+Golden Bowerbird,amblyornis newtoniana,Passeriformes,Ptilonorhynchidae (Bowerbirds),2,170,14806,True,False
+Kakapo,strigops habroptila,Psittaciformes,Strigopidae (New Zealand Parrots),2,164,15274,True,False
+Okinawa Rail,gallirallus okinawae,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",2,160,16145,True,False
+Cozumel Emerald,chlorostilbon forficatus,Caprimulgiformes,Trochilidae (Hummingbirds),2,158,14080,True,False
+Fly River Grassbird,megalurus albolimbatus,Passeriformes,Locustellidae (Grassbirds and Allies),1,126,10316,True,False
+Abbott's Starling,poeoptera femoralis,Passeriformes,Sturnidae (Starlings),1,94,8259,True,False
+Sapphire-bellied Hummingbird,lepidopyga lilliae,Caprimulgiformes,Trochilidae (Hummingbirds),1,91,8627,True,True
+Blue-headed Hummingbird,cyanophaia bicolor,Caprimulgiformes,Trochilidae (Hummingbirds),1,81,7137,True,False
+Russet-mantled Softtail,thripophaga berlepschi,Passeriformes,Furnariidae (Ovenbirds and Woodcreepers),1,73,6524,True,False
+Parana Antwren,stymphalornis acutirostris,Passeriformes,Thamnophilidae (Typical Antbirds),1,46,4123,True,False
+Nicobar Bulbul,hypsipetes nicobariensis,Passeriformes,Pycnonotidae (Bulbuls),0,22,2018,True,False
+Sao Tome Short-tail,motacilla bocagii,Passeriformes,Motacillidae (Wagtails and Pipits),0,21,1856,True,False
+Pirre Hummingbird,goethalsia bella,Caprimulgiformes,Trochilidae (Hummingbirds),0,16,1373,True,False
+Calayan Rail,gallirallus calayanensis,Gruiformes,"Rallidae (Rails, Gallinules, and Coots)",0,4,307,True,False
+Mangrove Finch,camarhynchus heliobates,Passeriformes,Thraupidae (Tanagers and Allies),0,1,50,True,False
