@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section 4 - Probable Species Finder</title>
+    {% include 'partials/theme-head.html' %}
+    {% include 'partials/section-vars.html' %}
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            height: 100vh;
+            overflow: hidden;
+            overflow-x: hidden;
+        }
+        .page-grid {
+            display: grid;
+            grid-template-columns: minmax(260px, 18rem) 1fr;
+            grid-template-rows: 1fr;
+            gap: 6px 8px;
+            padding: 8px;
+            height: 100%;
+            width: 100%;
+            max-width: 100%;
+        }
+        .panel,
+        .table-container {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+            overflow-x: hidden;
+        }
+        .panel::-webkit-scrollbar,
+        .table-container::-webkit-scrollbar { width: 2px; }
+        .panel::-webkit-scrollbar-thumb,
+        .table-container::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.18);
+            border-radius: 3px;
+        }
+        .panel::-webkit-scrollbar-track,
+        .table-container::-webkit-scrollbar-track { background: transparent; }
+        .panel {
+            background: var(--sec-panel);
+            color: var(--sec-text);
+            border-radius: 6px;
+            padding: 8px 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .results-panel {
+            overflow: hidden;
+        }
+        .results-panel .table-container {
+            flex: 1;
+            min-height: 0;
+            margin-top: 4px;
+            max-height: none;
+            overflow-y: auto;
+        }
+        h2 {
+            font-size: 12px;
+            margin-bottom: 6px;
+            color: var(--sec-text);
+            border-bottom: 1px solid var(--sec-rule);
+            padding-bottom: 4px;
+            font-weight: 700;
+            flex: 0 0 auto;
+        }
+        .hint {
+            font-size: 8px;
+            color: var(--sec-text-muted);
+            margin-bottom: 6px;
+            line-height: 1.3;
+            flex: 0 0 auto;
+        }
+        #traits-container {
+            flex: 0 1 auto;
+            min-height: 0;
+            max-height: 38vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+        }
+        #traits-container::-webkit-scrollbar { width: 2px; }
+        #traits-container::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.18);
+            border-radius: 3px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 4px;
+            margin-bottom: 5px;
+            align-items: center;
+        }
+        input {
+            width: 100%;
+            padding: 4px 6px;
+            border: 1px solid var(--sec-border);
+            border-radius: 3px;
+            font-size: 11px;
+            background: var(--sec-raise);
+            color: var(--sec-text);
+        }
+        select {
+            width: 100%;
+            padding: 3px 5px;
+            border: 1px solid var(--sec-border);
+            border-radius: 3px;
+            font-size: 9px;
+            background: var(--sec-raise);
+            color: var(--sec-text);
+        }
+        select option {
+            font-size: 9px;
+        }
+        button {
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 9px;
+            padding: 5px 8px;
+        }
+        .form-row .btn-danger { width: auto; padding: 4px 8px; }
+        .btn-primary { background: var(--sec-accent); color: #f0f0f0; }
+        .btn-danger { background: #5c3d3d; color: #f5f0f0; }
+        .btn-secondary { background: #5a5a5a; color: #f0f0f0; width: 100%; margin-top: 4px; padding: 5px; }
+        .form-block {
+            flex: 0 0 auto;
+            margin-top: 6px;
+        }
+        .form-block label {
+            display: block;
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--sec-text-dim);
+            margin-bottom: 2px;
+        }
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .btn-row button { width: 100%; }
+        .loading {
+            display: none;
+            color: var(--sec-accent);
+            padding: 4px 0;
+            font-size: 9px;
+            flex: 0 0 auto;
+        }
+        .loading.active { display: block; }
+        .category-table {
+            width: 100%;
+            font-size: 9px;
+            border-collapse: collapse;
+            color: var(--sec-text);
+        }
+        .category-table th, .category-table td {
+            padding: 4px 5px;
+            text-align: left;
+            border-bottom: 1px solid var(--sec-border);
+        }
+        .category-table th {
+            background: var(--sec-table-head);
+            position: sticky;
+            top: 0;
+        }
+        .conclusion {
+            flex: 0 0 auto;
+            margin-top: 6px;
+            background: var(--sec-well);
+            border-left: 3px solid var(--sec-rule);
+            padding: 6px 8px;
+            border-radius: 4px;
+            color: var(--sec-text);
+            font-size: 10px;
+            line-height: 1.4;
+            max-height: 20vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="app-body h-screen w-screen overflow-hidden flex flex-col bg-[#b1b0b0]">
+    {% include 'partials/navbar.html' %}
+    <div class="flex-1 min-h-0 overflow-hidden px-[2vw] pb-2">
+    <div class="page-grid">
+        <div class="panel input-panel">
+            <h2>Trait input</h2>
+            <div class="hint">Numerical traits only. Distance = normalized Euclidean.</div>
+            <div id="traits-container"></div>
+            <button class="btn-secondary" type="button" onclick="addTraitRow()">+ Add trait</button>
+            <div class="form-block">
+                <label for="target-feature">Target feature (optional)</label>
+                <select id="target-feature">
+                    <option value="">— None —</option>
+                </select>
+            </div>
+            <div class="form-block">
+                <label for="top-k">Top K</label>
+                <input id="top-k" type="number" min="1" max="30" value="10" />
+            </div>
+            <div class="btn-row">
+                <button class="btn-primary" type="button" onclick="runPrediction()">Find species</button>
+                <button class="btn-danger" type="button" onclick="clearTraits()">Clear</button>
+            </div>
+            <div id="loading" class="loading">Computing…</div>
+        </div>
+
+        <div class="panel results-panel">
+            <h2>Probable species</h2>
+            <div id="result-table" class="table-container"></div>
+            <div id="conclusion" class="conclusion" style="display:none;"></div>
+        </div>
+    </div>
+    </div>
+    <script src="/static/js/section4.js"></script>
+</body>
+</html>

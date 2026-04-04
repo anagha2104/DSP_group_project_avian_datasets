@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section 2 - Relationship Between Two Features</title>
+    {% include 'partials/theme-head.html' %}
+    <script src="/static/js/plotly.min.js"></script>
+    <script>
+        const NUMERICAL_TRAITS = {{ numerical_traits | tojson }};
+        const CATEGORICAL_TRAITS = {{ categorical_traits | tojson }};
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            overflow: hidden;
+            overflow-x: hidden;
+        }
+        /* Wider middle column; plot full height right; conclusion band under left+middle (shorter than section1 map row) */
+        .page-grid {
+            display: grid;
+            grid-template-columns: minmax(168px, 12.5rem) minmax(260px, 22rem) 1fr;
+            grid-template-rows: minmax(0, 1fr) minmax(120px, min(28vh, 280px));
+            gap: 6px 8px;
+            padding: 8px;
+            height: 100%;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        .panel,
+        .plot-scroll,
+        .table-container {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+            overflow-x: hidden;
+        }
+        .panel::-webkit-scrollbar,
+        .plot-scroll::-webkit-scrollbar,
+        .table-container::-webkit-scrollbar {
+            width: 2px;
+        }
+        .panel::-webkit-scrollbar-thumb,
+        .plot-scroll::-webkit-scrollbar-thumb,
+        .table-container::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.18);
+            border-radius: 3px;
+        }
+        .panel::-webkit-scrollbar-track,
+        .plot-scroll::-webkit-scrollbar-track,
+        .table-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .panel {
+            background: #fff;
+            border-radius: 6px;
+            padding: 8px 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            overflow-y: auto;
+            overflow-x: hidden;
+            min-height: 0;
+        }
+        .left-panel { grid-column: 1; grid-row: 1; }
+        .middle-panel { grid-column: 2; grid-row: 1; }
+        .plot-panel {
+            grid-column: 3;
+            grid-row: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            min-height: 0;
+        }
+        .panel.plot-panel {
+            padding: 4px 10px 8px 10px;
+        }
+        .plot-panel > h2 {
+            margin-bottom: 2px;
+            margin-top: 0;
+        }
+        .conclusion-panel {
+            grid-column: 1 / 3;
+            grid-row: 2;
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            overflow-y: auto;
+            min-height: 0;
+        }
+        .conclusion-panel.is-visible {
+            display: flex;
+        }
+        .conclusion-panel .conclusion-body {
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+        }
+        .conclusion-panel h2 {
+            font-size: 12px;
+            margin-bottom: 2px;
+            border-bottom: 1px solid #28a745;
+            padding-bottom: 4px;
+        }
+        .conclusion-body {
+            font-size: 15px;
+            line-height: 1.55;
+            color: #141414;
+            font-weight: 500;
+        }
+        .conclusion-body strong {
+            color: #000;
+            font-weight: 700;
+        }
+        h2 {
+            font-size: 12px;
+            margin-bottom: 6px;
+            color: #333;
+            border-bottom: 1px solid #007bff;
+            padding-bottom: 4px;
+            font-weight: 700;
+        }
+        .form-group { margin-bottom: 6px; }
+        .form-group label {
+            display: block;
+            font-size: 10px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 2px;
+        }
+        select { width: 100%; padding: 4px 6px; border: 1px solid #ddd; border-radius: 3px; font-size: 11px; }
+        .filter-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+        .filter-row label {
+            flex: 0 0 auto;
+            font-size: 10px;
+            margin-bottom: 0;
+            white-space: nowrap;
+            max-width: 5.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .filter-row .filter-select { flex: 1; min-width: 0; }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 2px;
+        }
+        .checkbox-group label { margin-bottom: 0; font-size: 10px; font-weight: 500; }
+        .counter {
+            background-color: #e7f3ff;
+            border-left: 3px solid #007bff;
+            padding: 4px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            margin-bottom: 6px;
+        }
+        .plot-container {
+            width: 100%;
+            flex: 1;
+            min-height: 200px;
+            background: transparent;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .empty-state {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px;
+            color: #999;
+            font-size: 12px;
+            flex: 1;
+        }
+        .stats-container {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            padding: 6px 8px;
+            font-size: 10px;
+        }
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 3px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 10px;
+        }
+        .stat-row:last-child { border-bottom: none; }
+        .table-container {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 6px;
+        }
+        .plot-below-chart.table-container {
+            max-height: none;
+        }
+        .category-table { width: 100%; font-size: 10px; border-collapse: collapse; }
+        .category-table th, .category-table td {
+            padding: 3px 4px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .category-table th { background: #f0f0f0; position: sticky; top: 0; }
+        .loading { display: none; color: #007bff; padding: 2px 0 4px; font-size: 11px; line-height: 1.2; }
+        .loading.active { display: block; }
+        .range-slider-group { margin-bottom: 6px; }
+        .range-slider-group label { font-size: 10px; margin-bottom: 2px; }
+        .range-slider-group input[type="range"] { width: 100%; cursor: pointer; height: 14px; }
+        .range-values { display: flex; justify-content: space-between; font-size: 9px; color: #666; }
+        .plot-scroll {
+            flex: 1;
+            min-height: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-top: 0;
+            margin-top: 0;
+        }
+        /* Below main plot: larger copy + bigger toggles */
+        .plot-below-chart {
+            font-size: 13px;
+            color: #222;
+            line-height: 1.5;
+        }
+        .plot-below-chart h3,
+        .plot-below-chart .plot-below-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+        }
+        .plot-below-chart .equation-lines { font-size: 13px; }
+        .equation-lines-row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 6px 20px;
+        }
+        .equation-item {
+            flex: 0 1 auto;
+            min-width: 0;
+        }
+        #equation-display .plot-below-title {
+            margin-bottom: 4px;
+        }
+        .subgroup-toggles-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 14px;
+            align-items: center;
+        }
+        .subgroup-toggles-wrap label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #222;
+            cursor: pointer;
+        }
+        .subgroup-toggles-wrap input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: #007bff;
+        }
+    </style>
+</head>
+<body class="app-body h-screen w-screen overflow-hidden flex flex-col bg-[#b1b0b0]">
+    {% include 'partials/navbar.html' %}
+    <div class="flex-1 min-h-0 overflow-hidden px-[2vw] pb-2">
+    <div class="page-grid">
+        <div class="panel left-panel">
+            <h2>Filters</h2>
+            <div id="left-species-counter" class="counter" style="display:none;">
+                Species <strong id="left-filtered-count">0</strong> / <strong id="left-total-count">0</strong>
+            </div>
+            <div id="filters-container"></div>
+            <div class="range-slider-group">
+                <label>Latitude</label>
+                <input type="range" id="lat-min" min="-72" max="79" value="-72" step="1">
+                <input type="range" id="lat-max" min="-72" max="79" value="79" step="1">
+                <div class="range-values"><span id="lat-min-val">-72</span><span id="lat-max-val">79</span></div>
+            </div>
+            <div class="range-slider-group">
+                <label>Longitude</label>
+                <input type="range" id="lon-min" min="-179" max="180" value="-179" step="1">
+                <input type="range" id="lon-max" min="-179" max="180" value="180" step="1">
+                <div class="range-values"><span id="lon-min-val">-179</span><span id="lon-max-val">180</span></div>
+            </div>
+            <button type="button" onclick="clearAllFilters()" style="width:100%; padding:5px; background:#dc3545; color:#fff; border:none; border-radius:3px; cursor:pointer; font-size:10px; margin-top:4px;">Clear all</button>
+        </div>
+
+        <div class="panel middle-panel">
+            <h2>Relationship setup</h2>
+            <div class="form-group">
+                <label for="feature-x">Feature X</label>
+                <select id="feature-x">
+                    <option value="">— Select X —</option>
+                    <optgroup label="Numerical">
+                        {% for trait in numerical_traits %}<option value="{{ trait }}">{{ trait }}</option>{% endfor %}
+                    </optgroup>
+                    <optgroup label="Categorical">
+                        {% for trait in categorical_traits %}<option value="{{ trait }}">{{ trait }}</option>{% endfor %}
+                    </optgroup>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="feature-y">Feature Y</label>
+                <select id="feature-y">
+                    <option value="">— Select Y —</option>
+                    <optgroup label="Numerical">
+                        {% for trait in numerical_traits %}<option value="{{ trait }}">{{ trait }}</option>{% endfor %}
+                    </optgroup>
+                    <optgroup label="Categorical">
+                        {% for trait in categorical_traits %}<option value="{{ trait }}">{{ trait }}</option>{% endfor %}
+                    </optgroup>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="subfeature-select">Sub-feature</label>
+                <select id="subfeature-select">
+                    <option value="">— None —</option>
+                    {% for col_name, display_name in subfeature_options.items() %}
+                    <option value="{{ col_name }}">{{ display_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="plot-mode">Plot mode</label>
+                <select id="plot-mode"></select>
+            </div>
+            <div id="num-num-controls" style="display:none;">
+                <div class="checkbox-group"><input type="checkbox" id="show-ci"><label for="show-ci">95% CI band</label></div>
+                <div class="checkbox-group"><input type="checkbox" id="log-x"><label for="log-x">Log X</label></div>
+                <div class="checkbox-group"><input type="checkbox" id="log-y"><label for="log-y">Log Y</label></div>
+            </div>
+            <div id="stats-section" style="display:none;">
+                <h3 style="font-size:11px; margin:4px 0; font-weight:700; color:#333;">Statistics</h3>
+                <div id="stats-display" class="stats-container"></div>
+                <div id="detail-table" class="table-container" style="display:none;"></div>
+            </div>
+        </div>
+
+        <div class="panel plot-panel">
+            <h2>Relationship view</h2>
+            <div id="loading" class="loading">Updating…</div>
+            <div id="empty-state" class="empty-state">Select Feature X and Feature Y</div>
+            <div class="plot-scroll">
+                <div id="plot-container" class="plot-container" style="display:none;"></div>
+                <div id="equation-display" class="table-container plot-below-chart" style="display:none;"></div>
+                <div id="subgroup-toggle-container" class="table-container plot-below-chart" style="display:none;"></div>
+            </div>
+        </div>
+
+        <div id="conclusion-panel" class="panel conclusion-panel" aria-live="polite">
+            <h2>Conclusion</h2>
+            <div id="conclusion" class="conclusion-body"></div>
+        </div>
+    </div>
+    </div>
+    <script src="/static/js/sectio2.js"></script>
+</body>
+</html>

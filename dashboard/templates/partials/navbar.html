@@ -1,0 +1,12 @@
+{% set _s = active_section|default(0) %}
+<nav class="relative z-50 w-full flex flex-wrap justify-between items-center gap-y-2 py-[1.5vh] px-[4vw] text-sm tracking-wide shrink-0 bg-[#b1b0b0]/95  backdrop-blur-sm">
+  <a href="{{ url_for('hello') }}" class="font-semibold text-gray-800 hover:text-gray-950 transition-colors">Team5</a>
+  <div class="flex flex-wrap gap-x-[2vw] gap-y-1 text-gray-600">
+    <a href="{{ url_for('section1') }}" class="hover:text-gray-900 transition-colors {% if _s == 1 %}text-gray-900 font-medium border-b border-gray-800{% endif %}">Trait Distribution</a>
+    <a href="{{ url_for('section2') }}" class="hover:text-gray-900 transition-colors {% if _s == 2 %}text-gray-900 font-medium border-b border-gray-800{% endif %}">Trait Comparison</a>
+    <a href="{{ url_for('section3') }}" class="hover:text-gray-900 transition-colors {% if _s == 3 %}text-gray-900 font-medium border-b border-gray-800{% endif %}">Species Comparison</a>
+    <a href="{{ url_for('section4') }}" class="hover:text-gray-900 transition-colors {% if _s == 4 %}text-gray-900 font-medium border-b border-gray-800{% endif %}">Bird Finder</a>
+  </div>
+  <a href="{{ url_for('hello') }}" class="text-gray-600 hover:text-gray-900 transition-colors text-right">Home</a>
+  <div class="absolute h-[1.5px] w-full left-0 bottom-0 bg-[#97949492] pointer-events-none"></div>
+</nav>
